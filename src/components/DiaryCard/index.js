@@ -4,11 +4,6 @@ import './DiaryCard.scss'
 
 const DairyCard = (props) => {
 
-  const onClickCard = (event) => {
-    (alert("Удалить"))
-    event.stopPropagation()
-  }
-
     return (
         <div className='dairy__card' onClick={() =>  (alert("Click"))} >
 
@@ -32,8 +27,8 @@ const DairyCard = (props) => {
 
             <div className='dairy__card__toolbar'>
                 <div className='dairy__card__toolbar__item'>
-                    <div className='edit' onClick={() => (alert("Редактирвоать"))}>Редактировать</div>
-                    <div className='delete' onClick={() => onClickCard } >Удалить</div>
+                    <div className='edit' onClick={(event) => (alert("Редактирвоать"), event.stopPropagation() ) }>Редактировать</div>
+                    <div className='delete' onClick={(event) => (alert("Удалить"), event.stopPropagation() )} >Удалить</div>
                 </div>
             </div>
 
