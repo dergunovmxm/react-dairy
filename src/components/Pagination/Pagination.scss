@@ -1,0 +1,24 @@
+.pagination__container__list{
+    display: flex;
+    justify-content: center;
+    margin: 30px;
+
+    .page-item{
+
+        cursor: pointer;
+        width: 20px;
+        border: 2px solid #5A9CFF;
+        border-radius: 7px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 2px;
+        opacity: .9;
+
+        &:active{
+            background: #5A9CFF;
+            color: white
+        }
+    }
+
+}
