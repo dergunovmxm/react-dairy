@@ -1,0 +1,83 @@
+{
+    "notes": [
+        {
+            "title": "Первая запись",
+            "description":"Часто возникает необходимость растянуть картинку по размеру блока с сохранением пропорций, чтобы изображение не искажалось. При этом результат бывает нужен разный. Иногда нужно обязательно заполнить всё пространство блока." ,
+            "image":"https://catherineasquithgallery.com/uploads/posts/2021-02/1612678074_74-p-kartinka-fon-zelenii-lug-125.jpg",
+            "id": 1
+        },
+        {
+            "title": "Вторая запись",
+            "description": "A ReactJS component that creates a pagination.. Latest version: 8.1.4, last published: a month ago. Start using react-paginate in your project by running `npm i react-paginate`",
+            "image": "https://mobimg.b-cdn.net/v3/fetch/89/89b1452e43e738be92c573fdebfb1d22.jpeg", 
+            "id": 2
+        },
+        {
+            "title": "Третья запись",
+            "description": "Pagination can be performed in several ways in React. One way is to create custom React Pagination. But creating custom React Pagination is tough and time-consuming.",
+            "image": "https://answit.com/wp-content/uploads/2017/01/full-hd.jpg",
+            "id": 3
+        },
+        {
+            "title": "Четвертая запись",
+            "description": "В этом учебном модуле вы научитесь создавать специальный компонент разбивки на страницы с помощью React для разбивки на страницы больших наборов данных. Мы построим разбитое на страницы представление всех стран мира",
+            "image": "https://storge.pic2.me/upload/227/5841e6bb8b95a.jpg",
+            "id": 4
+        },
+        {
+            "title": "Вторая запись",
+            "description": "A ReactJS component that creates a pagination.. Latest version: 8.1.4, last published: a month ago. Start using react-paginate in your project by running `npm i react-paginate`",
+            "image": "https://mobimg.b-cdn.net/v3/fetch/89/89b1452e43e738be92c573fdebfb1d22.jpeg", 
+            "id": 2
+        },
+        {
+            "title": "Третья запись",
+            "description": "Pagination can be performed in several ways in React. One way is to create custom React Pagination. But creating custom React Pagination is tough and time-consuming.",
+            "image": "https://answit.com/wp-content/uploads/2017/01/full-hd.jpg",
+            "id": 3
+        },
+        {
+            "title": "Четвертая запись",
+            "description": "В этом учебном модуле вы научитесь создавать специальный компонент разбивки на страницы с помощью React для разбивки на страницы больших наборов данных. Мы построим разбитое на страницы представление всех стран мира",
+            "image": "https://storge.pic2.me/upload/227/5841e6bb8b95a.jpg",
+            "id": 4
+        },
+        {
+            "title": "Вторая запись",
+            "description": "A ReactJS component that creates a pagination.. Latest version: 8.1.4, last published: a month ago. Start using react-paginate in your project by running `npm i react-paginate`",
+            "image": "https://mobimg.b-cdn.net/v3/fetch/89/89b1452e43e738be92c573fdebfb1d22.jpeg", 
+            "id": 2
+        },
+        {
+            "title": "Третья запись",
+            "description": "Pagination can be performed in several ways in React. One way is to create custom React Pagination. But creating custom React Pagination is tough and time-consuming.",
+            "image": "https://answit.com/wp-content/uploads/2017/01/full-hd.jpg",
+            "id": 3
+        },
+        {
+            "title": "Четвертая запись",
+            "description": "В этом учебном модуле вы научитесь создавать специальный компонент разбивки на страницы с помощью React для разбивки на страницы больших наборов данных. Мы построим разбитое на страницы представление всех стран мира",
+            "image": "https://storge.pic2.me/upload/227/5841e6bb8b95a.jpg",
+            "id": 4
+        }
+        ,
+        {
+            "title": "Вторая запись",
+            "description": "A ReactJS component that creates a pagination.. Latest version: 8.1.4, last published: a month ago. Start using react-paginate in your project by running `npm i react-paginate`",
+            "image": "https://mobimg.b-cdn.net/v3/fetch/89/89b1452e43e738be92c573fdebfb1d22.jpeg", 
+            "id": 2
+        },
+        {
+            "title": "Третья запись",
+            "description": "Pagination can be performed in several ways in React. One way is to create custom React Pagination. But creating custom React Pagination is tough and time-consuming.",
+            "image": "https://answit.com/wp-content/uploads/2017/01/full-hd.jpg",
+            "id": 3
+        },
+        {
+            "title": "Четвертая запись",
+            "description": "В этом учебном модуле вы научитесь создавать специальный компонент разбивки на страницы с помощью React для разбивки на страницы больших наборов данных. Мы построим разбитое на страницы представление всех стран мира",
+            "image": "https://storge.pic2.me/upload/227/5841e6bb8b95a.jpg",
+            "id": 4
+        }
+    ]
+}

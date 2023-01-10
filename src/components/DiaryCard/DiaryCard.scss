@@ -1,4 +1,20 @@
-.dairy__card{
+.dairy__card {
+
+    @media screen and (min-width: 1921px) {
+        width: 480px;
+        height: 520px;
+
+    }
+
+    @media screen and (min-width: 1281px) {
+        width: 360px;
+        height: 420px;
+    }
+
+    @media screen and (min-width: 1440px) {
+        width: 280px;
+        height: 330px;
+    }
 
     position: relative;
     width: 250px;
@@ -8,32 +24,75 @@
     border-radius: 14px;
     margin: 10px 0;
     cursor: pointer;
-    transition: box-shadow 0.1s ease-in-out, transform 0.1s ease-in-out;
+    transition: box-shadow 0.1s ease-in-out,
+    transform 0.1s ease-in-out;
 
     &:hover {
         box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.05);
         transform: translateY(-5px);
-;
-      
     }
 
     &__toolbar {
-        
+
+        @media screen and (min-width: 1921px) {
+            width: 480px;
+            height: 520px;
+            margin: -30px 10px;
+
+            svg {
+                font-size: 28px;
+            }
+        }
+
+        @media screen and (min-width: 1281px) {
+            width: 360px;
+            height: 420px;
+            margin: -20px 10px;
+
+            svg {
+                font-size: 22px;
+            }
+        }
+
+        @media screen and (min-width: 1440px) {
+            width: 280px;
+            height: 360px;
+           margin: -20px 10px;
+
+            svg {
+                font-size: 18px;
+            }
+        }
+
         position: absolute;
         top: 0;
         opacity: 0;
         height: 280px;
         width: 250px;
-        
-        &__item{
+        transition: opacity 0.1s ease-in;
+
+        &__item {
             position: absolute;
             bottom: 0;
             height: 30px;
+            display: flex;
+            flex-direction: row;
+            margin-left: 10px;
+            cursor: pointer;
 
-            span{
-                font-size: 12px;
-                padding: 0 10px;
+            .delete :hover {
+                color: red
             }
+
+            .edit :hover {
+                color: #5A9CFF;
+            }
+
+            svg {
+                opacity: .6;
+                margin-right: 15px;
+            }
+
         }
 
         &:hover {
@@ -47,15 +106,39 @@
 
         padding: 5px 5px 0 5px;
 
-
         img {
             object-fit: cover;
             height: 150px;
-            max-height: 150px;
+
             width: 240px;
             min-width: 240px;
             border-radius: 14px;
         }
+
+        @media screen and (min-width: 1921px) {
+            img {
+                width: 320px;
+                height: 280px;
+            }
+
+        }
+
+        @media screen and (min-width: 1281px) {
+            img {
+                width: 350px;
+                height: 220px;
+            }
+
+        }
+
+        @media screen and (min-width: 1440px) {
+            img {
+                width: 270px;
+                height: 170px;
+            }
+
+        }
+ 
 
     }
 
@@ -63,7 +146,7 @@
         display: flex;
         justify-content: center;
         margin: 0;
-        height: 40px;
+        height: 35px;
         padding: 0 5px;
 
         span {
@@ -73,22 +156,79 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
+
+        @media screen and (min-width: 1921px) {
+            span {
+                font-size: 26px;
+            }
+
+        }
+
+        @media screen and (min-width: 1281px) {
+            span {
+                font-size: 22px;
+            }
+
+        }
+
+        @media screen and (min-width: 1440px) {
+            span {
+                font-size: 20px;
+            }
+
+        }
     }
 
     &__description {
         margin: 5px 5px 0 5px;
         padding: 0 5px;
         height: 50px;
-        white-space: pre-wrap;
+        white-space: normal;
         overflow: hidden;
         text-overflow: ellipsis;
 
+        @media screen and (min-width: 1921px) {
+            padding: 10px;
+            height: 90px;
+            width: 440px;
+        }
 
+        @media screen and (min-width: 1281px) {
+            padding: 5px;
+            height: 80px;
+            width: 335px;
+        }
+        @media screen and (min-width: 1440px) {
+            padding: 3px;
+            height: 60px;
+            width: 270px;
+        }
 
         span {
             font-family: 'Inter';
             font-size: 14px;
             text-align: justify;
+
+        }
+
+        @media screen and (min-width: 1921px) {
+            span {
+                font-size: 20px;
+            }
+
+        }
+
+        @media screen and (min-width: 1281px) {
+            span {
+                font-size: 18px;
+            }
+
+        }
+
+        @media screen and (min-width: 1440px) {
+            span {
+                font-size: 16px;
+            }
 
         }
     }
@@ -97,6 +237,17 @@
         padding: 0 10px;
         text-align: right;
 
+        @media screen and (min-width: 1921px) {
+            margin: 25px;
+        }
+
+        @media screen and (min-width: 1281px) {
+            margin: 15px;
+        }
+        @media screen and (min-width: 1440px) {
+            margin: 20px 10px; 
+        }
+
         span {
 
             font-family: 'Inter';
@@ -104,7 +255,21 @@
             opacity: .7;
         }
 
+        @media screen and (min-width: 1921px) {
+            span {
+                font-size: 18px;
+            }
+        }
+
+        @media screen and (min-width: 1281px) {
+            span {
+                font-size: 16px;
+            }
+        }
+        @media screen and (min-width: 1440px) {
+            span {
+                font-size: 14px;
+            }
+        }
     }
-
-
 }

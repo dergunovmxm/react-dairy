@@ -1,34 +1,35 @@
-import { useState } from 'react'
 import './DiaryCard.scss'
-
+import { FiEdit, FiTrash2 } from "react-icons/fi"
 
 const DairyCard = (props) => {
 
     return (
-        <div className='dairy__card' onClick={() =>  (alert("Click"))} >
-
-
+        <div className='dairy__card' onClick={() => (alert("Click"))} >
 
             <div className='dairy__card__image' >
-                <img src={props.img} alt="dairyImage" />
+                <img src={props.image} alt="dairyImage" />
             </div>
 
             <div className='dairy__card__title'>
-                <span>Тестовая запись №1 </span>
+                <span>{props.title}</span>
             </div>
 
             <div className='dairy__card__description'>
-                <span>Часто возникает необходимость растянуть картинку по размеру блока с сохранением пропорций, чтобы изображение не искажалось. При этом результат бывает нужен разный. Иногда нужно обязательно заполнить всё пространство блока. </span>
+                <span>{props.description} </span>
             </div>
 
             <div className='dairy__card__date'>
-                <span>09.12.22</span>  
+                <span>09.12.22</span>
             </div>
 
             <div className='dairy__card__toolbar'>
                 <div className='dairy__card__toolbar__item'>
-                    <div className='edit' onClick={(event) => (alert("Редактирвоать"), event.stopPropagation() ) }>Редактировать</div>
-                    <div className='delete' onClick={(event) => (alert("Удалить"), event.stopPropagation() )} >Удалить</div>
+                    <div className='edit' onClick={(event) => (alert("Редактирвоать"), event.stopPropagation())}>
+                        <FiEdit />
+                    </div>
+                    <div className='delete' onClick={(event) => (alert("Удалить"), event.stopPropagation())} >
+                        <FiTrash2 />
+                    </div>
                 </div>
             </div>
 

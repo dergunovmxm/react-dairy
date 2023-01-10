@@ -1,8 +1,10 @@
 header {
-    width: 100%;
+    width: 100vw;
     height: 60px;
     background: white;
     border-bottom: 2px solid #eaeaea;
+
+
 
     .header__logo {
         display: flex;
@@ -19,15 +21,35 @@ header {
         &__info {
             display: flex;
             flex-direction: column;
-            
+
 
             b {
                 font-size: 13px;
                 text-transform: uppercase;
             }
-            span{
+
+            span {
                 font-size: 13px;
                 opacity: .5;
+            }
+            @media screen and (min-width: 1921px) {
+                b{
+                    font-size: 20px;
+                }
+                span{
+                    font-size: 20px;
+                }
+            }
+        }
+    }
+
+    @media screen and (min-width: 1921px) {
+        height: 100px;
+
+        .header__logo {
+            svg {
+                width: 70px;
+                height: 70px;
             }
         }
     }

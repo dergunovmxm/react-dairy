@@ -8,6 +8,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: #e7f6ff;
+
 }
 
 code {
@@ -16,20 +17,18 @@ code {
 }
 
 .container {
-
-  height: 720px;
-  max-height: 720px;
-  
-  overflow-y: hidden;
+  width: 100vw;
+  height: 100vh;
 
   .dairy__items {
-    min-width: 720px;
-    padding: 0 80px;
+    padding: 0 100px;
     margin-top: 20px;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
     height: 80%;
+
   }
+  
 
 }

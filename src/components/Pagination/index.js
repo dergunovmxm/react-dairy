@@ -1,6 +1,4 @@
-
 import "./Pagination.scss"
-
 const Pagination = ({ dairyPerPage, totalDairy, paginate }) => {
 
     const pageNumbers = []
@@ -11,9 +9,9 @@ const Pagination = ({ dairyPerPage, totalDairy, paginate }) => {
     
     return (
         <ul className="pagination__container__list">
-            {
+            {   
                 pageNumbers.map((number) => (
-                    <li className="page-item" key={number} onClick={() => paginate(number)}>
+                    <li className="page-item"  key={number} onClick={() => paginate(number)}>
                         {number}
                     </li>
                 ))
