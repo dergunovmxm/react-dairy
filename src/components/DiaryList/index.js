@@ -7,10 +7,11 @@ import { loadNotes } from "../../redux/actions"
 import { useEffect } from "react"
 import axios from "axios"
 
-const DiaryList = ({ }) => {
+const DiaryList = ({searchValue}) => {
 
     const [dairyPage, setDairyPage] = useState(1)
     const [dairyPerPage] = useState(8)
+    const [searchNotes, setSearchNotes] = useState([])
 
     const lastDairyIndex = dairyPage * dairyPerPage
     const firstDairyPage = lastDairyIndex - dairyPerPage
@@ -21,10 +22,23 @@ const DiaryList = ({ }) => {
     const notes = useSelector((state) => state.notes)
     const [currentDairy, setCurrentDiary] = useState(notes.slice(firstDairyPage, lastDairyIndex))
 
-    useEffect(() => {
-        dispatch(loadNotes())
-    }, [])
+  
+    // // поиск 
+    // useEffect(() => {
+    //     axios
+    //         .get(`${process.env.REACT_APP_API_URL}/notes/?title_like=${searchValue}`)
+    //         .then((response) => {
+    //             setSearchNotes(response.data);
+    //         });
+    // }, [searchValue]);
 
+    // отображение карточек
+    useEffect(() => {
+        dispatch(loadNotes(searchValue))
+    }, [searchValue])
+
+
+    // удаение
     useEffect(() => {
         setCurrentDiary(notes.slice(firstDairyPage, lastDairyIndex))
     }, [notes])
@@ -41,6 +55,8 @@ const DiaryList = ({ }) => {
                 console.log(error)
             })
     }
+
+
 
     return (
         <>

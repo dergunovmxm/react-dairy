@@ -6,10 +6,10 @@ const getNotes = (notes) => ({
     payload: notes
 })
 
-export const loadNotes = () => {
+export const loadNotes = (searchValue, curDate) => {
     return function (dispatch) {
         axios
-        .get(`${process.env.REACT_APP_API_URL}/notes`)
+        .get(`${process.env.REACT_APP_API_URL}/notes/?title_like=${searchValue}&`)
         .then((response) => {
             dispatch(getNotes(response.data))
         })

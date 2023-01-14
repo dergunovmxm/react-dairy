@@ -1,19 +1,33 @@
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DiaryCard, Pagination, Header } from "./components";
-import img1 from "./components/assets/img1.jpg"
-import img2 from "./components/assets/img2.jpg"
-import img3 from "./components/assets/img3.jpg"
 import DiaryList from "./components/DiaryList";
 import { fetchNotes } from "./redux/actions";
-
+import Diary from './pages/Diary';
+import { Routes, Route } from 'react-router-dom'
 
 
 function App() {
 
+  const [searchValue, setSearchValue] = useState('');
+
+  const onChangeSearchInput = (event) => {
+
+    setSearchValue(event.target.value);
+  };
+  console.log(searchValue)
+
   return (
     <div className="container">
-      <DiaryList/>
+      <Header
+        onChangeSearchInput={onChangeSearchInput}
+        searchValue={searchValue}
+        setSearchValue={setSearchValue} />
+      <Routes>
+        <Route exact path='/' element={<DiaryList searchValue={searchValue} />} />
+        <Route exact path='/notes/*' element={<Diary />} />
+      </Routes>
+
     </div>
   );
 }

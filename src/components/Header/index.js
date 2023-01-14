@@ -1,7 +1,10 @@
 import { BiBookBookmark } from "react-icons/bi";
+import { useState } from "react";
 import './Header.scss'
 
-const Header = () => {
+const Header = ({onChangeSearchInput, searchValue, setSearchValue}) => {
+
+    
     return (
         <header className='header' >
 
@@ -13,6 +16,24 @@ const Header = () => {
                     <span>By Maxim Dergunov</span>
                 </div>
             </div>
+
+            <div className="header__search">
+                    {
+                        searchValue && 
+                        <img className="clear"
+                            src="/images/btn-remove.svg"
+                            alt="Close"
+                            onClick={() => setSearchValue('')} 
+                            />
+                    }
+
+                    <img src="/images/search.svg" alt="Search" />
+                    <input
+                        onChange={onChangeSearchInput}
+                        placeholder="Поиск..."
+                        value={searchValue}
+                         />
+                </div>
 
         </header>
     )
