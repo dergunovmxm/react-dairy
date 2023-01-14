@@ -7,7 +7,7 @@ import { loadNotes } from "../../redux/actions"
 import { useEffect } from "react"
 import axios from "axios"
 
-const DiaryList = ({searchValue}) => {
+const DiaryList = ({ searchValue }) => {
 
     const [dairyPage, setDairyPage] = useState(1)
     const [dairyPerPage] = useState(8)
@@ -21,16 +21,6 @@ const DiaryList = ({searchValue}) => {
     let dispatch = useDispatch()
     const notes = useSelector((state) => state.notes)
     const [currentDairy, setCurrentDiary] = useState(notes.slice(firstDairyPage, lastDairyIndex))
-
-  
-    // // поиск 
-    // useEffect(() => {
-    //     axios
-    //         .get(`${process.env.REACT_APP_API_URL}/notes/?title_like=${searchValue}`)
-    //         .then((response) => {
-    //             setSearchNotes(response.data);
-    //         });
-    // }, [searchValue]);
 
     // отображение карточек
     useEffect(() => {
@@ -56,13 +46,16 @@ const DiaryList = ({searchValue}) => {
             })
     }
 
-
-
     return (
         <>
             <div className="dairy__items">
-                {currentDairy && currentDairy.map((item) => <DairyCard {...item} removeNote={removeNote} />)}
 
+                {currentDairy.length ? currentDairy.map((item) => <DairyCard {...item} removeNote={removeNote} />)
+                    : 
+                    <div className="emptySearch">
+                        <img src="images/empty.png" alt='emptySearch' />
+                        <span>Ничего не найдено</span>
+                    </div>}
             </div>
 
         </>

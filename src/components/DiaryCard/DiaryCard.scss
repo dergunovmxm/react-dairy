@@ -181,73 +181,28 @@
     }
 
     &__description {
-        margin: 5px 5px 0 5px;
+        margin: 5px 10px 0 10px;
         padding: 0 5px;
         height: 50px;
         white-space: normal;
         overflow: hidden;
         text-overflow: ellipsis;
 
-        @media screen and (min-width: 1921px) {
-            padding: 10px;
-            height: 90px;
-            width: 440px;
-        }
-
-        @media screen and (min-width: 1281px) {
-            padding: 5px;
-            height: 80px;
-            width: 335px;
-        }
-        @media screen and (min-width: 1440px) {
-            padding: 3px;
-            height: 60px;
-            width: 270px;
-        }
+       
 
         span {
             font-family: 'Inter';
             font-size: 14px;
             text-align: justify;
+            text-overflow: ellipsis;
 
-        }
-
-        @media screen and (min-width: 1921px) {
-            span {
-                font-size: 20px;
-            }
-
-        }
-
-        @media screen and (min-width: 1281px) {
-            span {
-                font-size: 18px;
-            }
-
-        }
-
-        @media screen and (min-width: 1440px) {
-            span {
-                font-size: 16px;
-            }
-
-        }
+        } 
     }
 
     &__date {
-        padding: 0 10px;
+        margin-top: 20px;
+        padding: 0 15px;
         text-align: right;
-
-        @media screen and (min-width: 1921px) {
-            margin: 25px;
-        }
-
-        @media screen and (min-width: 1281px) {
-            margin: 15px;
-        }
-        @media screen and (min-width: 1440px) {
-            margin: 20px 10px; 
-        }
 
         span {
 
@@ -256,21 +211,6 @@
             opacity: .7;
         }
 
-        @media screen and (min-width: 1921px) {
-            span {
-                font-size: 18px;
-            }
-        }
-
-        @media screen and (min-width: 1281px) {
-            span {
-                font-size: 16px;
-            }
-        }
-        @media screen and (min-width: 1440px) {
-            span {
-                font-size: 14px;
-            }
-        }
+       
     }
 }

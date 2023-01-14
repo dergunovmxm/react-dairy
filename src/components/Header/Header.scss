@@ -3,30 +3,32 @@
     background: white;
     border-bottom: 2px solid #eaeaea;
     display: flex;
+    align-items: center;
     justify-content: space-between;
+    margin-left: auto;
 
     &__search{
+        display: flex;
+        align-items: center;
         border: 1px solid #f3f3f3;
         border-radius: 10px;
         padding: 0 5px;
         position: relative;
-        height: 50px;
-        margin: 5px;
+        height: 40px;
+        margin-right: 30px;
         
       
         .clear {
           position: absolute;
-          right: 0;
           width: 18px;
           height: 18px;
-          top: 14px;
-          right: 15px;
+          right: 10px;
           cursor: pointer;
         }
       
         input {
           border: 0;
-          padding: 13px;
+          padding: 10px;
           font-size: 16px;
           width: 200px;
           outline: none;

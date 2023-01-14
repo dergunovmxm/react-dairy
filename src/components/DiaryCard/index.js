@@ -3,9 +3,7 @@ import { FiEdit, FiTrash2 } from "react-icons/fi"
 import axios from 'axios'
 
 
-const DiaryCard = ({ image, title, description, id, removeNote }) => {
-
-
+const DiaryCard = ({ image, title, description, id, removeNote, date }) => {
 
     return (
 
@@ -29,7 +27,7 @@ const DiaryCard = ({ image, title, description, id, removeNote }) => {
             </div>
 
             <div className='dairy__card__date'>
-                <span>09.12.22</span>
+                <span>{date}</span>
             </div>
 
             <div className='dairy__card__toolbar'>
