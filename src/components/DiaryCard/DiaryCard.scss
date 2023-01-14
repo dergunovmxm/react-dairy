@@ -47,7 +47,7 @@
         @media screen and (min-width: 1281px) {
             width: 360px;
             height: 420px;
-            margin: -20px 10px;
+            margin: -25px 10px;
 
             svg {
                 font-size: 22px;
@@ -57,7 +57,7 @@
         @media screen and (min-width: 1440px) {
             width: 280px;
             height: 360px;
-           margin: -20px 10px;
+           margin: -25px 10px;
 
             svg {
                 font-size: 18px;
@@ -105,6 +105,7 @@
     &__image {
 
         padding: 5px 5px 0 5px;
+        height: 50%;
 
         img {
             object-fit: cover;
@@ -145,7 +146,7 @@
     &__title {
         display: flex;
         justify-content: center;
-        margin: 0;
+        margin: 5px 0;
         height: 35px;
         padding: 0 5px;
 

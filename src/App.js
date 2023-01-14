@@ -12,17 +12,8 @@ import { fetchNotes } from "./redux/actions";
 function App() {
 
   return (
-
-    
     <div className="container">
-
-      <Header/>
       <DiaryList/>
-      {/* <Pagination
-                    dairyPerPage={dairyPerPage}
-                    totalDairy={notes.length}
-                    paginate={paginate}
-                /> */}
     </div>
   );
 }

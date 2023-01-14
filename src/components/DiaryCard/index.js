@@ -1,21 +1,31 @@
 import './DiaryCard.scss'
 import { FiEdit, FiTrash2 } from "react-icons/fi"
+import axios from 'axios'
 
-const DairyCard = (props) => {
+
+const DiaryCard = ({ image, title, description, id, removeNote }) => {
+
+
 
     return (
-        <div className='dairy__card' onClick={() => (alert("Click"))} >
+
+        <div className='dairy__card' 
+            onClick={() => {
+                window.location.assign(
+                    `http://localhost:3000/notes/?id=${id}`
+                )
+            }} >
 
             <div className='dairy__card__image' >
-                <img src={props.image} alt="dairyImage" />
+                <img src={image} alt="dairyImage" />
             </div>
 
             <div className='dairy__card__title'>
-                <span>{props.title}</span>
+                <span>{title}</span>
             </div>
 
             <div className='dairy__card__description'>
-                <span>{props.description} </span>
+                <span>{description} </span>
             </div>
 
             <div className='dairy__card__date'>
@@ -27,7 +37,7 @@ const DairyCard = (props) => {
                     <div className='edit' onClick={(event) => (alert("Редактирвоать"), event.stopPropagation())}>
                         <FiEdit />
                     </div>
-                    <div className='delete' onClick={(event) => (alert("Удалить"), event.stopPropagation())} >
+                    <div className='delete' onClick={(event) => (removeNote(id), event.stopPropagation())} >
                         <FiTrash2 />
                     </div>
                 </div>
@@ -37,4 +47,4 @@ const DairyCard = (props) => {
     )
 }
 
-export default DairyCard
+export default DiaryCard

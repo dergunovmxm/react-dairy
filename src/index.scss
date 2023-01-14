@@ -17,18 +17,14 @@ code {
 }
 
 .container {
-  width: 100vw;
-  height: 100vh;
 
   .dairy__items {
-    padding: 0 100px;
-    margin-top: 20px;
+
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    float: right;
     height: 80%;
-
+    margin: 10px 50px;
   }
-  
-
 }

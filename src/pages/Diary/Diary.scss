@@ -1,0 +1,47 @@
+.diary__container {
+    display: flex;
+    flex-direction: row;
+    margin: 20px;
+    height: 100vh;
+
+    &__content {
+        width: 70%;
+        display: flex;
+        flex-direction: column;
+
+        &__image {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+
+            img {
+                border-radius: 14px;
+                width: 50%;
+                height: auto;
+                object-fit: contain;
+            }
+        }
+
+        &__info {
+            padding: 40px;
+            &__title {
+                padding: 10px;
+                font-family: 'Inter';
+                font-size: 26px;
+                font-weight: bold;
+            }
+            &__description{
+                padding: 10px;
+                font-family: 'Inter';
+                font-size: 18px;
+                font-weight: normal;
+                color: darkgray;
+            }
+        }
+    }
+
+    &__comments {
+        width: 30%;
+        border: 2px solid greenyellow;
+    }
+}
