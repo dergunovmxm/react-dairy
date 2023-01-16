@@ -6,11 +6,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { loadNotes } from "../../redux/actions"
 import { useEffect } from "react"
 import axios from "axios"
+import Tools from "../Tools"
 
-const DiaryList = ({ searchValue }) => {
+const DiaryList = ({ searchValue, setSearchValue, onChangeSearchInput }) => {
 
     const [dairyPage, setDairyPage] = useState(1)
-    const [dairyPerPage] = useState(8)
+    const [dairyPerPage] = useState(50)
     const [searchNotes, setSearchNotes] = useState([])
 
     const lastDairyIndex = dairyPage * dairyPerPage
@@ -48,10 +49,15 @@ const DiaryList = ({ searchValue }) => {
 
     return (
         <>
+            <Tools
+                onChangeSearchInput={onChangeSearchInput}
+                searchValue={searchValue}
+                setSearchValue={setSearchValue} />
+
             <div className="dairy__items">
 
                 {currentDairy.length ? currentDairy.map((item) => <DairyCard {...item} removeNote={removeNote} />)
-                    : 
+                    :
                     <div className="emptySearch">
                         <img src="images/empty.png" alt='emptySearch' />
                         <span>Ничего не найдено</span>

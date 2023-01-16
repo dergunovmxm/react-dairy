@@ -1,10 +1,10 @@
 import './DiaryCard.scss'
 import { FiEdit, FiTrash2 } from "react-icons/fi"
+import format from 'date-fns/format'
 import axios from 'axios'
 
 
 const DiaryCard = ({ image, title, description, id, removeNote, date }) => {
-
     return (
 
         <div className='dairy__card' 
