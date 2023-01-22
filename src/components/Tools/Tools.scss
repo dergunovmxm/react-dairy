@@ -1,12 +1,14 @@
 .tools {
-    height: 50px;
+    margin-top: 10px;
+    height: 30px;
     display: flex;
-    align-items: center;
+
     flex-direction: row-reverse;
     padding: 0 30px;
-
+   
 
     &__adding {
+        margin-top: 0;
         margin-left: 30px;
         background: white;
         height: 30px;
@@ -33,28 +35,72 @@
 
     }
     &__filtering{
-        
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-        background: white;
-        height: 30px;
-        border-radius: 8px;
-        width: 150px;
-        text-align: center;
-        cursor: pointer;
-        transition: transform 0.05s ease-in-out;
-
-        span {
-            font-family: 'Inter';
-            font-size: 12px;
-            opacity: .7;
+        margin-top: auto;
+        &__menu{
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+            justify-content: space-around;
+            background: white;
+            height: 30px;
+            border-radius: 8px;
+            width: 150px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.05s ease-in-out;
+    
+            span {
+                font-family: 'Inter';
+                font-size: 12px;
+                opacity: .7;
+            }
+            svg{
+                opacity: .6;
+            }
         }
-        svg{
-            opacity: .6;
+      
+        &__items{
+            
+            border-radius: 8px;
+            width: 150px;
+            background: white;
+            .dropwon__item{
+                display: flex;
+                justify-content: space-between;
+                padding: 5px;
+                z-index: 10;
+                border-bottom: 1px solid #eaeaea;
+                cursor: pointer;
+                &:hover{
+                    background: #eaeaea;
+                }
+                span {
+                    font-family: 'Inter';
+                    font-size: 12px;
+                    opacity: .7;
+                }
+
+                svg{
+                    opacity: .6;
+                    font-size: 12px;
+                }
+                
+            }  
+            
+        }
+
+        &__items.active{
+            opacity: 1;
+            visibility: visible;
+
+        }
+        &__items.inactive{
+            opacity: 1;
+            visibility: hidden;
         }
     }
     &__search{
+        margin-top: 0;
         display: flex;
         align-items: center;
         border: 1px solid #f3f3f3;
@@ -84,4 +130,8 @@
             font-size: 12px;
         }
     }
+}
+
+.tools.active{
+    height: 100px;
 }

@@ -8,10 +8,10 @@ import { useEffect } from "react"
 import axios from "axios"
 import Tools from "../Tools"
 
-const DiaryList = ({ searchValue, setSearchValue, onChangeSearchInput }) => {
+const DiaryList = ({ searchValue, setSearchValue, onChangeSearchInput, setSortValue, sortValue}) => {
 
     const [dairyPage, setDairyPage] = useState(1)
-    const [dairyPerPage] = useState(50)
+    const [dairyPerPage] = useState(70)
     const [searchNotes, setSearchNotes] = useState([])
 
     const lastDairyIndex = dairyPage * dairyPerPage
@@ -28,7 +28,7 @@ const DiaryList = ({ searchValue, setSearchValue, onChangeSearchInput }) => {
         dispatch(loadNotes(searchValue))
     }, [searchValue])
 
-
+    
     // удаение
     useEffect(() => {
         setCurrentDiary(notes.slice(firstDairyPage, lastDairyIndex))
@@ -47,12 +47,21 @@ const DiaryList = ({ searchValue, setSearchValue, onChangeSearchInput }) => {
             })
     }
 
+    const handleSort = async (event) => {
+        let value = event.target.value
+        setSortValue(value)
+        return await axios
+        .get(`${process.env.REACT_APP_API_URL}/notes/?_sort=${value}&_order=asc`)
+        
+    }
+
     return (
         <>
             <Tools
                 onChangeSearchInput={onChangeSearchInput}
                 searchValue={searchValue}
-                setSearchValue={setSearchValue} />
+                setSearchValue={setSearchValue}
+                handleSort={handleSort} />
 
             <div className="dairy__items">
 
@@ -65,8 +74,6 @@ const DiaryList = ({ searchValue, setSearchValue, onChangeSearchInput }) => {
             </div>
 
         </>
-
-
 
     )
 }

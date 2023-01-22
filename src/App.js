@@ -1,4 +1,4 @@
-import { useState} from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DiaryCard, Pagination, Header } from "./components";
 import { CreateNote } from "./pages";
@@ -15,15 +15,19 @@ function App() {
 
     setSearchValue(event.target.value);
   };
-  console.log(searchValue)
 
   return (
-    <div className="container">
+    <div className="container" >
       <Header />
       <Routes>
-        <Route exact path='/' element={<DiaryList searchValue={searchValue} setSearchValue={setSearchValue} onChangeSearchInput={onChangeSearchInput} />} />
+        <Route exact path='/' element={<DiaryList
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          onChangeSearchInput={onChangeSearchInput}
+
+        />} />
         <Route exact path='/notes/*' element={<Diary />} />
-        <Route exact path='/create_note' element={<CreateNote />}/>
+        <Route exact path='/create_note' element={<CreateNote />} />
       </Routes>
 
     </div>

@@ -1,38 +1,27 @@
 import axios from 'axios'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import './CreateNote.scss'
 
 const CreateNote = () => {
 
+
     const [noteTitle, setNoteTitle] = useState('')
     const [noteDescription, setNoteDescription] = useState('')
     const [noteImage, setNoteImage] = useState(null)
-    // const [noteImageUrl, setNoteImageUrl] = useState(null)
-    // const fileReader = new FileReader()
-    // fileReader.onloadend = () => {
-    //     setNoteImageUrl(fileReader.result)
-    // }
+    const [loadData, setLoadData] = useState({})
 
-    const creatingNote = () => {
-
-        const formData = new FormData();
-        formData.append('image', noteImage);
-        for (var [key, value] of formData.entries()) { 
-            console.log(key, value);
-        }
-        var data = {
-
-            date: new Date().toLocaleString().slice(0, -3),
+    const creatingNote = async () => {
+        const data = {
             title: noteTitle,
             description: noteDescription,
-            image: formData
-            
+            image: noteImage,
+            date: new Date().toLocaleString().slice(0, -3)
         }
+        console.log(data)
+
         axios
             .post(`${process.env.REACT_APP_API_URL}/notes`, data)
-            // .then(window.location.assign(`http://localhost:3000`))
-        
-        
+            .then(window.location.assign(`http://localhost:3000`))
     }
 
     return (
@@ -53,19 +42,24 @@ const CreateNote = () => {
                 <div className='createNote__container__description'>
                     <textarea placeholder="Введите запись"
                         onChange={(event) => {
+
                             setNoteDescription(event.target.value)
                         }} />
                 </div>
 
                 <div className='createNote__container__image'>
+
                     <input type='file'
-                    onChange={event =>{
-                        setNoteImage(event.target.files[0])
-                        // fileReader.readAsDataURL(noteImage)
-                        
-                    }}/>
+                        onChange={event => {
+                            
+                            setNoteImage(event.target.files[0])
+
+                        }} />
+
+
+
                     <div className='createNote__container__image__prewiew'>
-                        <img src={noteImage ? URL.createObjectURL(noteImage): ""}/>
+                        <img src={noteImage ? URL.createObjectURL(noteImage) : ""} />
                     </div>
                 </div>
 

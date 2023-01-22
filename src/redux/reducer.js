@@ -2,6 +2,7 @@ import * as types from "./actionType"
 
 const initialState = {
     notes: [],
+    comments: [],
     note: {},
     loading: true,
 }
@@ -12,7 +13,12 @@ const notesReducer = (state = initialState, action) => {
             return{
                 ...state,
                 notes: action.payload,
-                loading: false
+                // loading: false
+            }
+        case types.GET_COMMENTS:
+            return{
+                ...state,
+                comments: action.payload
             }
         default:
             return state

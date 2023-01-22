@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useLocation } from 'react-router-dom'
 import './Diary.scss'
+import { Comments } from '../../components'
 
 
 
@@ -50,8 +51,9 @@ const Diary = () => {
 
             </div>
 
-            <div className='diary__container__comments'>
-                comments
+            <div className='diary__container__commentsBox'>
+                <h2>Комментарии</h2>
+                <Comments/>
             </div>
         </div>
     )
