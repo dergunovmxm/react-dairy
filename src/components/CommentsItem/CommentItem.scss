@@ -1,32 +1,116 @@
 .commentItem {
+    transition: 0.3s;
     display: flex;
     flex-direction: row;
     height: 100px;
-
-
     &__avatar {
+        border: 1px solid #eaeaea;
+        width: 50px;
+        height: 50px;
+        padding: 10px;
+        margin: 0 10px;
+        color: darkgray;
 
         svg {
             width: 50px;
             height: 50px;
+            
         }
 
     }
 
-    &__content{
+    &__content {
+        transition: 0.1s;
+        height: 60px;
+        padding: 5px;
+        width: 100%;
+        margin-right: 10px;
+        border: 1px solid #eaeaea;
+        display: flex;
+        flex-direction: column;
+        text-align: left;
 
         &__name {
             span {
                 font-family: 'Inter';
                 font-size: 14px;
-    
+                font-weight: bold;
             }
         }
 
-        &__text{
-            
+        &__text {
+            transition: 0.3s;
+            min-height: 23px;
+            overflow: hidden;
+            span {
+                font-weight: normal;
+                color: darkgray;
+            }
+        }
+
+        &__text__open {
+            transition: 0.3s;
+            span {
+                font-weight: normal;
+                color: darkgray;
+            }
         }
     }
 
+    &__contentOpen {
+        transition: 0.2s;
+        height: 150px;
+        padding: 5px;
+        width: 100%;
+        margin-right: 10px;
+        border: 1px solid #eaeaea;
+        display: flex;
+        flex-direction: column;
+        text-align: left;
 
+        &__name {
+            span {
+                font-family: 'Inter';
+                font-size: 14px;
+                font-weight: bold;
+            }
+        }
+
+        &__text {
+            height: 30px;
+
+            span {
+                font-weight: normal;
+                color: darkgray;
+            }
+        }
+
+        &__text.open {
+            height: 150px;
+
+            span {
+                font-weight: normal;
+                color: darkgray;
+            }
+        }
+    }
+
+}
+
+.open {
+    height: 200px;
+    transition: 0.3s;
+}
+
+.openButton {
+    transition: 0.3s;
+    text-align: right;
+    height: 20px;
+    cursor: pointer;
+    span {
+        font-size: 12px;
+        margin: 5px;
+        font-weight: normal;
+        color: darkgray;
+    }
 }
