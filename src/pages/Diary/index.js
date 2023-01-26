@@ -4,13 +4,14 @@ import axios from 'axios'
 import { useLocation } from 'react-router-dom'
 import './Diary.scss'
 import { Comments } from '../../components'
+import { useDispatch } from 'react-redux'
 
 
 
 const Diary = () => {
 
     const [items, setItems] = useState({})
-
+    const dispatch = useDispatch()
     let { search } = useLocation()
     const params = new URLSearchParams(search)
     const diaryId = params.get('id')
@@ -25,6 +26,10 @@ const Diary = () => {
                 console.log(response.data)
             })
     }, [])
+
+    // useEffect(() => {
+    //     dispatch(currentNote(diaryId))
+    // }, [])
 
 
 

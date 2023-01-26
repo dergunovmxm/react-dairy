@@ -10,22 +10,12 @@ import { Routes, Route } from 'react-router-dom'
 
 function App() {
 
-  const [searchValue, setSearchValue] = useState('');
-  const onChangeSearchInput = (event) => {
-
-    setSearchValue(event.target.value);
-  };
 
   return (
     <div className="container" >
       <Header />
       <Routes>
-        <Route exact path='/' element={<DiaryList
-          searchValue={searchValue}
-          setSearchValue={setSearchValue}
-          onChangeSearchInput={onChangeSearchInput}
-
-        />} />
+        <Route exact path='/' element={<DiaryList/>} />
         <Route exact path='/notes/*' element={<Diary />} />
         <Route exact path='/create_note' element={<CreateNote />} />
       </Routes>

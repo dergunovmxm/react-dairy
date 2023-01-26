@@ -3,26 +3,37 @@ import { useState, useRef } from 'react'
 import './CreateNote.scss'
 
 const CreateNote = () => {
-
-
     const [noteTitle, setNoteTitle] = useState('')
     const [noteDescription, setNoteDescription] = useState('')
-    const [noteImage, setNoteImage] = useState(null)
-    const [loadData, setLoadData] = useState({})
+    const [noteImage, setNoteImage] = useState('')
 
-    const creatingNote = async () => {
+    async function convertBase64(file) {
+
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onload = () => setNoteImage(reader.result);
+            reader.onerror = (error) => reject(error);
+            console.log(noteImage)
+
+        });
+    }
+
+    const creatingNote = () => {
+        
         const data = {
             title: noteTitle,
             description: noteDescription,
             image: noteImage,
             date: new Date().toLocaleString().slice(0, -3)
         }
-        console.log(data)
 
         axios
             .post(`${process.env.REACT_APP_API_URL}/notes`, data)
-            .then(window.location.assign(`http://localhost:3000`))
+        .then(window.location.assign(`http://localhost:3000`))
     }
+
 
     return (
         <form className='createNote'>
@@ -51,15 +62,12 @@ const CreateNote = () => {
 
                     <input type='file'
                         onChange={event => {
-                            
-                            setNoteImage(event.target.files[0])
-
+                            convertBase64(event.target.files[0])
                         }} />
 
-
-
                     <div className='createNote__container__image__prewiew'>
-                        <img src={noteImage ? URL.createObjectURL(noteImage) : ""} />
+                        {/* <img src={noteImage ? URL.createObjectURL(noteImage) : ""} /> */}
+                        <img src={noteImage} />
                     </div>
                 </div>
 

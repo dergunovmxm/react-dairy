@@ -2,13 +2,11 @@ import './Tools.scss'
 import { FiChevronDown, FiArrowDown, FiArrowUp, FiCompass } from 'react-icons/fi'
 import { useState } from 'react'
 
-const Tools = ({ onChangeSearchInput, searchValue, setSearchValue, handleSort }) => {
+const Filters = ({ onChangeSearchInput, searchValue, setSearchValue, handleSort, sort, order }) => {
 
-    const [isSortOpen, setIsSortOpen] = useState(false)
-    const [sortValue, setSortValue] = useState('')
-    const sortOptions = ["По дате", "По названию"]
+    const sortOptions = [{ "key":"date", "value":"По дате" }, { "key":"title", "value":"По названию" }]
     return (
-        <div className={`tools ${isSortOpen ? "active" : "inactive"}`}>
+        <div className='tools'>
             <div className='tools__adding'
                 onClick={() => {
                     window.location.assign(
@@ -20,21 +18,15 @@ const Tools = ({ onChangeSearchInput, searchValue, setSearchValue, handleSort })
 
             <div className='tools__filtering' >
 
-                {/* <div className='tools__filtering__menu' onClick={() => setIsSortOpen(!isSortOpen)}>
-                    <span>Сортировка</span>
-                    <FiChevronDown />
-                </div> */}
-
                 <select
-                    //  className={`tools__filtering__items ${isSortOpen ? "active" : "inactive"}`} 
                     onChange={handleSort}
-                    value={sortValue}
+                    value={sort}
                 >
 
                     <option>Сортировка</option>
                     {sortOptions.map((item, index) => (
-                        <option value={item} key={index}>
-                            {item}
+                        <option value={item.key} key={index}>
+                            {item.value}
                         </option>
                     ))}
                 </select>
@@ -65,4 +57,4 @@ const Tools = ({ onChangeSearchInput, searchValue, setSearchValue, handleSort })
     )
 }
 
-export default Tools
+export default Filters

@@ -147,16 +147,15 @@
     &__title {
         display: flex;
         justify-content: center;
-        margin: 5px 0;
-        height: 35px;
+        margin: 10px 0;
+        height: 45px;
         padding: 0 5px;
-
+        text-align: center;
         span {
             font-family: 'Inter';
             font-size: 18px;
             font-weight: bold;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            white-space: normal;
         }
 
         @media screen and (min-width: 1921px) {
@@ -189,8 +188,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
 
-       
-
+    
         span {
             font-family: 'Inter';
             font-size: 14px;

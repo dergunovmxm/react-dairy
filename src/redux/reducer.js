@@ -20,6 +20,11 @@ const notesReducer = (state = initialState, action) => {
                 ...state,
                 comments: action.payload
             }
+        case types.GET_CURRENT_NOTE:
+            return {
+                ...state,
+                note: action.payload
+            }
         default:
             return state
     }

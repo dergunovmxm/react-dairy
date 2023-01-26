@@ -6,9 +6,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { loadNotes } from "../../redux/actions"
 import { useEffect } from "react"
 import axios from "axios"
-import Tools from "../Tools"
+import  Filters from "../Tools"
 
-const DiaryList = ({ searchValue, setSearchValue, onChangeSearchInput, setSortValue, sortValue}) => {
+const DiaryList = () => {
 
     const [dairyPage, setDairyPage] = useState(1)
     const [dairyPerPage] = useState(70)
@@ -23,12 +23,22 @@ const DiaryList = ({ searchValue, setSearchValue, onChangeSearchInput, setSortVa
     const notes = useSelector((state) => state.notes)
     const [currentDairy, setCurrentDiary] = useState(notes.slice(firstDairyPage, lastDairyIndex))
 
+
+    const [searchValue, setSearchValue] = useState('');
+    const onChangeSearchInput = (event) => {
+  
+      setSearchValue(event.target.value);
+    };
+
+    const [sort, setSort] = useState('')
+    const [order, setOrder] = useState('asc')
+  
     // отображение карточек
     useEffect(() => {
-        dispatch(loadNotes(searchValue))
-    }, [searchValue])
+        dispatch(loadNotes(searchValue, sort, order))
+    }, [searchValue, sort, order])
 
-    
+
     // удаение
     useEffect(() => {
         setCurrentDiary(notes.slice(firstDairyPage, lastDairyIndex))
@@ -47,17 +57,17 @@ const DiaryList = ({ searchValue, setSearchValue, onChangeSearchInput, setSortVa
             })
     }
 
-    const handleSort = async (event) => {
-        let value = event.target.value
-        setSortValue(value)
-        return await axios
-        .get(`${process.env.REACT_APP_API_URL}/notes/?_sort=${value}&_order=asc`)
-        
+    const handleSort = (event) => {
+        const { value } = event.target
+        setSort(value)
+        setOrder('desc')
     }
+
+
 
     return (
         <>
-            <Tools
+            <Filters
                 onChangeSearchInput={onChangeSearchInput}
                 searchValue={searchValue}
                 setSearchValue={setSearchValue}
