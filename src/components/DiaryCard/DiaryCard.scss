@@ -1,25 +1,10 @@
 .dairy__card {
 
-    @media screen and (min-width: 1921px) {
-        width: 480px;
-        height: 520px;
-
-    }
-
-    @media screen and (min-width: 1281px) {
-        width: 360px;
-        height: 420px;
-    }
-
-    @media screen and (min-width: 1440px) {
-        width: 280px;
-        height: 330px;
-    }
-
     position: relative;
-    width: 250px;
-    min-width: 250px;
-    height: 280px;
+    width: 280px;
+    min-width: 280px;
+    height: 330px;
+    min-height: 330px;
     background: white;
     border-radius: 14px;
     margin: 10px 20px;
@@ -35,41 +20,12 @@
 
     &__toolbar {
 
-        @media screen and (min-width: 1921px) {
-            width: 480px;
-            height: 520px;
-            margin: -30px 10px;
-
-            svg {
-                font-size: 28px;
-            }
-        }
-
-        @media screen and (min-width: 1281px) {
-            width: 360px;
-            height: 420px;
-            margin: -25px 10px;
-
-            svg {
-                font-size: 22px;
-            }
-        }
-
-        @media screen and (min-width: 1440px) {
-            width: 280px;
-            height: 360px;
-           margin: -25px 10px;
-
-            svg {
-                font-size: 18px;
-            }
-        }
 
         position: absolute;
         top: 0;
         opacity: 0;
-        height: 280px;
-        width: 250px;
+        height: 330px;
+        width: 280px;
         transition: opacity 0.1s ease-in;
 
         &__item {
@@ -107,41 +63,18 @@
 
         padding: 5px 5px 0 5px;
         height: 50%;
+        display: flex;
+        justify-content: center;
 
         img {
             object-fit: cover;
-            height: 150px;
-
-            width: 240px;
-            min-width: 240px;
+            height: 170px;
+            width: 270px;
+            min-width: 260px;
             border-radius: 14px;
         }
 
-        @media screen and (min-width: 1921px) {
-            img {
-                width: 320px;
-                height: 280px;
-            }
-
-        }
-
-        @media screen and (min-width: 1281px) {
-            img {
-                width: 350px;
-                height: 220px;
-            }
-
-        }
-
-        @media screen and (min-width: 1440px) {
-            img {
-                width: 270px;
-                height: 170px;
-            }
-
-        }
- 
-
+    
     }
 
     &__title {
@@ -149,8 +82,12 @@
         justify-content: center;
         margin: 10px 0;
         height: 45px;
+        min-height: 45px;
         padding: 0 5px;
         text-align: center;
+        white-space: normal;
+        overflow: hidden;
+        text-overflow: ellipsis;
         span {
             font-family: 'Inter';
             font-size: 18px;
@@ -158,26 +95,6 @@
             white-space: normal;
         }
 
-        @media screen and (min-width: 1921px) {
-            span {
-                font-size: 26px;
-            }
-
-        }
-
-        @media screen and (min-width: 1281px) {
-            span {
-                font-size: 22px;
-            }
-
-        }
-
-        @media screen and (min-width: 1440px) {
-            span {
-                font-size: 20px;
-            }
-
-        }
     }
 
     &__description {

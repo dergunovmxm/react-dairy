@@ -58,7 +58,7 @@ const Diary = () => {
 
             <div className='diary__container__commentsBox'>
                 <h2>Комментарии</h2>
-                <Comments/>
+                <Comments id={diaryId}/>
             </div>
         </div>
     )

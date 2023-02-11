@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { loadNotes } from "../../redux/actions"
 import { useEffect } from "react"
 import axios from "axios"
-import  Filters from "../Tools"
+import  Filters from "../Filters"
 
 const DiaryList = () => {
 

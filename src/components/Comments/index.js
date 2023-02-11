@@ -4,14 +4,14 @@ import { loadComments } from '../../redux/actions'
 import CommentsItem from '../CommentsItem'
 import './Comments.scss'
 
-const Comments = () => {
+const Comments = ({id}) => {
 
     let dispatch = useDispatch()
     const comments = useSelector((state) => state.comments)
 
     useEffect(() => {
-        dispatch(loadComments())
-    }, [])
+        dispatch(loadComments(id))
+    }, [id])
     return (
         <div className='comments'>
             {

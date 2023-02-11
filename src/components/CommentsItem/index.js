@@ -2,7 +2,8 @@ import './CommentItem.scss'
 import { useState } from 'react'
 import { FiUser } from 'react-icons/fi'
 
-const CommentsItem = ({ text, firstname, lastname, role }) => {
+const CommentsItem = ({ text, firstname, lastname }) => {
+    
     let user = `${firstname} ${lastname}`
     const [openComment, setOpenComment] = useState(false)
     return (

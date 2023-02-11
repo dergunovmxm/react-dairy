@@ -27,10 +27,10 @@ export const loadNotes = (searchValue, sort, order) => {
     }
 }
 
-export const loadComments = () => {
+export const loadComments = (id) => {
     return function (dispatch) {
         axios
-        .get(`${process.env.REACT_APP_API_URL}/comments`)
+        .get(`${process.env.REACT_APP_API_URL}/comments?noteId=${id}`)
         .then((response) => {
             dispatch(getComments(response.data))
             console.log(response.data)

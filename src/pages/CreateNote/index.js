@@ -1,27 +1,38 @@
 import axios from 'axios'
-import { useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import './CreateNote.scss'
+import 'react-image-crop/dist/ReactCrop.css'
+import { ImageCropDialog } from '../../components'
 
 const CreateNote = () => {
+
     const [noteTitle, setNoteTitle] = useState('')
     const [noteDescription, setNoteDescription] = useState('')
     const [noteImage, setNoteImage] = useState('')
 
-    async function convertBase64(file) {
+    const [src, selectFile] = useState(null)
 
+    const [openCrop, setOpenCrop] = useState(false)
+    const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
+
+    const handleFileChange = (event) => {
+        selectFile(convertBase64(event.target.files[0]))
+    }
+
+    function convertBase64(file) {
+        
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = () => resolve(reader.result);
             reader.onload = () => setNoteImage(reader.result);
             reader.onerror = (error) => reject(error);
-            console.log(noteImage)
-
+            
         });
     }
 
     const creatingNote = () => {
-        
+
         const data = {
             title: noteTitle,
             description: noteDescription,
@@ -31,9 +42,24 @@ const CreateNote = () => {
 
         axios
             .post(`${process.env.REACT_APP_API_URL}/notes`, data)
-        .then(window.location.assign(`http://localhost:3000`))
+            .then(window.location.assign(`http://localhost:3000`))
     }
 
+    const onCancel = () => {
+        setOpenCrop(false)
+    }
+
+    const setCroppedImageFor = (crop, zoom, aspect, croppedImageUrl) => {
+        const newImage = { crop, zoom, aspect, croppedImageUrl }
+        croppedImageUrl.then((base64) => {
+            setNoteImage(base64) 
+        })
+         
+    }
+
+    useEffect(() => {
+        console.log(noteImage)
+    }, [noteImage])
 
     return (
         <form className='createNote'>
@@ -61,14 +87,26 @@ const CreateNote = () => {
                 <div className='createNote__container__image'>
 
                     <input type='file'
-                        onChange={event => {
-                            convertBase64(event.target.files[0])
-                        }} />
+                        // onChange={event => {
+                        //     convertBase64(event.target.files[0])
+                        // }}
+
+                        onChange={handleFileChange}
+                    />
 
                     <div className='createNote__container__image__prewiew'>
-                        {/* <img src={noteImage ? URL.createObjectURL(noteImage) : ""} /> */}
-                        <img src={noteImage} />
+                        {openCrop ? <ImageCropDialog
+                            imageUrl={noteImage}
+                            onCancel={onCancel}
+                            setCroppedImageFor={setCroppedImageFor}
+                            setOpenCrop={setOpenCrop}
+                        /> : null}
+                        {
+                            <img className='createNote__container__image__prewiew__img' src={noteImage} onClick={() => setOpenCrop(!openCrop)} />
+                        }
+
                     </div>
+
                 </div>
 
                 <div className='createNote__container__button'
