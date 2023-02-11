@@ -102,7 +102,9 @@ const CreateNote = () => {
                             setOpenCrop={setOpenCrop}
                         /> : null}
                         {
-                            <img className='createNote__container__image__prewiew__img' src={noteImage} onClick={() => setOpenCrop(!openCrop)} />
+                            <img className='createNote__container__image__prewiew__img' 
+                            src={noteImage} 
+                            onClick={() => setOpenCrop(!openCrop)} />
                         }
 
                     </div>
