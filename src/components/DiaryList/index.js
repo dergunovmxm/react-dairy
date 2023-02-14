@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { loadNotes } from "../../redux/actions"
 import { useEffect } from "react"
 import axios from "axios"
-import  Filters from "../Filters"
+import Filters from "../Filters"
+import EditModal from "../EditModal"
 
 const DiaryList = () => {
 
@@ -26,13 +27,15 @@ const DiaryList = () => {
 
     const [searchValue, setSearchValue] = useState('');
     const onChangeSearchInput = (event) => {
-  
-      setSearchValue(event.target.value);
+
+        setSearchValue(event.target.value);
     };
 
     const [sort, setSort] = useState('')
     const [order, setOrder] = useState('asc')
-  
+
+    const [editOpen, setEdiOpen] = useState(false)
+
     // отображение карточек
     useEffect(() => {
         dispatch(loadNotes(searchValue, sort, order))
@@ -67,6 +70,9 @@ const DiaryList = () => {
 
     return (
         <>
+
+
+
             <Filters
                 onChangeSearchInput={onChangeSearchInput}
                 searchValue={searchValue}
@@ -75,13 +81,14 @@ const DiaryList = () => {
 
             <div className="dairy__items">
 
-                {currentDairy.length ? currentDairy.map((item) => <DairyCard {...item} removeNote={removeNote} />)
+                {currentDairy.length ? currentDairy.map((item) => <DairyCard {...item} removeNote={removeNote} setEditOpen={setEdiOpen} editOpen={editOpen} />)
                     :
                     <div className="emptySearch">
                         <img src="images/empty.png" alt='emptySearch' />
                         <span>Ничего не найдено</span>
                     </div>}
             </div>
+            <EditModal editOpen={editOpen} setEditOpen={setEdiOpen} />
 
         </>
 

@@ -1,7 +1,7 @@
 .diary__container {
     display: flex;
     flex-direction: row;
-    height: 100vh;
+    height: 89vh;
     margin: 20px;
 
     &__content {
@@ -57,7 +57,46 @@
             font-family: 'Inter';
             font-size: 26px;
             font-weight: bold;
-            border-bottom: 1px solid #eaeaea ; 
+            border-bottom: 1px solid #eaeaea;
         }
+    }
+}
+
+.comments__box {
+    height: 70%;
+    overflow-y: scroll;
+    margin-bottom: 25px;
+}
+
+.comments__input {
+    height: 5%;
+    border: 2px solid #f3f3f3;
+    margin: 5px 20px;
+    border-radius: 10px;
+    padding: 10px;
+
+    input {
+        width: 100%;
+        border: 0;
+        font-family: 'Inter';
+        font-size: 16px;
+
+        &:focus {
+            outline: none !important;
+        }
+    }
+}
+
+.comments__button {
+    margin: 20px;
+    text-align: right;
+    
+    span {
+        border-radius: 8px;
+        background-color: #e7f6ff;
+        padding: 5px 25px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
     }
 }

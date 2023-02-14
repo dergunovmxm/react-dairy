@@ -8,10 +8,12 @@ const Comments = ({id}) => {
 
     let dispatch = useDispatch()
     const comments = useSelector((state) => state.comments)
+    
 
     useEffect(() => {
         dispatch(loadComments(id))
     }, [id])
+    
     return (
         <div className='comments'>
             {

@@ -67,6 +67,7 @@ const CreateNote = () => {
                 <div className='createNote__container__header'>
                     <span>Создание записи</span>
                 </div>
+                
                 <div className='createNote__container__title'>
                     <input
                         type="text"

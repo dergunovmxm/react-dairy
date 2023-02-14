@@ -58,7 +58,22 @@ const Diary = () => {
 
             <div className='diary__container__commentsBox'>
                 <h2>Комментарии</h2>
-                <Comments id={diaryId}/>
+                <div className='comments__box'>
+                    <Comments id={diaryId} />
+                </div>
+
+                <div className='comments__input'>
+                    <input type="text"
+                        onChange={(event) => {
+
+                        }} />
+
+                </div>
+                <div className='comments__button'>
+                    <span>
+                        Отправить
+                    </span>
+                </div>
             </div>
         </div>
     )

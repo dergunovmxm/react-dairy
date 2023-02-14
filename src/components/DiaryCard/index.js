@@ -4,7 +4,7 @@ import format from 'date-fns/format'
 import axios from 'axios'
 
 
-const DiaryCard = ({ image, title, description, id, removeNote, date }) => {
+const DiaryCard = ({ image, title, description, id, removeNote, date, setEditOpen, editOpen }) => {
     return (
 
         <div className='dairy__card' 
@@ -32,7 +32,7 @@ const DiaryCard = ({ image, title, description, id, removeNote, date }) => {
 
             <div className='dairy__card__toolbar'>
                 <div className='dairy__card__toolbar__item'>
-                    <div className='edit' onClick={(event) => (alert("Редактирвоать"), event.stopPropagation())}>
+                    <div className='edit' onClick={(event) => (setEditOpen(true), console.log(editOpen), event.stopPropagation())}>
                         <FiEdit />
                     </div>
                     <div className='delete' onClick={(event) => (removeNote(id), event.stopPropagation())} >
