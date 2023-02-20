@@ -12,13 +12,13 @@ const Comments = ({id}) => {
 
     useEffect(() => {
         dispatch(loadComments(id))
-    }, [id])
-    
+    }, [id, comments.length])
+
     return (
         <div className='comments'>
             {
                 comments.map((item) => (
-                    <CommentsItem text={item.text} firstname={item.firstname} lastname={item.lastname} role={item.role} />
+                    <CommentsItem text={item.text} firstname={item.firstname} lastname={item.lastname} />
                 ))
             }
         </div>

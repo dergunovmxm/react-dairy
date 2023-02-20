@@ -32,7 +32,7 @@ const CreateNote = () => {
     }
 
     const creatingNote = () => {
-
+        console.log('lol');
         const data = {
             title: noteTitle,
             description: noteDescription,

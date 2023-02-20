@@ -7,45 +7,45 @@ import { loadNotes } from "../../redux/actions"
 import { useEffect } from "react"
 import axios from "axios"
 import Filters from "../Filters"
-import EditModal from "../EditModal"
+
 
 const DiaryList = () => {
 
-    const [dairyPage, setDairyPage] = useState(1)
-    const [dairyPerPage] = useState(70)
-    const [searchNotes, setSearchNotes] = useState([])
-
-    const lastDairyIndex = dairyPage * dairyPerPage
-    const firstDairyPage = lastDairyIndex - dairyPerPage
-
-    const paginate = pageNumber => setDairyPage(pageNumber)
-
     let dispatch = useDispatch()
     const notes = useSelector((state) => state.notes)
-    const [currentDairy, setCurrentDiary] = useState(notes.slice(firstDairyPage, lastDairyIndex))
+    const [currentDairy, setCurrentDiary] = useState(notes)
 
 
     const [searchValue, setSearchValue] = useState('');
     const onChangeSearchInput = (event) => {
-
         setSearchValue(event.target.value);
     };
+
+    
+    const [dairyPage, setDairyPage] = useState(1)
+    const [limit, setLimit] = useState(5)
+    const [totalNotes, setTotalNotes] = useState(0)
+
 
     const [sort, setSort] = useState('')
     const [order, setOrder] = useState('asc')
 
-    const [editOpen, setEdiOpen] = useState(false)
 
     // отображение карточек
     useEffect(() => {
-        dispatch(loadNotes(searchValue, sort, order))
-    }, [searchValue, sort, order])
+        console.log(dairyPage)
+        dispatch(loadNotes(searchValue, sort, order, dairyPage, limit))
+    }, [searchValue, sort, order, dairyPage, limit])
 
-
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API_URL}/notes?title_like=${searchValue}`)
+        .then((response) => setTotalNotes(response.data.length))
+    }, [searchValue])
     // удаение
     useEffect(() => {
-        setCurrentDiary(notes.slice(firstDairyPage, lastDairyIndex))
+        setCurrentDiary(notes)
     }, [notes])
+
     const removeNote = (id) => {
         axios
             .delete(`${process.env.REACT_APP_API_URL}/notes/${id}`)
@@ -63,16 +63,11 @@ const DiaryList = () => {
     const handleSort = (event) => {
         const { value } = event.target
         setSort(value)
-        setOrder('desc')
+        setOrder(order)
     }
-
-
 
     return (
         <>
-
-
-
             <Filters
                 onChangeSearchInput={onChangeSearchInput}
                 searchValue={searchValue}
@@ -81,15 +76,15 @@ const DiaryList = () => {
 
             <div className="dairy__items">
 
-                {currentDairy.length ? currentDairy.map((item) => <DairyCard {...item} removeNote={removeNote} setEditOpen={setEdiOpen} editOpen={editOpen} />)
+                {currentDairy.length ? notes.map((item, i) => <DairyCard {...item} key={i} removeNote={removeNote}/>)
                     :
                     <div className="emptySearch">
                         <img src="images/empty.png" alt='emptySearch' />
                         <span>Ничего не найдено</span>
                     </div>}
             </div>
-            <EditModal editOpen={editOpen} setEditOpen={setEdiOpen} />
 
+            <Pagination setDairyPage={setDairyPage} totalNotes={totalNotes} limit={limit}/>
         </>
 
     )

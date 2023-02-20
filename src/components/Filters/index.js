@@ -4,7 +4,10 @@ import { useState } from 'react'
 
 const Filters = ({ onChangeSearchInput, searchValue, setSearchValue, handleSort, sort, order }) => {
 
-    const sortOptions = [{ "key":"date", "value":"По дате" }, { "key":"title", "value":"По названию" }]
+    const sortOptions = [{ "key": "date", "value": "По дате", "oreder": "desc" },
+    { "key": "title", "value": "По названию по возрастанию", "order": "desc" },
+    { "key": "title", "value": "По названию по убыванию", "order": "asc" },]
+
     return (
         <div className='tools'>
             <div className='tools__adding'
@@ -25,7 +28,7 @@ const Filters = ({ onChangeSearchInput, searchValue, setSearchValue, handleSort,
 
                     <option>Сортировка</option>
                     {sortOptions.map((item, index) => (
-                        <option value={item.key} key={index}>
+                        <option value={item.key} key={index} order={order}>
                             {item.value}
                         </option>
                     ))}

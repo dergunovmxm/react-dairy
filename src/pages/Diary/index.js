@@ -4,14 +4,18 @@ import axios from 'axios'
 import { useLocation } from 'react-router-dom'
 import './Diary.scss'
 import { Comments } from '../../components'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import * as types from "../../redux/actionType"
 
 
 
 const Diary = () => {
 
     const [items, setItems] = useState({})
+    const [comment, setComment] = useState('')
+
     const dispatch = useDispatch()
+    const comments = useSelector((state) => state.comments)
     let { search } = useLocation()
     const params = new URLSearchParams(search)
     const diaryId = params.get('id')
@@ -23,15 +27,31 @@ const Diary = () => {
             .then((response) => {
 
                 setItems(response.data)
-                console.log(response.data)
             })
     }, [])
 
-    // useEffect(() => {
-    //     dispatch(currentNote(diaryId))
-    // }, [])
+    const addComment = () => {
 
+        const data = {
+            text: comment,
+            firstname: "Maxim",
+            lastname: "Dergunov",
+            noteId: diaryId
+        }
 
+        if (comment !== '') {
+            console.log(data)
+            axios.post(`${process.env.REACT_APP_API_URL}/comments`, data)
+                .then(({ data }) => {
+                    comments.push(data)
+                     dispatch({
+                        type: types.GET_COMMENTS,
+                        payload: [...comments]
+                    })
+                })
+                setComment('')
+        }
+    }
 
     return (
         <div className='diary__container'>
@@ -65,11 +85,19 @@ const Diary = () => {
                 <div className='comments__input'>
                     <input type="text"
                         onChange={(event) => {
-
-                        }} />
+                            setComment(event.target.value)
+                        }}
+                        onKeyDown={event => {
+                            if (event.keyCode === 13) {
+                                addComment()
+                            }
+                        }}
+                        value={comment}
+                    />
 
                 </div>
-                <div className='comments__button'>
+                <div className='comments__button'
+                    onClick={addComment}>
                     <span>
                         Отправить
                     </span>
