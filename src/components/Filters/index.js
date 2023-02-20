@@ -2,11 +2,10 @@ import './Filters.scss'
 import { FiChevronDown, FiArrowDown, FiArrowUp, FiCompass } from 'react-icons/fi'
 import { useState } from 'react'
 
-const Filters = ({ onChangeSearchInput, searchValue, setSearchValue, handleSort, sort, order }) => {
+const Filters = ({ onChangeSearchInput, searchValue, setSearchValue, handleSort, sort}) => {
 
-    const sortOptions = [{ "key": "date", "value": "По дате", "oreder": "desc" },
-    { "key": "title", "value": "По названию по возрастанию", "order": "desc" },
-    { "key": "title", "value": "По названию по убыванию", "order": "asc" },]
+    const sortOptions = [{ "key": "date", "value": "По дате", "order": "asc" },
+    { "key": "title", "value": "По названию", "order": "desc" },]
 
     return (
         <div className='tools'>
@@ -28,7 +27,7 @@ const Filters = ({ onChangeSearchInput, searchValue, setSearchValue, handleSort,
 
                     <option>Сортировка</option>
                     {sortOptions.map((item, index) => (
-                        <option value={item.key} key={index} order={order}>
+                        <option value={item.key} key={index} order={item.order}>
                             {item.value}
                         </option>
                     ))}

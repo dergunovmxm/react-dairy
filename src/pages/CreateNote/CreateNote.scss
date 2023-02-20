@@ -69,6 +69,7 @@
 
         &__image {
             height: 300px;
+
             &__prewiew {
                 &__img {
                     text-align: center;
@@ -76,12 +77,36 @@
                     height: 200px;
                     width: auto;
                 }
-                
+
             }
         }
 
         &__button {
+
             cursor: pointer;
+            padding: 10px 20px;
+            border-radius: 8px;
+
+            &:hover {
+                background: #e7f6ff
+            }
+
+            &:active {
+                transform: translateY(2px);
+            }
         }
+    }
+}
+
+.error {
+    width: 50%;
+    padding: 3px;
+
+    span {
+        color: red;
+        font-family: 'Inter';
+        font-weight: bold;
+        font-size: 14px;
+        text-align: right;
     }
 }

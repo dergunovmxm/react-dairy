@@ -21,14 +21,14 @@ const DiaryList = () => {
         setSearchValue(event.target.value);
     };
 
-    
+
     const [dairyPage, setDairyPage] = useState(1)
     const [limit, setLimit] = useState(5)
     const [totalNotes, setTotalNotes] = useState(0)
 
 
     const [sort, setSort] = useState('')
-    const [order, setOrder] = useState('asc')
+    const [order, setOrder] = useState('')
 
 
     // отображение карточек
@@ -39,7 +39,7 @@ const DiaryList = () => {
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_URL}/notes?title_like=${searchValue}`)
-        .then((response) => setTotalNotes(response.data.length))
+            .then((response) => setTotalNotes(response.data.length))
     }, [searchValue])
     // удаение
     useEffect(() => {
@@ -76,15 +76,15 @@ const DiaryList = () => {
 
             <div className="dairy__items">
 
-                {currentDairy.length ? notes.map((item, i) => <DairyCard {...item} key={i} removeNote={removeNote}/>)
+                {currentDairy.length ? notes.map((item, i) => <DairyCard {...item} key={i} removeNote={removeNote} />)
                     :
                     <div className="emptySearch">
                         <img src="images/empty.png" alt='emptySearch' />
                         <span>Ничего не найдено</span>
                     </div>}
             </div>
-
-            <Pagination setDairyPage={setDairyPage} totalNotes={totalNotes} limit={limit}/>
+            {currentDairy.length ?
+                <Pagination setDairyPage={setDairyPage} totalNotes={totalNotes} limit={limit} /> : <></>}
         </>
 
     )
