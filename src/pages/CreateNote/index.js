@@ -14,11 +14,10 @@ const CreateNote = () => {
     const [file, setFile] = useState(null)
 
     const [openCrop, setOpenCrop] = useState(false)
-    const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
 
-    const handleFileChange = (event) => {
-        selectFile(convertBase64(event.target.files[0]))
-    }
+    // const handleFileChange = (event) => {
+    //     selectFile(convertBase64(event.target.files[0]))
+    // }
 
     function convertBase64(file) {
 
@@ -42,7 +41,7 @@ const CreateNote = () => {
         }
 
         axios
-            .post(`${process.env.REACT_APP_API_URL}/notes`, data)
+            .post(`/notes`, data)
             .then(window.location.assign(`http://localhost:3000`))
     }
 
@@ -51,7 +50,7 @@ const CreateNote = () => {
     }
 
     const setCroppedImageFor = (crop, zoom, aspect, croppedImageUrl) => {
-        const newImage = { crop, zoom, aspect, croppedImageUrl }
+        // const newImage = { crop, zoom, aspect, croppedImageUrl }
         croppedImageUrl.then((base64) => {
             setNoteImage(base64)
         })
@@ -138,6 +137,7 @@ const CreateNote = () => {
                             setOpenCrop={setOpenCrop}
                         /> : null}
                         { file ?
+                            // eslint-disable-next-line jsx-a11y/alt-text
                             <img className='createNote__container__image__prewiew__img'
                                 src={noteImage}
                                 onClick={() => setOpenCrop(!openCrop)} /> : <></>

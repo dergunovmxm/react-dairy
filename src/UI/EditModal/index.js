@@ -4,7 +4,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import  ImageCropDialog  from '../ImageCropDialog'
 
-const EditModal = ({ editOpen, setEditOpen, id, date }) => {
+const EditModal = ({ editOpen, setEditOpen, id}) => {
 
     const [noteTitle, setNoteTitle] = useState('')
     const [noteDescription, setNoteDescription] = useState('')
@@ -35,8 +35,7 @@ const EditModal = ({ editOpen, setEditOpen, id, date }) => {
         setOpenCrop(false)
     }
 
-    const setCroppedImageFor = (crop, zoom, aspect, croppedImageUrl) => {
-        const newImage = { crop, zoom, aspect, croppedImageUrl }
+    const setCroppedImageFor = ( croppedImageUrl) => {
         croppedImageUrl.then((base64) => {
             setNoteImage(base64)
         })
@@ -98,6 +97,8 @@ const EditModal = ({ editOpen, setEditOpen, id, date }) => {
                             setOpenCrop={setOpenCrop}
                         /> : null}
                         {
+                            
+                            // eslint-disable-next-line jsx-a11y/alt-text
                             <img className='createNote__container__image__prewiew__img'
                                 src={noteImage}
                                 onClick={() => setOpenCrop(!openCrop)} />

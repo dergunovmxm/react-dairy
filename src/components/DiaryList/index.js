@@ -5,7 +5,7 @@ import Pagination from "../../UI/Pagination"
 import { useDispatch, useSelector } from 'react-redux'
 import { loadNotes } from "../../redux/actions"
 import { useEffect } from "react"
-import axios from "axios"
+import axios from '../../axios'
 import Filters from "../../UI/Filters"
 import empty from '../../assets/empty.png'
 
@@ -39,9 +39,10 @@ const DiaryList = () => {
     }, [searchValue, sort, order, dairyPage, limit])
 
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_API_URL}/notes?title_like=${searchValue}`)
+        axios.get(`/notes?title_like=${searchValue}`)
             .then((response) => setTotalNotes(response.data.length))
     }, [searchValue])
+
     // удаение
     useEffect(() => {
         setCurrentDiary(notes)
@@ -49,7 +50,7 @@ const DiaryList = () => {
 
     const removeNote = (id) => {
         axios
-            .delete(`${process.env.REACT_APP_API_URL}/notes/${id}`)
+            .delete(`/notes/${id}`)
             .then(() => {
                 dispatch({
                     type: types.GET_NOTES,

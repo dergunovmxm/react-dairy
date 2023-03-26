@@ -41,6 +41,7 @@ const DiaryCard = ({ image, title, description, id, removeNote, date }) => {
                             <FiEdit />
 
                         </div>
+                    
                         <div className='delete' onClick={(event) => (removeNote(id), event.stopPropagation())} >
                             <FiTrash2 />
                         </div>

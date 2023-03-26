@@ -1,6 +1,6 @@
 import * as types from "./actionType"
-import axios from "axios"
-import { type } from "@testing-library/user-event/dist/type"
+import axios from "../axios"
+// import { type } from "@testing-library/user-event/dist/type"
 
 const getNotes = (notes) => ({
     type: types.GET_NOTES,
@@ -19,7 +19,7 @@ const getCurrentNote = () => ({
 export const loadNotes = (searchValue, sort, order, dairyPage, limit) => {
     return function (dispatch) {
         axios
-            .get(`${process.env.REACT_APP_API_URL}/notes/?title_like=${searchValue}&_sort=${sort}&_order=${order}&_page=${dairyPage}&_limit=${limit}}`)
+            .get(`/notes/?title_like=${searchValue}&_sort=${sort}&_order=${order}&_page=${dairyPage}&_limit=${limit}}`)
             .then((response) => {
                 dispatch(getNotes(response.data))
             })
@@ -30,7 +30,7 @@ export const loadNotes = (searchValue, sort, order, dairyPage, limit) => {
 export const loadComments = (id) => {
     return function (dispatch) {
         axios
-            .get(`${process.env.REACT_APP_API_URL}/comments?noteId=${id}`)
+            .get(`/comments?noteId=${id}`)
             .then((response) => {
                 dispatch(getComments(response.data))
                 console.log(response.data)
@@ -43,7 +43,7 @@ export const loadComments = (id) => {
 export const currentNote = (id) => {
     return function (dispatch) {
         axios
-            .get(`${process.env.REACT_APP_API_URL}/notes/?id=${id}`)
+            .get(`/notes/?id=${id}`)
             .then((response) => {
                 dispatch(getCurrentNote(response.data))
             })

@@ -1,9 +1,6 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { DiaryCard, Pagination, Header } from "./components";
+import {  Header } from "./components";
 import { CreateNote } from "./pages";
 import DiaryList from "./components/DiaryList";
-import { fetchNotes } from "./redux/actions";
 import Diary from './pages/Diary';
 import { Routes, Route } from 'react-router-dom'
 

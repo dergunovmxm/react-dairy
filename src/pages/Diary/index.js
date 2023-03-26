@@ -23,7 +23,7 @@ const Diary = () => {
 
     useEffect(() => {
         axios
-            .get(`${process.env.REACT_APP_API_URL}/notes/${diaryId}`)
+            .get(`/notes/${diaryId}`)
             .then((response) => {
 
                 setItems(response.data)
@@ -41,7 +41,7 @@ const Diary = () => {
 
         if (comment !== '') {
             console.log(data)
-            axios.post(`${process.env.REACT_APP_API_URL}/comments`, data)
+            axios.post(`/comments`, data)
                 .then(({ data }) => {
                     comments.push(data)
                      dispatch({
