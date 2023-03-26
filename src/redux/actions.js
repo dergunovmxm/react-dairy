@@ -23,7 +23,10 @@ export const loadNotes = (searchValue, sort, order, dairyPage, limit) => {
             .then((response) => {
                 dispatch(getNotes(response.data))
             })
-            .catch((error) => console.log(error))
+            .catch((error) => {
+                console.warn(error);
+                alert("Не удалось выполниить запрос!");
+            })
     }
 }
 
@@ -35,7 +38,10 @@ export const loadComments = (id) => {
                 dispatch(getComments(response.data))
                 console.log(response.data)
             })
-            .catch((error) => console.log(error))
+            .catch((error) => {
+                console.warn(error);
+                alert("Не удалось выполниить запрос!");
+            })
     }
 }
 
@@ -47,6 +53,9 @@ export const currentNote = (id) => {
             .then((response) => {
                 dispatch(getCurrentNote(response.data))
             })
-            .catch((error) => console.log(error))
+            .catch((error) => {
+                console.warn(error);
+                alert("Не удалось выполниить запрос!");
+            })
     }
 }

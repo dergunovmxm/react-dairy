@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react'
-import axios from 'axios'
+import axios from '../../axios'
 import { useLocation } from 'react-router-dom'
 import './Diary.scss'
 import { Comments } from '../../components'
@@ -28,6 +28,10 @@ const Diary = () => {
 
                 setItems(response.data)
             })
+            .catch((error) => {
+                console.warn(error);
+                alert("Не удалось выполниить запрос!");
+            })
     }, [])
 
     const addComment = () => {
@@ -48,6 +52,10 @@ const Diary = () => {
                         type: types.GET_COMMENTS,
                         payload: [...comments]
                     })
+                })
+                .catch((error) => {
+                    console.warn(error);
+                    alert("Не удалось выполниить запрос!");
                 })
                 setComment('')
         }

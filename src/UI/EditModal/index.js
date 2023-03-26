@@ -1,7 +1,7 @@
 import "./EditModal.scss"
 import { FiX } from "react-icons/fi"
 import { useState } from 'react'
-import axios from 'axios'
+import axios from '../../axios'
 import  ImageCropDialog  from '../ImageCropDialog'
 
 const EditModal = ({ editOpen, setEditOpen, id}) => {
@@ -49,8 +49,12 @@ const EditModal = ({ editOpen, setEditOpen, id}) => {
             image: noteImage,
             date: new Date().toLocaleString().slice(0, -3)
         }
-        axios.put(`${process.env.REACT_APP_API_URL}/notes/${id}`, data)
+        axios.put(`/notes/${id}`, data)
             .then(window.location.assign(`http://localhost:3000`))
+            .catch((error) => {
+                console.warn(error);
+                alert("Не удалось выполниить запрос!");
+            })
     }
 
     return (

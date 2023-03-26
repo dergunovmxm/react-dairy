@@ -24,7 +24,7 @@ const DiaryList = () => {
 
 
     const [dairyPage, setDairyPage] = useState(1)
-    const [limit, setLimit] = useState(5)
+    const [limit, setLimit] = useState(30)
     const [totalNotes, setTotalNotes] = useState(0)
 
 
@@ -41,6 +41,10 @@ const DiaryList = () => {
     useEffect(() => {
         axios.get(`/notes?title_like=${searchValue}`)
             .then((response) => setTotalNotes(response.data.length))
+            .catch((error) => {
+                console.warn(error);
+                alert("Не удалось выполниить запрос!");
+            })
     }, [searchValue])
 
     // удаение
@@ -58,7 +62,8 @@ const DiaryList = () => {
                 })
             })
             .catch((error) => {
-                console.log(error)
+                console.warn(error);
+                alert("Не удалось выполниить запрос!");
             })
     }
 

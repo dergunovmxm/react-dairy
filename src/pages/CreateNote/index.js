@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from '../../axios'
 import { useState } from 'react'
 import './CreateNote.scss'
 import 'react-image-crop/dist/ReactCrop.css'
@@ -43,6 +43,10 @@ const CreateNote = () => {
         axios
             .post(`/notes`, data)
             .then(window.location.assign(`http://localhost:3000`))
+            .catch((error) => {
+                console.warn(error);
+                alert("Не удалось выполниить запрос!");
+            })
     }
 
     const onCancel = () => {
