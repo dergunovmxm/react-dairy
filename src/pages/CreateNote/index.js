@@ -1,10 +1,8 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import './CreateNote.scss'
 import 'react-image-crop/dist/ReactCrop.css'
-import { ImageCropDialog } from '../../components'
-import { Formik, FieldArray } from 'formik'
-import * as yup from 'yup'
+import  ImageCropDialog  from '../../UI/ImageCropDialog'
 
 const CreateNote = () => {
 

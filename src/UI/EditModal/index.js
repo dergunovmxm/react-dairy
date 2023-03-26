@@ -1,10 +1,8 @@
 import "./EditModal.scss"
 import { FiX } from "react-icons/fi"
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import axios from 'axios'
-import { useDispatch, useSelector } from 'react-redux'
-import { useLocation } from 'react-router-dom'
-import { ImageCropDialog } from '../../components'
+import  ImageCropDialog  from '../ImageCropDialog'
 
 const EditModal = ({ editOpen, setEditOpen, id, date }) => {
 

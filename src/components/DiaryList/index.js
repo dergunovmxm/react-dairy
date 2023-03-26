@@ -1,12 +1,13 @@
 import { useState } from "react"
 import * as types from "../../redux/actionType"
 import DairyCard from "../DiaryCard"
-import Pagination from "../Pagination"
+import Pagination from "../../UI/Pagination"
 import { useDispatch, useSelector } from 'react-redux'
 import { loadNotes } from "../../redux/actions"
 import { useEffect } from "react"
 import axios from "axios"
-import Filters from "../Filters"
+import Filters from "../../UI/Filters"
+import empty from '../../assets/empty.png'
 
 
 const DiaryList = () => {
@@ -79,7 +80,7 @@ const DiaryList = () => {
                 {currentDairy.length ? notes.map((item, i) => <DairyCard {...item} key={i} removeNote={removeNote} />)
                     :
                     <div className="emptySearch">
-                        <img src="images/empty.png" alt='emptySearch' />
+                        <img src={empty} alt='emptySearch' />
                         <span>Ничего не найдено</span>
                     </div>}
             </div>

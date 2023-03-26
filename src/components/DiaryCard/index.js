@@ -1,8 +1,6 @@
 import './DiaryCard.scss'
 import { FiEdit, FiTrash2 } from "react-icons/fi"
-import format from 'date-fns/format'
-import axios from 'axios'
-import EditModal from "../EditModal"
+import EditModal from "../../UI/EditModal"
 import { useState } from "react"
 
 

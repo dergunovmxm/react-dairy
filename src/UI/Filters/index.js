@@ -1,8 +1,8 @@
 import './Filters.scss'
-import { FiChevronDown, FiArrowDown, FiArrowUp, FiCompass } from 'react-icons/fi'
-import { useState } from 'react'
+import close from '../../assets/btn-remove.svg'
+import search from '../../assets/search.svg'
 
-const Filters = ({ onChangeSearchInput, searchValue, setSearchValue, handleSort, sort}) => {
+const Filters = ({ onChangeSearchInput, searchValue, setSearchValue, handleSort, sort }) => {
 
     const sortOptions = [{ "key": "date", "value": "По дате", "order": "asc" },
     { "key": "title", "value": "По названию", "order": "desc" },]
@@ -41,13 +41,13 @@ const Filters = ({ onChangeSearchInput, searchValue, setSearchValue, handleSort,
                 {
                     searchValue &&
                     <img className="clear"
-                        src="/images/btn-remove.svg"
+                        src={close}
                         alt="Close"
                         onClick={() => setSearchValue('')}
                     />
                 }
 
-                <img src="/images/search.svg" alt="Search" />
+                <img src={search} alt="Search" />
                 <input
                     onChange={onChangeSearchInput}
                     placeholder="Поиск..."
