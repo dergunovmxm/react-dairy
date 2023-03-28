@@ -1,15 +1,17 @@
-import { createStore, applyMiddleware, compose } from "redux";
-import thunk from "redux-thunk";
 
-import rootReducer from "./reducer";
+import { configureStore } from "@reduxjs/toolkit";
+import { notesReducer } from "./slices/notes";
+import { commentsReducer } from "./slices/comments";
+import { paginationReducer } from "./slices/pagination";
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const middleware = [thunk];
+const store = configureStore({
+  reducer: {
+    notes: notesReducer,
+    comments: commentsReducer,
+    pagination: paginationReducer
+  }
+})
 
-const store = createStore(
-  rootReducer,
-  composeEnhancers(applyMiddleware(...middleware))
-);
+export default store
 
-export default store;

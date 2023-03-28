@@ -1,22 +1,23 @@
 import './Filters.scss'
 import close from '../../assets/btn-remove.svg'
 import search from '../../assets/search.svg'
+import { Link } from 'react-router-dom'
 
-const Filters = ({ onChangeSearchInput, searchValue, setSearchValue, handleSort, sort }) => {
+const Filters = ({ searchValue, setSearchValue, handleSort, sort }) => {
 
     const sortOptions = [{ "key": "date", "value": "По дате", "order": "asc" },
     { "key": "title", "value": "По названию", "order": "desc" },]
 
     return (
+
         <div className='tools'>
+            <Link to='create_note'>
             <div className='tools__adding'
-                onClick={() => {
-                    window.location.assign(
-                        `http://localhost:3000/create_note`
-                    )
-                }}>
+                >
                 <span>Добавить запись</span>
             </div>
+            </Link>
+            
 
             <div className='tools__filtering' >
 
@@ -32,9 +33,6 @@ const Filters = ({ onChangeSearchInput, searchValue, setSearchValue, handleSort,
                         </option>
                     ))}
                 </select>
-
-
-
             </div>
 
             <div className="tools__search">
@@ -49,7 +47,7 @@ const Filters = ({ onChangeSearchInput, searchValue, setSearchValue, handleSort,
 
                 <img src={search} alt="Search" />
                 <input
-                    onChange={onChangeSearchInput}
+                    onChange={(event)=> setSearchValue(event.target.value)}
                     placeholder="Поиск..."
                     value={searchValue}
                 />

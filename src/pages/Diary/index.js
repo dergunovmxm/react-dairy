@@ -5,9 +5,7 @@ import { useLocation } from 'react-router-dom'
 import './Diary.scss'
 import { Comments } from '../../components'
 import { useDispatch, useSelector } from 'react-redux'
-import * as types from "../../redux/actionType"
-
-
+import { fetchComments } from '../../redux/slices/comments'
 
 const Diary = () => {
 
@@ -15,7 +13,7 @@ const Diary = () => {
     const [comment, setComment] = useState('')
 
     const dispatch = useDispatch()
-    const comments = useSelector((state) => state.comments)
+    const { comments } = useSelector((state) => state.comments)
     let { search } = useLocation()
     const params = new URLSearchParams(search)
     const diaryId = params.get('id')
@@ -44,20 +42,16 @@ const Diary = () => {
         }
 
         if (comment !== '') {
-            console.log(data)
             axios.post(`/comments`, data)
-                .then(({ data }) => {
-                    comments.push(data)
-                     dispatch({
-                        type: types.GET_COMMENTS,
-                        payload: [...comments]
-                    })
+                .then(() => {
+                    console.log(data);
+                    dispatch(fetchComments(diaryId))
                 })
                 .catch((error) => {
                     console.warn(error);
                     alert("Не удалось выполниить запрос!");
                 })
-                setComment('')
+            setComment('')
         }
     }
 
@@ -105,7 +99,8 @@ const Diary = () => {
 
                 </div>
                 <div className='comments__button'
-                    onClick={addComment}>
+                    onClick={addComment}
+                >
                     <span>
                         Отправить
                     </span>

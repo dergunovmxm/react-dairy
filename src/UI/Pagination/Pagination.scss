@@ -1,44 +1,81 @@
-.pagination__container__list{
+@mixin text($w, $s, $l, $c) {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: $w;
+    font-size: $s;
+    line-height: $l;
+    color: $c;
+}
+
+.wrapper {
     display: flex;
+    flex-direction: row;
+    align-items: center;
     justify-content: center;
-    margin: 10px auto;
+    margin-top: 50px;
 
-
-    .page-item{
-
-        cursor: pointer;
-        width: 20px;
-        border: 2px solid #5A9CFF;
-        border-radius: 7px;
+    &__pagination {
         display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 2px;
-        opacity: .9;
-        @media screen and (min-width: 1921px) {
-            width: 50px;
-            height: 50px;
-            border-radius: 10px;
-            margin-top: 50px;
+        flex-direction: row;
+        align-items: center;;
+        @include text(600, 17px, 16px, rgb(90, 156, 255));
+
+        &__pages {
+            display: flex;
+            flex-direction: row;
+
+            &__block {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 30px;
+                width: 30px;
+                background: white;
+                border-radius: 5px;
+                border: solid 2px rgba(90, 156, 255, 0.3);
+                @include text(600, 16px, 16px, rgb(90, 156, 255));
+                cursor: pointer;
+            }
+
+            &__block:hover {
+                background: rgba(90, 156, 255, .5);
+                color:white;
+            }
+
+            &__select_block {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 30px;
+                width: 30px;
+                background: rgba(90, 156, 255, .5);
+                border-radius: 5px;
+                border: solid 2px rgba(90, 156, 255, .5);
+                margin-right: 0, 5px;
+                @include text(600, 16px, 16px, #fffff0);
+                cursor: pointer;
+            }
+
+            &__select_block:hover {
+                background-color: rgba(90, 156, 255, .5);
+            }
         }
-        @media screen and (min-width: 1281px) {
-            width: 30px;
+
+        &__arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             height: 30px;
-            border-radius: 12px;
-            margin-top: 30px;
+            width: 30px;
+            background: rgba(234, 234, 234, .5);
+            border-radius: 5px;
+            border: solid 2px rgba(90, 156, 255, .3);
+            @include text(600, 18px, 16px, rgb(90, 156, 255));
+            cursor: pointer;
         }
-        @media screen and (min-width: 1440px) {
-            width: 20px;
-            height: 20px;
-            border-radius: 8px;
-            margin-top: 20px;
+        &__arrow:hover {
+            background-color: rgb(90, 156, 255);
+            color: white;
         }
-
-     
     }
-    :active{
-        background: #5A9CFF;
-        color: white
-    }
-
 }
