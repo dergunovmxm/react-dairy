@@ -11,7 +11,7 @@
     align-items: center;
     transform: scale(0);
 
-
+    
     &__content {
         height: 84vh;
         width: 30%;
@@ -23,8 +23,6 @@
         align-items: center;
 
         &__close {
-
-           
             cursor: pointer;
             display: flex;
             justify-content: center;
@@ -64,7 +62,7 @@
                 width: 100%;
                 border: 0;
                 font-family: 'Inter';
-                font-size: 14px;
+                font-size: 14px !important;
 
                 &:focus {
                     outline: none !important;

@@ -14,13 +14,13 @@ const Comments = ({ id }) => {
     }, [id])
 
     return (
-        <div className='comments'>
+        <section className='comments'>
             {comments.items.length ?
                 comments.items.map((item, index) => (
                     <CommentsItem text={item.text} firstname={item.firstname} lastname={item.lastname} key={index} />
                 )) : <>Нет комментариев...</>
             }
-        </div>
+        </section>
     )
 }
 

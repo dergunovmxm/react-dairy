@@ -2,11 +2,14 @@ import "./EditModal.scss"
 import { FiX } from "react-icons/fi"
 import { useEffect, useState } from 'react'
 import axios from '../../axios'
-import  ImageCropDialog  from '../ImageCropDialog'
+import ImageCropDialog from '../ImageCropDialog'
 import { convertBase64 } from '../../utils/functions'
 import Button from '../../UI/Button'
+import Title from "../../UI/Title"
+import Tilte from "../../UI/Title"
 
-const EditModal = ({ editOpen, setEditOpen, id}) => {
+
+const EditModal = ({ editOpen, setEditOpen, id }) => {
 
     const [noteTitle, setNoteTitle] = useState('')
     const [noteDescription, setNoteDescription] = useState('')
@@ -24,7 +27,7 @@ const EditModal = ({ editOpen, setEditOpen, id}) => {
         setOpenCrop(false)
     }
 
-    const setCroppedImageFor = ( croppedImageUrl) => {
+    const setCroppedImageFor = (croppedImageUrl) => {
         croppedImageUrl.then((base64) => {
             setNoteImage(base64)
         })
@@ -47,29 +50,29 @@ const EditModal = ({ editOpen, setEditOpen, id}) => {
     }
 
     useEffect(() => {
-        if(id){
+        if (id) {
             axios.get(`/notes/${id}`)
-            .then(({data}) => {
-                setNoteTitle(data.title)
-                setNoteDescription(data.description)
-                setNoteImage(data.image)
-            })
+                .then(({ data }) => {
+                    setNoteTitle(data.title)
+                    setNoteDescription(data.description)
+                    setNoteImage(data.image)
+                })
         }
-        
-        
+
+
     }, [])
 
     return (
-        <div className={editOpen ? "editModal active" : "editModal"}>
+        <section className={editOpen ? "editModal active" : "editModal"}>
 
-            <div className="editModal__content">
+            <form className="editModal__content">
 
                 <div className="editModal__content__close" >
                     <FiX onClick={() => setEditOpen(false)} />
                 </div>
 
                 <div className="editModal__content__header">
-                    <span>Редактировать запись</span>
+                    <Tilte title={"Редактирование записи"} />
                 </div>
 
                 <div className='editModal__content__title'>
@@ -79,15 +82,14 @@ const EditModal = ({ editOpen, setEditOpen, id}) => {
                         placeholder="Введите заголовок записи"
                         onChange={(event) => {
                             setNoteTitle(event.target.value)
-                        }} 
-                        />
-                        
+                        }}
+                    />
+
                 </div>
 
                 <div className='editModal__content__description'>
                     <textarea placeholder="Введите запись"
                         onChange={(event) => {
-
                             setNoteDescription(event.target.value)
                         }}
                         value={noteDescription} />
@@ -107,26 +109,26 @@ const EditModal = ({ editOpen, setEditOpen, id}) => {
                             setOpenCrop={setOpenCrop}
                         /> : null}
                         {
-                            
+
                             // eslint-disable-next-line jsx-a11y/alt-text
                             <img className='createNote__container__image__prewiew__img'
                                 src={noteImage}
                                 onClick={() => setOpenCrop(!openCrop)}
-                                 />
+                            />
                         }
 
                     </div>
 
                 </div>
 
-                <div className='editModal__content__button'
-                    onClick={() => { editNote() }}
-                >
-                    <Button value={"Сохранить"} />
+                <div className='editModal__content__button' onClick={() => { editNote() }}>
+                    <Button value={"Сохранить"}
+                    />
                 </div>
 
-            </div>
-        </div>
+            </form>
+
+        </section>
     )
 }
 

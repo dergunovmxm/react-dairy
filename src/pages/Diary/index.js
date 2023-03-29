@@ -7,6 +7,7 @@ import { Comments } from '../../components'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchComments } from '../../redux/slices/comments'
 import Button from '../../UI/Button'
+import { Input, Title } from '../../UI'
 
 const Diary = () => {
 
@@ -59,7 +60,7 @@ const Diary = () => {
     return (
         <div className='diary__container'>
 
-            <div className='diary__container__content'>
+            <main className='diary__container__content'>
 
                 <div className='diary__container__content__image'>
                     <img src={items.image} alt="defaultImage" />
@@ -77,33 +78,23 @@ const Diary = () => {
 
                 </div>
 
-            </div>
+            </main>
 
-            <div className='diary__container__commentsBox'>
-                <h2>Комментарии</h2>
+            <section className='diary__container__commentsBox'>
+                <Title title={"Комментарии"}/>
                 <div className='comments__box'>
                     <Comments id={diaryId} />
                 </div>
 
                 <div className='comments__input'>
-                    <input type="text"
-                        onChange={(event) => {
-                            setComment(event.target.value)
-                        }}
-                        onKeyDown={event => {
-                            if (event.keyCode === 13) {
-                                addComment()
-                            }
-                        }}
-                        value={comment}
-                    />
-
+                    <Input addComment={addComment} setComment={setComment} comment={comment} />
                 </div>
                 <div className='comments__button'
                     onClick={addComment}>
                     <Button value={"Отправить"}/>
                 </div>
-            </div>
+            </section>
+            
         </div>
     )
 }

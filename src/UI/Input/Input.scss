@@ -1,0 +1,10 @@
+input {
+    width: 100%;
+    border: 0;
+    font-family: 'Inter';
+    font-size: 14px;
+
+    &:focus {
+        outline: none !important;
+    }
+}

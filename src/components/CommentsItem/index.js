@@ -8,8 +8,8 @@ const CommentsItem = ({ text, firstname, lastname }) => {
     const [openComment, setOpenComment] = useState(false);
 
     return (
-        <div className={openComment ? "commentItem open" : "commentItem"}>
-
+        
+        <section className={openComment ? "commentItem open" : "commentItem"}>
 
             <div className='commentItem__avatar'>
                 <FiUser />
@@ -32,15 +32,10 @@ const CommentsItem = ({ text, firstname, lastname }) => {
                         ? <span>Свернуть</span>
                         : <span>Развернуть</span>
                 }
-
                 </div>
-
             </div>
 
-
-
-
-        </div>
+        </section>
     )
 }
 

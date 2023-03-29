@@ -3,9 +3,13 @@
     margin-bottom: 30px;
     height: 30px;
     display: flex;
-
     flex-direction: row-reverse;
     padding: 0 30px;
+
+    a {
+        text-decoration: none;
+        color: black
+    }
 
 
     &__adding {
@@ -18,7 +22,6 @@
         text-align: center;
         cursor: pointer;
         transition: transform 0.05s ease-in-out;
-        text-decoration: none;
 
         span {
             font-family: 'Inter';

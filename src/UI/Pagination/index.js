@@ -75,7 +75,7 @@ const Pagination = () => {
 
         <div className="wrapper">
 
-            <div className="wrapper__pagination">
+            <section className="wrapper__pagination">
 
                 <div
                     onClick={() => {
@@ -123,7 +123,7 @@ const Pagination = () => {
                     <FiChevronsRight />
                 </div>
 
-            </div>
+            </section>
         </div>
     );
 }

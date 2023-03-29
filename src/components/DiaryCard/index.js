@@ -22,7 +22,7 @@ const DiaryCard = ({ image, title, description, id, date }) => {
         <>
             <EditModal editOpen={editOpen} setEditOpen={setEditOpen} id={id} />
 
-            <div className='dairy__card'
+            <section className='dairy__card'
                 onClick={() => {
                     window.location.assign(
                         `http://localhost:3000/notes/?id=${id}`
@@ -45,7 +45,7 @@ const DiaryCard = ({ image, title, description, id, date }) => {
                     <span>{date}</span>
                 </div>
 
-                <div className='dairy__card__toolbar'>
+                <aside className='dairy__card__toolbar'>
                     <div className='dairy__card__toolbar__item'>
                         <div className='edit' onClick={(event) => (setEditOpen(true), event.stopPropagation())}>
                             <FiEdit />
@@ -56,9 +56,9 @@ const DiaryCard = ({ image, title, description, id, date }) => {
                             <FiTrash2 />
                         </div>
                     </div>
-                </div>
+                </aside>
 
-            </div>
+            </section>
         </>
     )
 }

@@ -5,6 +5,7 @@ import 'react-image-crop/dist/ReactCrop.css'
 import  ImageCropDialog  from '../../UI/ImageCropDialog'
 import { convertBase64 } from '../../utils/functions'
 import Button from '../../UI/Button'
+import { Title } from '../../UI'
 
 const CreateNote = () => {
 
@@ -39,7 +40,7 @@ const CreateNote = () => {
     }
 
     const setCroppedImageFor = (crop, zoom, aspect, croppedImageUrl) => {
-        // const newImage = { crop, zoom, aspect, croppedImageUrl }
+        const newImage = { crop, zoom, aspect, croppedImageUrl }
         croppedImageUrl.then((base64) => {
             setNoteImage(base64)
         })
@@ -86,10 +87,11 @@ const CreateNote = () => {
 
     return (
 
-        <form className='createNote'>
-            <div className='createNote__container'>
+        <div className='createNote'>
+            <form className='createNote__container'>
+
                 <div className='createNote__container__header'>
-                    <span>Создание записи</span>
+                    <Title title={"Создание записи"}/>
                 </div>
 
                 <div className='createNote__container__title'>
@@ -131,7 +133,6 @@ const CreateNote = () => {
                                 src={noteImage}
                                 onClick={() => setOpenCrop(!openCrop)} /> : <></>
                         }
-
                     </div>
 
                 </div>
@@ -140,8 +141,9 @@ const CreateNote = () => {
                     onClick={() => { creatingNote(noteTitle, noteDescription, noteImage) }}>
                     <Button value={"Записать"} />
                 </div>
-            </div>
-        </form>
+
+            </form>
+        </div>
 
         // <div >
         //     <Formik

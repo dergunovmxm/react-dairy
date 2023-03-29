@@ -10,7 +10,7 @@ const Filters = ({ searchValue, setSearchValue, handleSort, sort }) => {
 
     return (
 
-        <div className='tools'>
+        <header className='tools'>
             <Link to='create_note'>
             <div className='tools__adding'
                 >
@@ -53,7 +53,7 @@ const Filters = ({ searchValue, setSearchValue, handleSort, sort }) => {
                 />
             </div>
 
-        </div>
+        </header>
     )
 }
 
