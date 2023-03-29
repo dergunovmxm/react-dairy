@@ -13,7 +13,7 @@ const Diary = () => {
 
     const [items, setItems] = useState({})
     const [comment, setComment] = useState('')
-
+    const [isLoading, setIsLoading] = useState(true)
     const dispatch = useDispatch()
     const { comments } = useSelector((state) => state.comments)
     let { search } = useLocation()
@@ -25,8 +25,8 @@ const Diary = () => {
         axios
             .get(`/notes/${diaryId}`)
             .then((response) => {
-
                 setItems(response.data)
+                setIsLoading(false)
             })
             .catch((error) => {
                 console.warn(error);
@@ -59,42 +59,43 @@ const Diary = () => {
 
     return (
         <div className='diary__container'>
+            {!isLoading ? <>
+                <main className='diary__container__content'>
 
-            <main className='diary__container__content'>
-
-                <div className='diary__container__content__image'>
-                    <img src={items.image} alt="defaultImage" />
-                </div>
-
-                <div className='diary__container__content__info'>
-
-                    <div className='diary__container__content__info__title'>
-                        <span>{items.title}</span>
+                    <div className='diary__container__content__image'>
+                        <img src={items.image} alt="defaultImage" />
                     </div>
 
-                    <div className='diary__container__content__info__description'>
-                        <span>{items.description}</span>
+                    <div className='diary__container__content__info'>
+
+                        <div className='diary__container__content__info__title'>
+                            <span>{items.title}</span>
+                        </div>
+
+                        <div className='diary__container__content__info__description'>
+                            <span>{items.description}</span>
+                        </div>
+
                     </div>
 
-                </div>
+                </main>
 
-            </main>
+                <section className='diary__container__commentsBox'>
+                    <Title title={"Комментарии"} />
+                    <div className='comments__box'>
+                        <Comments id={diaryId} />
+                    </div>
 
-            <section className='diary__container__commentsBox'>
-                <Title title={"Комментарии"}/>
-                <div className='comments__box'>
-                    <Comments id={diaryId} />
-                </div>
+                    <div className='comments__input'>
+                        <Input addComment={addComment} setComment={setComment} comment={comment} />
+                    </div>
+                    <div className='comments__button'
+                        onClick={addComment}>
+                        <Button value={"Отправить"} />
+                    </div>
+                </section></> : <section className="dairy__loading">Загрузка...</section>
+            }
 
-                <div className='comments__input'>
-                    <Input addComment={addComment} setComment={setComment} comment={comment} />
-                </div>
-                <div className='comments__button'
-                    onClick={addComment}>
-                    <Button value={"Отправить"}/>
-                </div>
-            </section>
-            
         </div>
     )
 }

@@ -12,8 +12,7 @@ const Filters = ({ searchValue, setSearchValue, handleSort, sort }) => {
 
         <header className='tools'>
             <Link to='create_note'>
-            <div className='tools__adding'
-                >
+            <div className='tools__adding'>
                 <span>Добавить запись</span>
             </div>
             </Link>

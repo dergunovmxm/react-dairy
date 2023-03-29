@@ -20,7 +20,7 @@ const DiaryList = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [sort, setSort] = useState('')
     const [order, setOrder] = useState('')
-    const { selectPage, numPages } = useSelector((state) => state.pagination);
+    const { selectPage, numPages, lastPage } = useSelector((state) => state.pagination);
 
 
     // const { selectFilter } = useSelector((state) => state.filterReducer);
@@ -106,7 +106,7 @@ const DiaryList = () => {
             // handleSort={handleSort}
             />
 
-            {isLoading ?
+            {isLoading  ?
                 <section className="dairy__loading">Загрузка...</section>
 
                 : <section className="dairy__items">
@@ -118,8 +118,8 @@ const DiaryList = () => {
                 </section>}
 
             {
-                isLoading ? <></> :
-                    notes.length ?
+                isLoading   ? <></> :
+                    notes.length && lastPage ?
                         <Pagination /> : <></>
             }
 

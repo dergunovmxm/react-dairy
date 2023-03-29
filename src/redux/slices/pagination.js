@@ -3,10 +3,10 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
     selectPage: 1,
     numPages: 1,
-    showPages: 3,
+    showPages: 0,
     firstPage: 1,
     mediumPage: 3,
-    lastPage: 5,
+    lastPage: 0,
 };
 
 const paginationSlice = createSlice({

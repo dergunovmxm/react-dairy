@@ -2,10 +2,11 @@ import axios from '../../axios'
 import { useState } from 'react'
 import './CreateNote.scss'
 import 'react-image-crop/dist/ReactCrop.css'
-import  ImageCropDialog  from '../../UI/ImageCropDialog'
+import ImageCropDialog from '../../UI/ImageCropDialog'
 import { convertBase64 } from '../../utils/functions'
 import Button from '../../UI/Button'
 import { Title } from '../../UI'
+import { Link, useNavigate } from 'react-router-dom'
 
 const CreateNote = () => {
 
@@ -28,7 +29,6 @@ const CreateNote = () => {
 
         axios
             .post(`/notes`, data)
-            .then(window.location.assign(`http://localhost:3000`))
             .catch((error) => {
                 console.warn(error);
                 alert("Не удалось выполниить запрос!");
@@ -91,7 +91,7 @@ const CreateNote = () => {
             <form className='createNote__container'>
 
                 <div className='createNote__container__header'>
-                    <Title title={"Создание записи"}/>
+                    <Title title={"Создание записи"} />
                 </div>
 
                 <div className='createNote__container__title'>
@@ -127,7 +127,7 @@ const CreateNote = () => {
                             setCroppedImageFor={setCroppedImageFor}
                             setOpenCrop={setOpenCrop}
                         /> : null}
-                        { file ?
+                        {file ?
                             // eslint-disable-next-line jsx-a11y/alt-text
                             <img className='createNote__container__image__prewiew__img'
                                 src={noteImage}
@@ -136,12 +136,12 @@ const CreateNote = () => {
                     </div>
 
                 </div>
-
-                <div className='createNote__container__button'
-                    onClick={() => { creatingNote(noteTitle, noteDescription, noteImage) }}>
-                    <Button value={"Записать"} />
-                </div>
-
+                <Link to= "/">
+                    <div className='createNote__container__button'
+                        onClick={() => { creatingNote(noteTitle, noteDescription, noteImage) }}>
+                        <Button value={"Записать"} />
+                    </div>
+                </Link>
             </form>
         </div>
 
