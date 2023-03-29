@@ -3,6 +3,8 @@ import { FiX } from "react-icons/fi"
 import { useEffect, useState } from 'react'
 import axios from '../../axios'
 import  ImageCropDialog  from '../ImageCropDialog'
+import { convertBase64 } from '../../utils/functions'
+import Button from '../../UI/Button'
 
 const EditModal = ({ editOpen, setEditOpen, id}) => {
 
@@ -15,20 +17,7 @@ const EditModal = ({ editOpen, setEditOpen, id}) => {
     const [openCrop, setOpenCrop] = useState(false)
 
     const handleFileChange = (event) => {
-        selectFile(convertBase64(event.target.files[0]))
-    }
-
-
-    function convertBase64(file) {
-
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result);
-            reader.onload = () => setNoteImage(reader.result);
-            reader.onerror = (error) => reject(error);
-
-        });
+        selectFile(convertBase64(event.target.files[0], setNoteImage))
     }
 
     const onCancel = () => {
@@ -133,7 +122,7 @@ const EditModal = ({ editOpen, setEditOpen, id}) => {
                 <div className='editModal__content__button'
                     onClick={() => { editNote() }}
                 >
-                    Сохранить
+                    <Button value={"Сохранить"} />
                 </div>
 
             </div>

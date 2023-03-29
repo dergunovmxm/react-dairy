@@ -123,16 +123,6 @@ const DiaryList = () => {
                         <Pagination /> : <></>
             }
 
-            {/* 
-
-            <div className="dairy__items">
-
-                {notes.map((item, i) => <DairyCard {...item} key={i} removeNote={removeNote} />)
-                    
-           
-                }
-            </div>
-             */}
         </>
 
     )

@@ -3,33 +3,18 @@ import { useState } from 'react'
 import './CreateNote.scss'
 import 'react-image-crop/dist/ReactCrop.css'
 import  ImageCropDialog  from '../../UI/ImageCropDialog'
+import { convertBase64 } from '../../utils/functions'
+import Button from '../../UI/Button'
 
 const CreateNote = () => {
 
     const [noteTitle, setNoteTitle] = useState('')
     const [noteDescription, setNoteDescription] = useState('')
     const [noteImage, setNoteImage] = useState('')
-
     const [src, selectFile] = useState(null)
     const [file, setFile] = useState(null)
-
     const [openCrop, setOpenCrop] = useState(false)
 
-    // const handleFileChange = (event) => {
-    //     selectFile(convertBase64(event.target.files[0]))
-    // }
-
-    function convertBase64(file) {
-
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result);
-            reader.onload = () => setNoteImage(reader.result);
-            reader.onerror = (error) => reject(error);
-
-        });
-    }
 
     const creatingNote = () => {
 
@@ -128,7 +113,7 @@ const CreateNote = () => {
 
                     <input type='file'
                         onChange={(event) => {
-                            selectFile(convertBase64(event.target.files[0]));
+                            selectFile(convertBase64(event.target.files[0], setNoteImage));
                             setFile(event.target.files[0])
                         }}
                     />
@@ -153,7 +138,7 @@ const CreateNote = () => {
 
                 <div className='createNote__container__button'
                     onClick={() => { creatingNote(noteTitle, noteDescription, noteImage) }}>
-                    Записать
+                    <Button value={"Записать"} />
                 </div>
             </div>
         </form>

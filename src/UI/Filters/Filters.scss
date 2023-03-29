@@ -18,11 +18,13 @@
         text-align: center;
         cursor: pointer;
         transition: transform 0.05s ease-in-out;
+        text-decoration: none;
 
         span {
             font-family: 'Inter';
             font-size: 12px;
             opacity: .7;
+            text-decoration: none;
         }
 
         &:hover {

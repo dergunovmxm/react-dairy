@@ -1,4 +1,4 @@
-
+import './Button.scss'
 
 const Button = ({ value }) => {
     return (

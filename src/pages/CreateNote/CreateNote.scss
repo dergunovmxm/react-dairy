@@ -5,7 +5,7 @@
     justify-content: center;
 
     &__container {
-        height: 84vh;
+        height: 85vh;
         width: 30%;
         min-width: 560px;
         background: white;
@@ -84,13 +84,10 @@
         &__button {
 
             cursor: pointer;
-            padding: 10px 20px;
+            padding: 20px;
             border-radius: 8px;
 
-            &:hover {
-                background: #e7f6ff
-            }
-
+           
             &:active {
                 transform: translateY(2px);
             }
