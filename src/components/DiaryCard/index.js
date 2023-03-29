@@ -2,11 +2,21 @@ import './DiaryCard.scss'
 import { FiEdit, FiTrash2 } from "react-icons/fi"
 import EditModal from "../../UI/EditModal"
 import { useState } from "react"
+import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { fetchRemoveNotes, fetchNotes } from "../../redux/slices/notes"
 
 
-const DiaryCard = ({ image, title, description, id, removeNote, date }) => {
+const DiaryCard = ({ image, title, description, id, date }) => {
 
+
+    const dispatch = useDispatch()
     const [editOpen, setEditOpen] = useState(false)
+    const removeNote = (id) => {
+        if (window.confirm("Вы действительно хотите удалить запись?")) {
+            dispatch(fetchRemoveNotes(id)) 
+        }
+    }
 
     return (
         <>

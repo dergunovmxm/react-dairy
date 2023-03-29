@@ -4,11 +4,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { changePage, changeFirstPage, changeMediumPage, changeLastPage } from '../../redux/slices/pagination';
 import { FiChevronsLeft, FiChevronsRight, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
-function Pagination() {
+
+const Pagination = () => {
+
     const dispatch = useDispatch();
-    const { selectPage, numPages, firstPage, mediumPage, lastPage, showPages } = useSelector(
-        (state) => state.pagination
-    );
+    const { selectPage, numPages, firstPage, mediumPage, lastPage, showPages } = useSelector((state) => state.pagination);
+    const step = 1
 
     const pageRight = (step) => {
 
@@ -82,13 +83,12 @@ function Pagination() {
                         dispatch(changeLastPage(showPages));
                         dispatch(changeMediumPage(Math.floor(showPages / 2)));
                         dispatch(changePage(1));
-                        console.log(showPages)
                     }}
                     className="wrapper__pagination__arrow">
                     <FiChevronsLeft />
                 </div>
 
-                <div onClick={() => pageLeft(1)} className="wrapper__pagination__arrow">
+                <div onClick={() => pageLeft(step)} className="wrapper__pagination__arrow">
                     <FiChevronLeft />
                 </div>
 
@@ -108,7 +108,7 @@ function Pagination() {
                     )}
                 </div>
 
-                <div onClick={() => pageRight(1)} className="wrapper__pagination__arrow">
+                <div onClick={() => pageRight(step)} className="wrapper__pagination__arrow">
                     <FiChevronRight />
                 </div>
 

@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchComments } from '../../redux/slices/comments'
-import CommentsItem from '../CommentsItem'
+import  CommentsItem  from '../CommentsItem'
 import './Comments.scss'
 
 const Comments = ({ id }) => {
@@ -10,9 +10,9 @@ const Comments = ({ id }) => {
     const { comments } = useSelector(({ ...state }) => state.comments)
 
     useEffect(() => {
-        dispatch(fetchComments(id, ))
+        dispatch(fetchComments(id,))
     }, [id])
-console.log(comments);
+
     return (
         <div className='comments'>
             {comments.items.length ?

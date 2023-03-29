@@ -6,6 +6,7 @@ import './Diary.scss'
 import { Comments } from '../../components'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchComments } from '../../redux/slices/comments'
+import Button from '../../UI/Button'
 
 const Diary = () => {
 
@@ -99,11 +100,8 @@ const Diary = () => {
 
                 </div>
                 <div className='comments__button'
-                    onClick={addComment}
-                >
-                    <span>
-                        Отправить
-                    </span>
+                    onClick={addComment}>
+                    <Button value={"Отправить"}/>
                 </div>
             </div>
         </div>

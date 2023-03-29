@@ -1,6 +1,6 @@
 import "./EditModal.scss"
 import { FiX } from "react-icons/fi"
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import axios from '../../axios'
 import  ImageCropDialog  from '../ImageCropDialog'
 
@@ -57,6 +57,19 @@ const EditModal = ({ editOpen, setEditOpen, id}) => {
             })
     }
 
+    useEffect(() => {
+        if(id){
+            axios.get(`/notes/${id}`)
+            .then(({data}) => {
+                setNoteTitle(data.title)
+                setNoteDescription(data.description)
+                setNoteImage(data.image)
+            })
+        }
+        
+        
+    }, [])
+
     return (
         <div className={editOpen ? "editModal active" : "editModal"}>
 
@@ -73,10 +86,13 @@ const EditModal = ({ editOpen, setEditOpen, id}) => {
                 <div className='editModal__content__title'>
                     <input
                         type="text"
+                        value={noteTitle}
                         placeholder="Введите заголовок записи"
                         onChange={(event) => {
                             setNoteTitle(event.target.value)
-                        }} />
+                        }} 
+                        />
+                        
                 </div>
 
                 <div className='editModal__content__description'>
@@ -84,7 +100,8 @@ const EditModal = ({ editOpen, setEditOpen, id}) => {
                         onChange={(event) => {
 
                             setNoteDescription(event.target.value)
-                        }} />
+                        }}
+                        value={noteDescription} />
                 </div>
 
                 <div className='editModal__content__image'>
@@ -105,7 +122,8 @@ const EditModal = ({ editOpen, setEditOpen, id}) => {
                             // eslint-disable-next-line jsx-a11y/alt-text
                             <img className='createNote__container__image__prewiew__img'
                                 src={noteImage}
-                                onClick={() => setOpenCrop(!openCrop)} />
+                                onClick={() => setOpenCrop(!openCrop)}
+                                 />
                         }
 
                     </div>

@@ -2,7 +2,7 @@ import './CommentItem.scss'
 import React, { useState } from 'react'
 import { FiUser } from 'react-icons/fi'
 
-export default React.memo (function CommentsItem({ text, firstname, lastname }) {
+const CommentsItem = ({ text, firstname, lastname }) => {
     
     let user = `${firstname} ${lastname}`
     const [openComment, setOpenComment] = useState(false);
@@ -42,4 +42,6 @@ export default React.memo (function CommentsItem({ text, firstname, lastname }) 
 
         </div>
     )
-})
+}
+
+export default CommentsItem
