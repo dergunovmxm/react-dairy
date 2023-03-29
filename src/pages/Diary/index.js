@@ -7,7 +7,7 @@ import { Comments } from '../../components'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchComments } from '../../redux/slices/comments'
 import Button from '../../UI/Button'
-import { Input, Title } from '../../UI'
+import { Input, Loading, Title } from '../../UI'
 
 const Diary = () => {
 
@@ -93,7 +93,8 @@ const Diary = () => {
                         onClick={addComment}>
                         <Button value={"Отправить"} />
                     </div>
-                </section></> : <section className="dairy__loading">Загрузка...</section>
+                </section></>
+                : <Loading />
             }
 
         </div>

@@ -8,6 +8,7 @@ import Filters from "../../UI/Filters"
 import empty from '../../assets/empty.png'
 import { changeNumPages, changeShowPages, changePage, changeFirstPage, changeMediumPage, changeLastPage } from '../../redux/slices/pagination';
 import './DiaryList.scss'
+import { Loading } from "../../UI"
 
 
 
@@ -44,6 +45,7 @@ const DiaryList = () => {
         axios
             .get(`/notes?title_like=${searchValue}`)
             .then((response) => {
+                setIsLoading(false)
                 const n = Math.ceil(response.data.length / 4);
                 if (n !== numPages) {
                     dispatch(changeFirstPage(1));
@@ -106,25 +108,25 @@ const DiaryList = () => {
             // handleSort={handleSort}
             />
 
-            {isLoading  ?
-                <section className="dairy__loading">Загрузка...</section>
-
-                : <section className="dairy__items">
-                    {notes.length ? notes.map((item) => <DairyCard {...item} key={item.id} />)
-                        : <div className="emptySearch">
-                            <img src={empty} alt='emptySearch' />
-                            <span>Ничего не найдено</span>
-                        </div>}
-                </section>}
-
             {
-                isLoading   ? <></> :
-                    notes.length && lastPage ?
-                        <Pagination /> : <></>
+                isLoading ? <Loading /> :
+                    <>
+                        <section className="dairy__items">
+                            {notes.length ? notes.map((item) => <DairyCard {...item} key={item.id} />)
+                                : <div className="emptySearch">
+                                    <img src={empty} alt='emptySearch' />
+                                    <span>Ничего не найдено</span>
+                                </div>}
+                        </section>
+
+                        {
+                            isLoading ? <></> :
+                                notes.length && lastPage ?
+                                    <Pagination /> : <></>
+                        }
+                    </>
             }
-
         </>
-
     )
 }
 

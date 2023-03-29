@@ -3,6 +3,7 @@ import { CreateNote } from "./pages";
 import DiaryList from "./components/DiaryList";
 import Diary from './pages/Diary';
 import { Routes, Route } from 'react-router-dom'
+import './index.scss'
 
 function App() {
 

@@ -1,34 +1,30 @@
 .container {
-    .dairy__loading{
+
+  .dairy__items {
+
+    display: flex;
+    flex-wrap: wrap;
+    height: 80%;
+    margin: 10px 50px;
+
+    .emptySearch {
       display: flex;
       justify-content: center;
       align-items: center;
-    }
-    .dairy__items {
-  
-      display: flex;
-      flex-wrap: wrap;
-      height: 80%;
-      margin: 10px 50px;
-  
-      .emptySearch {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        width: 100%;
-  
-        span {
-          font-family: 'Inter';
-          font-size: 26px;
-          font-weight: bold;
-          opacity: .6;
-        }
-  
-        img {
-          width: 250px;
-          height: 250px;
-        }
+      flex-direction: column;
+      width: 100%;
+
+      span {
+        font-family: 'Inter';
+        font-size: 26px;
+        font-weight: bold;
+        opacity: .6;
+      }
+
+      img {
+        width: 250px;
+        height: 250px;
       }
     }
   }
+}
