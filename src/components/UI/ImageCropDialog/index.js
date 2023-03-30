@@ -102,7 +102,6 @@ const ImageCropDialog = ({ imageUrl, cropInit, zoomInit, aspectInit, onCancel, s
                 </div>
                 <div className='button__area'>
                     <div className='button__area__button exit' onClick={onCancel}>Выйти</div>
-                    <div className='button__area__button reset' onClick={() => alert("Сброс")}>Сброс</div>
                     <div className='button__area__button save' onClick={onCrop}>Сохранить</div>
                 </div>
             </div>

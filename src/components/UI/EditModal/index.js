@@ -6,14 +6,15 @@ import ImageCropDialog from '../ImageCropDialog'
 import { convertBase64 } from '../../../utils/functions'
 import Button from '../Button'
 import Tilte from "../Title"
+import { useNavigate } from "react-router-dom"
 
 
 const EditModal = ({ editOpen, setEditOpen, id }) => {
 
+    const navigate = useNavigate()
     const [noteTitle, setNoteTitle] = useState('')
     const [noteDescription, setNoteDescription] = useState('')
     const [noteImage, setNoteImage] = useState('')
-
     const [src, selectFile] = useState(null)
 
     const [openCrop, setOpenCrop] = useState(false)
@@ -26,7 +27,8 @@ const EditModal = ({ editOpen, setEditOpen, id }) => {
         setOpenCrop(false)
     }
 
-    const setCroppedImageFor = (croppedImageUrl) => {
+    const setCroppedImageFor = (crop, zoom, aspect, croppedImageUrl) => {
+        const newImage = { crop, zoom, aspect, croppedImageUrl }
         croppedImageUrl.then((base64) => {
             setNoteImage(base64)
         })
@@ -41,7 +43,9 @@ const EditModal = ({ editOpen, setEditOpen, id }) => {
             date: new Date().toLocaleString().slice(0, -3)
         }
         axios.put(`/notes/${id}`, data)
-            .then(window.location.assign(`http://localhost:3000`))
+            .then(() => {
+                navigate('/')
+            })
             .catch((error) => {
                 console.warn(error);
                 alert("Не удалось выполниить запрос!");
@@ -96,9 +100,21 @@ const EditModal = ({ editOpen, setEditOpen, id }) => {
 
                 <div className='editModal__content__image'>
 
-                    <input type='file'
-                        onChange={handleFileChange}
-                    />
+                   
+                             <div class="input__wrapper">
+                                        <input
+                                            name="file"
+                                            className="input input__file"
+                                            id="input__file"
+                                            type='file'
+                                            onChange={handleFileChange}
+                                            
+                                            multiple
+                                        />
+                                        <label for="input__file" class="input__file-button">
+                                            <span class="input__file-button-text">Выберите файл</span>
+                                        </label>
+                                    </div>
 
                     <div className='editModal__content__image__prewiew'>
                         {openCrop ? <ImageCropDialog
