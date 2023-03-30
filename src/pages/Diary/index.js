@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchComments } from '../../redux/slices/comments'
 import Button from '../../components/UI/Button'
 import { Input, Loading, Title } from '../../components/UI'
+import { FiImage } from 'react-icons/fi'
 
 const Diary = () => {
 
@@ -62,7 +63,10 @@ const Diary = () => {
                 <main className='diary__container__content'>
 
                     <div className='diary__container__content__image'>
-                        <img src={items.image} alt="defaultImage" />
+                        {
+                            items.image ? <img src={items.image} alt="defaultImage" /> : <FiImage />
+                        }
+                        
                     </div>
 
                     <div className='diary__container__content__info'>

@@ -1,13 +1,13 @@
 import { useState } from "react"
 import DairyCard from "../DiaryCard"
 import Pagination from "../UI/Pagination"
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useEffect } from "react"
 import axios from '../../axios'
 import Filters from "../UI/Filters"
 import empty from '../../assets/empty.png'
 import './DiaryList.scss'
-import  Loading  from "../UI/Loading"
+import Loading from "../UI/Loading"
 import { fetchRemoveNotes } from "../../redux/slices/notes"
 import { useLocation, useNavigate } from "react-router-dom"
 
@@ -36,7 +36,7 @@ const DiaryList = () => {
                         .get(`/notes?title_like=${searchValue}&_page=${page}&_limit=${limit}&_sort=${sort.name}&_order=${sort.order}`)
                         .then(({ data }) => {
                             if (!data.length) {
-                                
+
                                 navigate(`?_page=${page - 1}&_limit=${limit}`)
                                 setNumPages(numPages - 1)
                             } else {
@@ -56,8 +56,8 @@ const DiaryList = () => {
     useEffect(() => {
         axios
             .get(`/notes?title_like=${searchValue}&_page=${page}&_limit=${limit}&_sort=${sort.sort}&_order=${sort.order}`)
-            .then(({data}) => {
-                
+            .then(({ data }) => {
+
                 setNotes(data)
                 setIsLoading(false)
             })
@@ -89,7 +89,7 @@ const DiaryList = () => {
                 sort={sort}
                 onClickSort={(i) => setSort(i)}
                 limit={limit}
-          
+
             />
 
             {

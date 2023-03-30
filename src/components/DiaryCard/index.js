@@ -1,5 +1,5 @@
 import './DiaryCard.scss'
-import { FiEdit, FiTrash2 } from "react-icons/fi"
+import { FiEdit, FiTrash2, FiImage } from "react-icons/fi"
 import EditModal from "../UI/EditModal"
 import { useState } from "react"
 import { useNavigate } from 'react-router-dom'
@@ -18,7 +18,10 @@ const DiaryCard = ({ image, title, description, id, date, removeNote }) => {
                     onClick={() => { navigate(`/notes/?id=${id}`)}} >
 
                     <div className='dairy__card__image' >
-                        <img src={image} alt="dairyImage" />
+                        {
+                            image ? <img src={image} alt="dairyImage" /> : <FiImage />
+                        }
+                        
                     </div>
 
                     <div className='dairy__card__title'>

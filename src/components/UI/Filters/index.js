@@ -12,6 +12,9 @@ const Filters = ({ searchValue, setSearchValue, sort, onClickSort, limit }) => {
 
     const list = [
         {
+            name: 'Сортировка',
+        },
+        {
             name: 'По дате Up',
             sort: 'date',
             order: 'asc'
