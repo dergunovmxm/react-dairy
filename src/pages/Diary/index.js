@@ -15,7 +15,7 @@ const Diary = () => {
     const [comment, setComment] = useState('')
     const [isLoading, setIsLoading] = useState(true)
     const dispatch = useDispatch()
-    const { comments } = useSelector((state) => state.comments)
+    
     let { search } = useLocation()
     const params = new URLSearchParams(search)
     const diaryId = params.get('id')
@@ -46,7 +46,6 @@ const Diary = () => {
         if (comment !== '') {
             axios.post(`/comments`, data)
                 .then(() => {
-                    console.log(data);
                     dispatch(fetchComments(diaryId))
                 })
                 .catch((error) => {

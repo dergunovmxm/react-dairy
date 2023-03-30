@@ -1,34 +1,60 @@
 import './Filters.scss'
 import close from '../../assets/btn-remove.svg'
 import search from '../../assets/search.svg'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import React, { useState, useRef, useEffect } from 'react';
 
-const Filters = ({ searchValue, setSearchValue, handleSort, sort }) => {
+const Filters = ({ searchValue, setSearchValue }) => {
 
-    const sortOptions = [{ "key": "date", "value": "По дате", "order": "asc" },
-    { "key": "title", "value": "По названию", "order": "desc" },]
+    const sortOptions = [
+
+        {
+            sortName: "По возрастанию даты",
+            type: "date",
+            order: "asc"
+        },
+        {
+            sortName: "По убыванию даты",
+            type: "date",
+            order: "desc"
+        },
+
+        {
+            sortName: "По алфавиту в прямом порядке",
+            type: "name",
+            order: "asc"
+        },
+
+        {
+            sortName: "По алфавиту в обратном порядке",
+            type: "name",
+            order: "desc"
+        },
+
+
+    ]
 
     return (
 
         <header className='tools'>
             <Link to='create_note'>
-            <div className='tools__adding'>
-                <span>Добавить запись</span>
-            </div>
+                <div className='tools__adding'>
+                    <span>Добавить запись</span>
+                </div>
             </Link>
-            
+
 
             <div className='tools__filtering' >
 
                 <select
-                    onChange={handleSort}
-                    value={sort}
+                // onChange={handleSort}
+                // value={sort}
                 >
 
                     <option>Сортировка</option>
                     {sortOptions.map((item, index) => (
-                        <option value={item.key} key={index} order={item.order}>
-                            {item.value}
+                        <option value={item.sortName} key={index}>
+                            {item.sortName}
                         </option>
                     ))}
                 </select>
@@ -46,7 +72,7 @@ const Filters = ({ searchValue, setSearchValue, handleSort, sort }) => {
 
                 <img src={search} alt="Search" />
                 <input
-                    onChange={(event)=> setSearchValue(event.target.value)}
+                    onChange={(event) => {setSearchValue(event.target.value)}}
                     placeholder="Поиск..."
                     value={searchValue}
                 />

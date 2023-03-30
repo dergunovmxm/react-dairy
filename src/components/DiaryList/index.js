@@ -6,30 +6,56 @@ import { useEffect } from "react"
 import axios from '../../axios'
 import Filters from "../../UI/Filters"
 import empty from '../../assets/empty.png'
-import { changeNumPages, changeShowPages, changePage, changeFirstPage, changeMediumPage, changeLastPage } from '../../redux/slices/pagination';
 import './DiaryList.scss'
 import { Loading } from "../../UI"
-
+import { fetchRemoveNotes } from "../../redux/slices/notes"
+import { useLocation, useNavigate } from "react-router-dom"
 
 
 const DiaryList = () => {
 
     let dispatch = useDispatch()
-    const { loadNotes } = useSelector((state) => state.notes);
     const [notes, setNotes] = useState([]);
     const [searchValue, setSearchValue] = useState('');
     const [isLoading, setIsLoading] = useState(true)
     const [sort, setSort] = useState('')
     const [order, setOrder] = useState('')
-    const { selectPage, numPages, lastPage } = useSelector((state) => state.pagination);
+    const navigate = useNavigate();
+    const [numPages, setNumPages] = useState(0);
 
+    let { search } = useLocation();
+    const params = new URLSearchParams(search);
+    const page = params.get('_page') || 1;
 
-    // const { selectFilter } = useSelector((state) => state.filterReducer);
-    // const { nameSort, typeSort, orderSort } = useSelector((state) => state.sortReducer);
+    const removeNote = (id) => {
+        if (window.confirm("Вы действительно хотите удалить запись?")) {
+            setIsLoading(true)
+            axios.delete(`/notes/${id}`)
+                .then(() => {
+                    axios
+                        .get(`/notes?title_like=${searchValue}&_page=${page}&_limit=4`)
+                        .then(({ data }) => {
+                            if (!data.length) {
+                                
+                                navigate(`?_page=${page - 1}&_limit=4`)
+                                setNumPages(numPages - 1)
+                            } else {
+                                setNotes(data)
+                                setIsLoading(false)
+                            }
+                        })
+                        .catch((error) => {
+                            console.warn(error);
+                            alert("Не удалось выполниить запрос!");
+                        })
+                })
+            dispatch(fetchRemoveNotes(id))
+        }
+    }
 
     useEffect(() => {
         axios
-            .get(`/notes?title_like=${searchValue}&_page=${selectPage}&_limit=4`)
+            .get(`/notes?title_like=${searchValue}&_page=${page}&_limit=4`)
             .then((responce) => {
                 setNotes(responce.data)
                 setIsLoading(false)
@@ -39,66 +65,20 @@ const DiaryList = () => {
                 alert("Не удалось выполниить запрос!");
             })
 
-    }, [selectPage, searchValue]);
+    }, [page, searchValue]);
 
     useEffect(() => {
         axios
             .get(`/notes?title_like=${searchValue}`)
-            .then((response) => {
+            .then(({ data }) => {
                 setIsLoading(false)
-                const n = Math.ceil(response.data.length / 4);
-                if (n !== numPages) {
-                    dispatch(changeFirstPage(1));
-                    dispatch(changePage(1));
-                }
-                dispatch(changeNumPages(n));
-                if (n === 1) {
-                    dispatch(changeLastPage(1));
-                    dispatch(changeMediumPage(1));
-                    dispatch(changeShowPages(1));
-                } else if (n === 2) {
-                    dispatch(changeLastPage(2));
-                    dispatch(changeMediumPage(1));
-                    dispatch(changeShowPages(2));
-                } else if (n >= 3 && n < 5) {
-                    dispatch(changeLastPage(3));
-                    dispatch(changeMediumPage(2));
-                    dispatch(changeShowPages(3));
-                } else {
-                    dispatch(changeLastPage(5));
-                    dispatch(changeMediumPage(3));
-                    dispatch(changeShowPages(5));
-                }
-
+                setNumPages(Math.ceil(data.length / 4));
             })
             .catch((error) => {
                 console.warn(error);
                 alert("Не удалось выполниить запрос!");
             });
     }, [searchValue]);
-
-
-    // useEffect(() => {
-    //     // бек, который я использовал, не выдаёт запросы при одновременном использовании поиска и фильтрации. поэтому на сайте этого не будет
-    //     if (searchValue) {
-    //         axios
-    //             .get(`notes?search=${searchValue}&sortBy=${typeSort}&order=${orderSort}&page=${selectPage}&limit=6`,)
-    //     } else {
-    //         axios
-    //             .get(`notes?category=${selectFilter}&sortBy=${typeSort}&order=${orderSort}&page=${selectPage}&limit=6`,)
-
-    //     }
-    // }, [selectPage, selectFilter, searchValue, nameSort]);
-
-
-    // удаение
-
-
-    // const handleSort = (event) => {
-    //     const { value } = event.target
-    //     setSort(value)
-    //     setOrder(order)
-    // }
 
     return (
         <>
@@ -112,7 +92,7 @@ const DiaryList = () => {
                 isLoading ? <Loading /> :
                     <>
                         <section className="dairy__items">
-                            {notes.length ? notes.map((item) => <DairyCard {...item} key={item.id} />)
+                            {notes.length ? notes.map((item) => <DairyCard {...item} key={item.id} removeNote={removeNote} />)
                                 : <div className="emptySearch">
                                     <img src={empty} alt='emptySearch' />
                                     <span>Ничего не найдено</span>
@@ -121,8 +101,8 @@ const DiaryList = () => {
 
                         {
                             isLoading ? <></> :
-                                notes.length && lastPage ?
-                                    <Pagination /> : <></>
+                                notes.length ?
+                                    <Pagination page={page} numPages={numPages} /> : <></>
                         }
                     </>
             }

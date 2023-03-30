@@ -1,75 +1,10 @@
 import './Pagination.scss';
-
-import { useSelector, useDispatch } from 'react-redux';
-import { changePage, changeFirstPage, changeMediumPage, changeLastPage } from '../../redux/slices/pagination';
 import { FiChevronsLeft, FiChevronsRight, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
 
+const Pagination = ({ page, numPages }) => {
 
-const Pagination = () => {
-
-    const dispatch = useDispatch();
-    const { selectPage, numPages, firstPage, mediumPage, lastPage, showPages } = useSelector((state) => state.pagination);
-    const step = 1
-
-    const pageRight = (step) => {
-
-        if (selectPage === mediumPage) {
-            if (lastPage + step <= numPages) {
-                dispatch(changeFirstPage(firstPage + step));
-                dispatch(changeLastPage(lastPage + step));
-                dispatch(changeMediumPage(mediumPage + step));
-                dispatch(changePage(selectPage + step));
-            } else if (selectPage + step <= numPages) {
-                dispatch(changeFirstPage(firstPage + numPages - lastPage));
-                dispatch(changeLastPage(lastPage + numPages - lastPage));
-                dispatch(changeMediumPage(mediumPage + numPages - lastPage));
-                dispatch(changePage(selectPage + step));
-            }
-        } else if (selectPage < mediumPage) {
-            if (selectPage + step > mediumPage) {
-                dispatch(changeFirstPage(firstPage + numPages - lastPage));
-                dispatch(changeLastPage(lastPage + numPages - lastPage));
-                dispatch(changeMediumPage(mediumPage + numPages - lastPage));
-                dispatch(changePage(selectPage + step));
-            } else {
-                dispatch(changePage(selectPage + step));
-            }
-        } else if (selectPage > mediumPage) {
-            if (selectPage + step <= numPages) {
-                dispatch(changePage(selectPage + step));
-            }
-        }
-    }
-
-    const pageLeft = (step) => {
-        if (selectPage === mediumPage) {
-            if (firstPage - step >= 1) {
-                dispatch(changeFirstPage(firstPage - step));
-                dispatch(changeLastPage(lastPage - step));
-                dispatch(changeMediumPage(mediumPage - step));
-                dispatch(changePage(selectPage - step));
-            } else if (selectPage - step >= 1) {
-                dispatch(changeFirstPage(firstPage - 1 + firstPage));
-                dispatch(changeLastPage(lastPage - 1 + firstPage));
-                dispatch(changeMediumPage(mediumPage - 1 + firstPage));
-                dispatch(changePage(selectPage - step));
-            }
-        } else if (selectPage > mediumPage) {
-            if (selectPage - step < mediumPage) {
-                dispatch(changeFirstPage(firstPage - 1 + firstPage));
-                dispatch(changeLastPage(lastPage - 1 + firstPage));
-                dispatch(changeMediumPage(mediumPage - 1 + firstPage));
-                dispatch(changePage(selectPage - step));
-
-            } else {
-                dispatch(changePage(selectPage - step));
-            }
-        } else if (selectPage < mediumPage) {
-            if (selectPage - step >= 1) {
-                dispatch(changePage(selectPage - step));
-            }
-        }
-    }
+    const navigate = useNavigate()
 
     return (
 
@@ -79,45 +14,44 @@ const Pagination = () => {
 
                 <div
                     onClick={() => {
-                        dispatch(changeFirstPage(1));
-                        dispatch(changeLastPage(showPages));
-                        dispatch(changeMediumPage(Math.floor(showPages / 2)));
-                        dispatch(changePage(1));
+                        navigate(`?_page=${1}&_limit=4`)
                     }}
                     className="wrapper__pagination__arrow">
                     <FiChevronsLeft />
                 </div>
 
-                <div onClick={() => pageLeft(step)} className="wrapper__pagination__arrow">
+                <div onClick={() => { navigate(`?_page=${Number(page) === 1 ? page : page - 1}&_limit=4`) }} className="wrapper__pagination__arrow">
                     <FiChevronLeft />
                 </div>
 
                 <div className="wrapper__pagination__pages">
-                    {Array.from({ length: showPages }, (_, i) => firstPage + i).map(
-                        (element) => (
-                            <div
-                                key={element}
-                                className={
-                                    selectPage === element
-                                        ? "wrapper__pagination__pages__select_block"
-                                        : "wrapper__pagination__pages__block"
-                                }>
-                                {element}
-                            </div>
-                        ),
-                    )}
+                    {Array.from({
+                        length: (Number(page) === 1
+                            ? (Number(page) === Number(numPages) ? 1 : 2)
+                            : (Number(page) === Number(numPages) ? 2 : 3))
+                    },
+                        (_, i) => (Number(page) === 1 ? Number(page) : Number(page - 1)) + i).map(
+                            (element) => (
+                                <div
+                                    key={element}
+                                    className={
+                                        Number(page) === Number(element)
+                                            ? "wrapper__pagination__pages__select_block"
+                                            : "wrapper__pagination__pages__block"
+                                    }>
+                                    {element}
+                                </div>
+                            ),
+                        )}
                 </div>
 
-                <div onClick={() => pageRight(step)} className="wrapper__pagination__arrow">
+                <div onClick={() => { navigate(`?_page=${Number(page) + 1 > numPages ? page : Number(page) + 1}&_limit=4`) }} className="wrapper__pagination__arrow">
                     <FiChevronRight />
                 </div>
 
                 <div
                     onClick={() => {
-                        dispatch(changeFirstPage(numPages - showPages + 1));
-                        dispatch(changeLastPage(numPages));
-                        dispatch(changeMediumPage(numPages - Math.ceil(showPages / 2)));
-                        dispatch(changePage(numPages));
+                        navigate(`?_page=${numPages}&_limit=4`)
                     }}
                     className="wrapper__pagination__arrow">
                     <FiChevronsRight />

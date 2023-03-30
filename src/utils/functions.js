@@ -1,5 +1,4 @@
 
-
 export const convertBase64 = (file, setNoteImage) =>  {
 
     return new Promise((resolve, reject) => {

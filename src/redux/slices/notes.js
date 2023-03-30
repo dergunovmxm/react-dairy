@@ -9,7 +9,7 @@ export const fetchNotes = createAsyncThunk('notes/fetchNotes', async () => {
 export const fetchRemoveNotes = createAsyncThunk('notes/fetchRemoveBooks', async (id) => {
     axios.delete(`/notes/${id}`)
         .then(() => {
-            axios.get(`/notes`)
+            
         })
 })
 

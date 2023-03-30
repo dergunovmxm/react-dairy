@@ -4,21 +4,13 @@ import EditModal from "../../UI/EditModal"
 import { useState } from "react"
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { fetchRemoveNotes } from "../../redux/slices/notes"
 
-
-const DiaryCard = ({ image, title, description, id, date }) => {
+const DiaryCard = ({ image, title, description, id, date, removeNote }) => {
 
 
     const navigate = useNavigate()
-    const dispatch = useDispatch()
     const [editOpen, setEditOpen] = useState(false)
-    const removeNote = (id) => {
-        if (window.confirm("Вы действительно хотите удалить запись?")) {
-            dispatch(fetchRemoveNotes(id))
-        }
-    }
-
+    
     return (
         <>
             <EditModal editOpen={editOpen} setEditOpen={setEditOpen} id={id} />
