@@ -6,8 +6,8 @@ import './Diary.scss'
 import { Comments } from '../../components'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchComments } from '../../redux/slices/comments'
-import Button from '../../UI/Button'
-import { Input, Loading, Title } from '../../UI'
+import Button from '../../components/UI/Button'
+import { Input, Loading, Title } from '../../components/UI'
 
 const Diary = () => {
 
@@ -15,7 +15,7 @@ const Diary = () => {
     const [comment, setComment] = useState('')
     const [isLoading, setIsLoading] = useState(true)
     const dispatch = useDispatch()
-    
+
     let { search } = useLocation()
     const params = new URLSearchParams(search)
     const diaryId = params.get('id')

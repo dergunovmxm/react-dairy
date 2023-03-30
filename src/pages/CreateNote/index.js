@@ -2,10 +2,10 @@ import axios from '../../axios'
 import { useState } from 'react'
 import './CreateNote.scss'
 import 'react-image-crop/dist/ReactCrop.css'
-import ImageCropDialog from '../../UI/ImageCropDialog'
+import ImageCropDialog from '../../components/UI/ImageCropDialog'
 import { convertBase64 } from '../../utils/functions'
-import Button from '../../UI/Button'
-import { Title } from '../../UI'
+import Button from '../../components/UI/Button'
+import { Title } from '../../components/UI'
 import { Link, useNavigate } from 'react-router-dom'
 
 const CreateNote = () => {
@@ -16,7 +16,7 @@ const CreateNote = () => {
     const [src, selectFile] = useState(null)
     const [file, setFile] = useState(null)
     const [openCrop, setOpenCrop] = useState(false)
-
+    const navigate = useNavigate()
 
     const creatingNote = () => {
 
@@ -29,6 +29,9 @@ const CreateNote = () => {
 
         axios
             .post(`/notes`, data)
+            .then(() => {
+                alert('Запись создана!')
+            })
             .catch((error) => {
                 console.warn(error);
                 alert("Не удалось выполниить запрос!");
@@ -136,7 +139,7 @@ const CreateNote = () => {
                     </div>
 
                 </div>
-                <Link to= "/">
+                <Link to= '/'>
                     <div className='createNote__container__button'
                         onClick={() => { creatingNote(noteTitle, noteDescription, noteImage) }}>
                         <Button value={"Записать"} />

@@ -1,9 +1,8 @@
 import './DiaryCard.scss'
 import { FiEdit, FiTrash2 } from "react-icons/fi"
-import EditModal from "../../UI/EditModal"
+import EditModal from "../UI/EditModal"
 import { useState } from "react"
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 
 const DiaryCard = ({ image, title, description, id, date, removeNote }) => {
 
