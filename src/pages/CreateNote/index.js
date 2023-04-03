@@ -4,25 +4,28 @@ import './CreateNote.scss'
 import 'react-image-crop/dist/ReactCrop.css'
 import ImageCropDialog from '../../components/UI/ImageCropDialog'
 import { convertBase64 } from '../../utils/functions'
-import Button from '../../components/UI/Button'
 import { Title } from '../../components/UI'
-import { Link, useNavigate } from 'react-router-dom'
-import { Formik } from 'formik'
+import { useNavigate } from 'react-router-dom'
+import { Formik, useFormikContext } from 'formik'
 import * as yup from 'yup'
 
 
 const CreateNote = () => {
 
     const [noteImage, setNoteImage] = useState('')
+    const [noteTitle, setTitle] = useState('')
+    const [noteDescription, setDescription] = useState('')
     const [src, selectFile] = useState(null)
     const [file, setFile] = useState(null)
     const [openCrop, setOpenCrop] = useState(false)
     const navigate = useNavigate()
+    
 
     const creatingNote = (values) => {
+
         const data = {
-            title: values.title,
-            description: values.description,
+            title: noteTitle,
+            description: noteDescription,
             image: noteImage,
             date: new Date().toLocaleString().slice(0, -3)
         }
@@ -53,6 +56,8 @@ const CreateNote = () => {
     const validationSchema = yup.object().shape({
         title: yup.string().typeError('Не верный тип').required('Введите заголовок записи'),
         description: yup.string().typeError('Не верный тип').required('Введите текст записи'),
+        image: yup.string().typeError('Не верный тип').required('Загрузите картинку'),
+
 
     })
 
@@ -62,16 +67,16 @@ const CreateNote = () => {
         <div>
             <Formik
                 initialValues={{
-                    title: '',
-                    description: '',
-                    image: '',
+                    title: noteTitle,
+                    description: noteDescription,
+                    image: noteImage,
                     date: new Date().toLocaleString().slice(0, -3)
                 }}
                 validateOnBlur
-                onSubmit={(values) => creatingNote(values)}
+                onSubmit={(values) => { creatingNote(values); console.log(values) }}
                 validationSchema={validationSchema}>
                 {
-                    ({ values, errors, touched, handleChange, handleBlur, isValid, handleSubmit }) => (
+                    ({ values, errors, touched, handleChange, handleBlur, isValid, handleSubmit, resetForm  }) => (
                         <div className='createNote'>
                             <form className='createNote__container'>
                                 <div className='createNote__container__header'>
@@ -83,7 +88,7 @@ const CreateNote = () => {
                                         type={`text`}
                                         name={'title'}
                                         placeholder="Введите заголовок записи"
-                                        onChange={handleChange}
+                                        onChange={(event) => { setTitle(event.target.value); handleChange(event) }}
                                         onBlur={handleBlur}
                                         value={values.title} />
                                 </div>
@@ -93,7 +98,7 @@ const CreateNote = () => {
 
                                 <div className='createNote__container__description'>
                                     <textarea placeholder="Введите запись"
-                                        onChange={handleChange}
+                                        onChange={(event) => { setDescription(event.target.value);  handleChange(event)}}
                                         onBlur={handleBlur}
                                         name={`description`}
                                         value={values.description}
@@ -102,29 +107,29 @@ const CreateNote = () => {
                                 </div>
 
                                 {touched.description && errors.description &&
-
                                     <div className={`error`}><span>{errors.description}</span></div>}
 
                                 <div className='createNote__container__image'>
 
-                                    <div class="input__wrapper">
+                                    <div className="input__wrapper">
                                         <input
-                                            name="file"
+                                            name="image"
                                             className="input input__file"
                                             id="input__file"
                                             type='file'
-                                            onChange={(event) => {
+                                            onChange={event => {
+                                                handleChange(event);
                                                 selectFile(convertBase64(event.target.files[0], setNoteImage));
                                                 setFile(event.target.files[0])
                                             }}
-                                            value={values.noteImage}
+
+                                            value={values.image}
                                             multiple
                                         />
-                                        <label for="input__file" class="input__file-button">
-                                            <span class="input__file-button-text">Выберите файл</span>
+                                        <label htmlFor="input__file" className="input__file-button">
+                                            <span className="input__file-button-text">Выберите файл</span>
                                         </label>
                                     </div>
-
 
                                     <div className='createNote__container__image__prewiew'>
                                         {openCrop ? <ImageCropDialog
@@ -142,14 +147,25 @@ const CreateNote = () => {
                                     </div>
 
                                 </div>
+                                {touched.image && errors.image &&
+                                    <div className={`error`}><span>{errors.image}</span></div>}
 
                                 <div className='createNote__container__button'>
-                                        <button className="button"
-                                            disabled={!isValid}
-                                            onClick={handleSubmit}
-                                            type={`submit`}>
-                                            Записать
-                                        </button>
+                                    <button className="button"
+                                        disabled={!isValid}
+                                        onClick={handleSubmit}
+                                        type={`submit`}>
+                                        Записать
+                                    </button>
+                                </div>
+
+                                <div className='createNote__container__button'>
+                                    <button className="button"
+                                        onClick={() => resetForm()}
+                                        type={`submit`}>
+                                        Сбросить
+                                    </button>
+
                                 </div>
 
                             </form>

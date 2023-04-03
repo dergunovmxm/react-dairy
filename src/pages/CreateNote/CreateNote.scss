@@ -1,8 +1,9 @@
 .createNote {
 
-    width: 95vw;
+    // width: 95vw;
     display: flex;
     justify-content: center;
+    overflow-x: hidden ;
 
     &__container {
         height: 85vh;
@@ -129,12 +130,13 @@
 }
 
 .input__wrapper {
-    width: 100%;
+    
     margin: 15px 0;
     text-align: center;
 }
 
 .input__file {
+    width: 10px;
     opacity: 0;
     visibility: hidden;
     position: absolute;

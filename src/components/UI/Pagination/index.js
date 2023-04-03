@@ -20,7 +20,7 @@ const Pagination = ({ page, numPages, limit }) => {
                     <FiChevronsLeft />
                 </div>
 
-                <div onClick={() => { navigate(`?_page=${Number(page) === 1 ? page : page - 1}&_limit=${limit}`) }} className="wrapper__pagination__arrow">
+                <div onClick={() => { navigate(`?_page=${Number(page) === 1 ? Number(page) : Number(page) - 1}&_limit=${limit}`) }} className="wrapper__pagination__arrow">
                     <FiChevronLeft />
                 </div>
 
@@ -39,13 +39,13 @@ const Pagination = ({ page, numPages, limit }) => {
                                             ? "wrapper__pagination__pages__select_block"
                                             : "wrapper__pagination__pages__block"
                                     }>
-                                    {element}
+                                    {Number(element)}
                                 </div>
                             ),
                         )}
                 </div>
 
-                <div onClick={() => { navigate(`?_page=${Number(page) + 1 > numPages ? page : Number(page) + 1}&_limit=${limit}`) }} className="wrapper__pagination__arrow">
+                <div onClick={() => { navigate(`?_page=${Number(page) + 1 > numPages ? Number(page) : Number(page) + 1}&_limit=${limit}`) }} className="wrapper__pagination__arrow">
                     <FiChevronRight />
                 </div>
 

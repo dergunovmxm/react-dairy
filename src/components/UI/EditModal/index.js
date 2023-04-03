@@ -1,27 +1,28 @@
 import "./EditModal.scss"
 import { FiX } from "react-icons/fi"
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import axios from '../../../axios'
 import ImageCropDialog from '../ImageCropDialog'
-import { convertBase64 } from '../../../utils/functions'
-import Button from '../Button'
 import Tilte from "../Title"
-import { useNavigate } from "react-router-dom"
+import { Formik } from 'formik'
+import * as yup from 'yup'
 
 
-const EditModal = ({ editOpen, setEditOpen, id }) => {
+const EditModal = ({
+    editOpen,
+    setEditOpen,
+    id,
+    editTitle,
+    editDescription,
+    editImage,
+    setEditImage,
+    setIsEdit, 
+    isEdit }) => {
 
-    const navigate = useNavigate()
-    const [noteTitle, setNoteTitle] = useState('')
-    const [noteDescription, setNoteDescription] = useState('')
-    const [noteImage, setNoteImage] = useState('')
+    const [file, setFile] = useState(null)
     const [src, selectFile] = useState(null)
 
     const [openCrop, setOpenCrop] = useState(false)
-
-    const handleFileChange = (event) => {
-        selectFile(convertBase64(event.target.files[0], setNoteImage))
-    }
 
     const onCancel = () => {
         setOpenCrop(false)
@@ -30,21 +31,39 @@ const EditModal = ({ editOpen, setEditOpen, id }) => {
     const setCroppedImageFor = (crop, zoom, aspect, croppedImageUrl) => {
         const newImage = { crop, zoom, aspect, croppedImageUrl }
         croppedImageUrl.then((base64) => {
-            setNoteImage(base64)
+            setEditImage(base64)
         })
 
     }
 
-    const editNote = () => {
+    const convertBase64 = (file, setEditImage) => {
+
+        return new Promise((resolve, reject) => {
+    
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onload = () => setEditImage(reader.result);
+            reader.onerror = (error) => reject(error);
+    
+        });
+    }
+
+    const editNote = (values) => {
+
         const data = {
-            title: noteTitle,
-            description: noteDescription,
-            image: noteImage,
+            title: values.title,
+            description: values.description,
+            image: editImage,
             date: new Date().toLocaleString().slice(0, -3)
+
         }
+
         axios.put(`/notes/${id}`, data)
             .then(() => {
-                navigate('/')
+
+                alert('Запись изменена!')
+                setEditOpen(false)
             })
             .catch((error) => {
                 console.warn(error);
@@ -52,96 +71,124 @@ const EditModal = ({ editOpen, setEditOpen, id }) => {
             })
     }
 
-    useEffect(() => {
-        if (id) {
-            axios.get(`/notes/${id}`)
-                .then(({ data }) => {
-                    setNoteTitle(data.title)
-                    setNoteDescription(data.description)
-                    setNoteImage(data.image)
-                })
-        }
-
-
-    }, [])
+    const validationSchema = yup.object().shape({
+        title: yup.string().typeError('Не верный тип').required('Введите заголовок записи'),
+        description: yup.string().typeError('Не верный тип').required('Введите текст записи'),
+        image: yup.string().typeError('Не верный тип').required('Загрузите картинку'),
+    })
 
     return (
         <section className={editOpen ? "editModal active" : "editModal"}>
+            <Formik
 
-            <form className="editModal__content">
+                initialValues={{
+                    title: editTitle,
+                    description: editDescription,
+                    image: editImage
+                }}
+                enableReinitialize
+                validateOnBlur
+                validateOnChange
+                onSubmit={values => { editNote(values); setIsEdit(true);}}
+                validationSchema={validationSchema}>
+                {
+                    ({ values, errors, touched, dirty, handleChange, handleBlur, isValid, handleSubmit }) => (
+                        <form className="editModal__content" >
 
-                <div className="editModal__content__close" >
-                    <FiX onClick={() => setEditOpen(false)} />
-                </div>
+                            <div className="editModal__content__close" >
+                                <FiX onClick={() => {setEditOpen(false); setEditImage('')}} />
+                            </div>
 
-                <div className="editModal__content__header">
-                    <Tilte title={"Редактирование записи"} />
-                </div>
+                            <div className="editModal__content__header">
+                                <Tilte title={"Редактирование записи"} />
+                            </div>
 
-                <div className='editModal__content__title'>
-                    <input
-                        type="text"
-                        value={noteTitle}
-                        placeholder="Введите заголовок записи"
-                        onChange={(event) => {
-                            setNoteTitle(event.target.value)
-                        }}
-                    />
+                            <div className='createNote__container__title'>
+                                <input
+                                    type={`text`}
+                                    name={'title'}
+                                    placeholder="Введите заголовок записи"
+                                    onChange={(event) => {handleChange(event); console.log(id)}}
+                                    onBlur={handleBlur}
+                                    value={values.title} />
+                            </div>
 
-                </div>
+                            {touched.title && errors.title &&
+                                <div className={`error`}><span>{errors.title}</span></div>}
 
-                <div className='editModal__content__description'>
-                    <textarea placeholder="Введите запись"
-                        onChange={(event) => {
-                            setNoteDescription(event.target.value)
-                        }}
-                        value={noteDescription} />
-                </div>
+                            <div className='createNote__container__description'>
+                                <textarea placeholder="Введите запись"
+                                    onChange={(event) => {handleChange(event); console.log(id)}}
+                                    onBlur={handleBlur}
+                                    name={`description`}
+                                    value={values.description}
 
-                <div className='editModal__content__image'>
+                                />
+                            </div>
 
-                   
-                             <div class="input__wrapper">
-                                        <input
-                                            name="file"
-                                            className="input input__file"
-                                            id="input__file"
-                                            type='file'
-                                            onChange={handleFileChange}
+                            {touched.description && errors.description &&
+                                <div className={`error`}><span>{errors.description}</span></div>}
+
+
+
+                            <div className='createNote__container__image'>
+
+                                <div className="input__wrapper">
+                                    <input
+                                        name="image"
+                                        className="input input__file"
+                                        id="input__file"
+                                        type='file'
+                                        onChange={(event) => {
+                                            selectFile(convertBase64(event.target.files[0], setEditImage));
+                                            handleChange(event);
+                                            setFile(event.target.files[0])
+                                            console.log(id)
                                             
-                                            multiple
-                                        />
-                                        <label for="input__file" class="input__file-button">
-                                            <span class="input__file-button-text">Выберите файл</span>
-                                        </label>
-                                    </div>
+                                        }}
+                                      
+                                        value={values.image?.name}
+                                        multiple
+                                    />
+                                    <label htmlFor="input__file" className="input__file-button">
+                                        <span className="input__file-button-text">Изменить изображение</span>
+                                    </label>
+                                </div>
 
-                    <div className='editModal__content__image__prewiew'>
-                        {openCrop ? <ImageCropDialog
-                            imageUrl={noteImage}
-                            onCancel={onCancel}
-                            setCroppedImageFor={setCroppedImageFor}
-                            setOpenCrop={setOpenCrop}
-                        /> : null}
-                        {
+                                <div className='createNote__container__image__prewiew'>
+                                    {openCrop ? <ImageCropDialog
+                                        imageUrl={editImage}
+                                        onCancel={onCancel}
+                                        setCroppedImageFor={setCroppedImageFor}
+                                        setOpenCrop={setOpenCrop}
+                                    /> : null}
+                                    {editImage ?
+                                        // eslint-disable-next-line jsx-a11y/alt-text
+                                        <img className='createNote__container__image__prewiew__img'
+                                            src={editImage}
+                                            onClick={() => setOpenCrop(!openCrop)} /> : <></>
+                                    }
+                                </div>
 
-                            // eslint-disable-next-line jsx-a11y/alt-text
-                            <img className='createNote__container__image__prewiew__img'
-                                src={noteImage}
-                                onClick={() => setOpenCrop(!openCrop)}
-                            />
-                        }
+                            </div>
 
-                    </div>
+                            {touched.image && errors.image &&
+                                <div className={`error`}><span>{errors.image}</span></div>}
 
-                </div>
 
-                <div className='editModal__content__button' onClick={() => { editNote() }}>
-                    <Button value={"Сохранить"}
-                    />
-                </div>
+                            <div className='createNote__container__button'>
+                                <button className="button"
+                                    disabled={!isValid && !dirty}
+                                    onClick={handleSubmit}
+                                    type={`submit`}>
+                                    Записать
+                                </button>
+                            </div>
 
-            </form>
+
+                        </form>
+                    )}
+            </Formik>
 
         </section>
     )

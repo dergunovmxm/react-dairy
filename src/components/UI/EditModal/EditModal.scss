@@ -10,17 +10,21 @@
     justify-content: center;
     align-items: center;
     transform: scale(0);
-
     
     &__content {
+
         height: 84vh;
         width: 30%;
         min-width: 560px;
         background: white;
         border-radius: 13px;
-        display: flex;
+        display: flex; 
         flex-direction: column;
-        align-items: center;
+        align-items: center; 
+        z-index: 10000;
+        transform: scale(1);
+        transition: transform 0.6s ease-in-out;
+
 
         &__close {
             cursor: pointer;
@@ -122,3 +126,4 @@
 .editModal.active {
     transform: scale(1);
 }
+

@@ -1,7 +1,8 @@
 
-export const convertBase64 = (file, setNoteImage) =>  {
+export const convertBase64 = (file, setNoteImage) => {
 
     return new Promise((resolve, reject) => {
+
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => resolve(reader.result);

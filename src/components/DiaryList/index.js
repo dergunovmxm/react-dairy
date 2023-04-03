@@ -8,7 +8,7 @@ import Filters from "../UI/Filters"
 import empty from '../../assets/empty.png'
 import './DiaryList.scss'
 import Loading from "../UI/Loading"
-import { fetchRemoveNotes } from "../../redux/slices/notes"
+import { fetchNotes, fetchRemoveNotes } from "../../redux/slices/notes"
 import { useLocation, useNavigate } from "react-router-dom"
 
 
@@ -18,6 +18,7 @@ const DiaryList = () => {
     const [notes, setNotes] = useState([]);
     const [searchValue, setSearchValue] = useState('');
     const [isLoading, setIsLoading] = useState(true)
+    const [isEdit, setIsEdit] = useState(false)
     const [sort, setSort] = useState({})
     const navigate = useNavigate();
     const [numPages, setNumPages] = useState(0);
@@ -32,13 +33,14 @@ const DiaryList = () => {
             setIsLoading(true)
             axios.delete(`/notes/${id}`)
                 .then(() => {
+                    setNumPages(Number(numPages - 1));
                     axios
                         .get(`/notes?title_like=${searchValue}&_page=${page}&_limit=${limit}&_sort=${sort.name}&_order=${sort.order}`)
                         .then(({ data }) => {
                             if (!data.length) {
 
                                 navigate(`?_page=${page - 1}&_limit=${limit}`)
-                                setNumPages(numPages - 1)
+                                
                             } else {
                                 setNotes(data)
                                 setIsLoading(false)
@@ -55,6 +57,19 @@ const DiaryList = () => {
 
     useEffect(() => {
         axios
+            .get(`/notes?title_like=${searchValue}`)
+            .then(({ data }) => {
+                setIsLoading(false)
+                setNumPages(Math.ceil(data.length / limit));
+            })
+            .catch((error) => {
+                console.warn(error);
+                alert("Не удалось выполниить запрос!");
+            });
+    }, [searchValue]);
+
+    useEffect(() => {
+        axios
             .get(`/notes?title_like=${searchValue}&_page=${page}&_limit=${limit}&_sort=${sort.sort}&_order=${sort.order}`)
             .then(({ data }) => {
 
@@ -66,20 +81,8 @@ const DiaryList = () => {
                 alert("Не удалось выполниить запрос!");
             })
 
-    }, [page, searchValue, sort]);
+    }, [page, searchValue, sort, isEdit]);
 
-    useEffect(() => {
-        axios
-            .get(`/notes?title_like=${searchValue}`)
-            .then(({ data }) => {
-                setIsLoading(false)
-                setNumPages(Math.ceil(data.length / limit));
-            })
-            .catch((error) => {
-                console.warn(error);
-                alert("Не удалось выполниить запрос!");
-            });
-    }, [searchValue]);
 
     return (
         <>
@@ -96,7 +99,7 @@ const DiaryList = () => {
                 isLoading ? <Loading /> :
                     <>
                         <section className="dairy__items">
-                            {notes.length ? notes.map((item) => <DairyCard {...item} key={item.id} removeNote={removeNote} />)
+                            {notes.length ? notes.map((item) => <DairyCard {...item} key={item.id} removeNote={removeNote} setIsEdit={setIsEdit} isEdit={isEdit}/>)
                                 : <div className="emptySearch">
                                     <img src={empty} alt='emptySearch' />
                                     <span>Ничего не найдено</span>

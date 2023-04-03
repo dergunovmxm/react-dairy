@@ -56,7 +56,7 @@ const Filters = ({ searchValue, setSearchValue, sort, onClickSort, limit }) => {
                                 {
                                     list.map((item, i) => (
                                         <li key={i}
-                                            onClick={() => { onClickItem(item); setLabel(item.name); console.log(sort) }}
+                                            onClick={() => { onClickItem(item); setLabel(item.name); }}
                                         >
                                             {item.name}
                                         </li>

@@ -10,7 +10,7 @@ const Comments = ({ id }) => {
     const { comments } = useSelector(({ ...state }) => state.comments)
 
     useEffect(() => {
-        dispatch(fetchComments(id,))
+        dispatch(fetchComments(id))
     }, [id])
 
     return (
