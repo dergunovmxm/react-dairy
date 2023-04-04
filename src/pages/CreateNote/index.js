@@ -3,13 +3,14 @@ import { useState } from 'react'
 import './CreateNote.scss'
 import 'react-image-crop/dist/ReactCrop.css'
 import ImageCropDialog from '../../components/UI/ImageCropDialog'
+import moment from 'moment';
+import 'moment/locale/ru';
 import { convertBase64 } from '../../utils/functions'
 import { Title } from '../../components/UI'
 import { useNavigate } from 'react-router-dom'
-import { Formik, useFormikContext } from 'formik'
+import { Formik } from 'formik'
 import * as yup from 'yup'
-
-
+moment.locale('ru')
 const CreateNote = () => {
 
     const [noteImage, setNoteImage] = useState('')
@@ -21,13 +22,13 @@ const CreateNote = () => {
     const navigate = useNavigate()
     
 
-    const creatingNote = (values) => {
+    const creatingNote = () => {
 
         const data = {
             title: noteTitle,
             description: noteDescription,
             image: noteImage,
-            date: new Date().toLocaleString().slice(0, -3)
+            date: moment().format('LLL')
         }
         axios
             .post(`/notes`, data)
@@ -46,18 +47,16 @@ const CreateNote = () => {
     }
 
     const setCroppedImageFor = (crop, zoom, aspect, croppedImageUrl) => {
-        const newImage = { crop, zoom, aspect, croppedImageUrl }
-        croppedImageUrl.then((base64) => {
-            setNoteImage(base64)
-        })
-
+        const newImage = { noteImage, crop, zoom, aspect, croppedImageUrl }
+        console.log(newImage)
+        setNoteImage(croppedImageUrl)
     }
 
-    const validationSchema = yup.object().shape({
-        title: yup.string().typeError('Не верный тип').required('Введите заголовок записи'),
-        description: yup.string().typeError('Не верный тип').required('Введите текст записи'),
-        image: yup.string().typeError('Не верный тип').required('Загрузите картинку'),
 
+    const validationSchema = yup.object().shape({
+        title: yup.string().typeError('Неверный тип').required('Введите заголовок записи'),
+        description: yup.string().typeError('Неверный тип').required('Введите текст записи'),
+        image: yup.string().typeError('Неверный тип').required('Загрузите картинку'),
 
     })
 
@@ -70,13 +69,13 @@ const CreateNote = () => {
                     title: noteTitle,
                     description: noteDescription,
                     image: noteImage,
-                    date: new Date().toLocaleString().slice(0, -3)
+                    date: moment().format('LLL')
                 }}
                 validateOnBlur
-                onSubmit={(values) => { creatingNote(values); console.log(values) }}
+                onSubmit={(values) => { creatingNote(values); }}
                 validationSchema={validationSchema}>
                 {
-                    ({ values, errors, touched, handleChange, handleBlur, isValid, handleSubmit, resetForm  }) => (
+                    ({ values, errors, touched, handleChange, handleBlur, isValid, handleSubmit, handleReset }) => (
                         <div className='createNote'>
                             <form className='createNote__container'>
                                 <div className='createNote__container__header'>
@@ -138,7 +137,7 @@ const CreateNote = () => {
                                             setCroppedImageFor={setCroppedImageFor}
                                             setOpenCrop={setOpenCrop}
                                         /> : null}
-                                        {file ?
+                                        {noteImage?
                                             // eslint-disable-next-line jsx-a11y/alt-text
                                             <img className='createNote__container__image__prewiew__img'
                                                 src={noteImage}
@@ -161,8 +160,8 @@ const CreateNote = () => {
 
                                 <div className='createNote__container__button'>
                                     <button className="button"
-                                        onClick={() => resetForm()}
-                                        type={`submit`}>
+                                        onClick={(event) => {event.stopPropagation(); handleReset(); setNoteImage('');  }}
+                                        type={`reset`}>
                                         Сбросить
                                     </button>
 

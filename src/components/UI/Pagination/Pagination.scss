@@ -34,6 +34,7 @@
                 border-radius: 5px;
                 border: solid 2px rgba(90, 156, 255, 0.3);
                 @include text(600, 16px, 16px, rgb(90, 156, 255));
+                cursor: pointer;
             }
 
             &__select_block {

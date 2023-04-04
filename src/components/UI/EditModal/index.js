@@ -1,12 +1,13 @@
 import "./EditModal.scss"
 import { FiX } from "react-icons/fi"
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import axios from '../../../axios'
 import ImageCropDialog from '../ImageCropDialog'
 import Tilte from "../Title"
+import moment from 'moment';
 import { Formik } from 'formik'
 import * as yup from 'yup'
-
+moment.locale('ru')
 
 const EditModal = ({
     editOpen,
@@ -15,13 +16,12 @@ const EditModal = ({
     editTitle,
     editDescription,
     editImage,
-    setEditImage,
-    setIsEdit, 
-    isEdit }) => {
+    setIsEdit
+}) => {
 
     const [file, setFile] = useState(null)
     const [src, selectFile] = useState(null)
-
+    const [noteImage, setNoteImage] = useState(editImage)
     const [openCrop, setOpenCrop] = useState(false)
 
     const onCancel = () => {
@@ -29,23 +29,21 @@ const EditModal = ({
     }
 
     const setCroppedImageFor = (crop, zoom, aspect, croppedImageUrl) => {
-        const newImage = { crop, zoom, aspect, croppedImageUrl }
-        croppedImageUrl.then((base64) => {
-            setEditImage(base64)
-        })
-
+        const newImage = { noteImage, crop, zoom, aspect, croppedImageUrl }
+        console.log(newImage)
+        setNoteImage(croppedImageUrl)
     }
 
     const convertBase64 = (file, setEditImage) => {
 
         return new Promise((resolve, reject) => {
-    
+
             const reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = () => resolve(reader.result);
             reader.onload = () => setEditImage(reader.result);
             reader.onerror = (error) => reject(error);
-    
+
         });
     }
 
@@ -54,15 +52,17 @@ const EditModal = ({
         const data = {
             title: values.title,
             description: values.description,
-            image: editImage,
-            date: new Date().toLocaleString().slice(0, -3)
+            image: noteImage,
+            date: moment().format('LLL')
 
         }
 
         axios.put(`/notes/${id}`, data)
+
             .then(() => {
 
                 alert('Запись изменена!')
+                setIsEdit(true)
                 setEditOpen(false)
             })
             .catch((error) => {
@@ -72,31 +72,39 @@ const EditModal = ({
     }
 
     const validationSchema = yup.object().shape({
-        title: yup.string().typeError('Не верный тип').required('Введите заголовок записи'),
-        description: yup.string().typeError('Не верный тип').required('Введите текст записи'),
+        title: yup.string().typeError('Неверный тип').required('Введите заголовок записи'),
+        description: yup.string().typeError('Неверный тип').required('Введите текст записи'),
         image: yup.string().typeError('Не верный тип').required('Загрузите картинку'),
     })
+    const initialValues = {
+        title: editTitle,
+        description: editDescription,
+        image: editImage,
+        date: moment().format('LLL')
+    }
+
+    useEffect(() => {
+        setNoteImage(editImage)
+    }, [editImage])
 
     return (
         <section className={editOpen ? "editModal active" : "editModal"}>
             <Formik
 
-                initialValues={{
-                    title: editTitle,
-                    description: editDescription,
-                    image: editImage
-                }}
+                initialValues={
+                    initialValues
+                }
                 enableReinitialize
                 validateOnBlur
                 validateOnChange
-                onSubmit={values => { editNote(values); setIsEdit(true);}}
+                onSubmit={values => { editNote(values) }}
                 validationSchema={validationSchema}>
                 {
-                    ({ values, errors, touched, dirty, handleChange, handleBlur, isValid, handleSubmit }) => (
+                    ({ values, errors, touched, dirty, handleChange, handleBlur, isValid, handleSubmit, handleReset }) => (
                         <form className="editModal__content" >
 
                             <div className="editModal__content__close" >
-                                <FiX onClick={() => {setEditOpen(false); setEditImage('')}} />
+                                <FiX onClick={() => { setEditOpen(false); }} />
                             </div>
 
                             <div className="editModal__content__header">
@@ -108,7 +116,7 @@ const EditModal = ({
                                     type={`text`}
                                     name={'title'}
                                     placeholder="Введите заголовок записи"
-                                    onChange={(event) => {handleChange(event); console.log(id)}}
+                                    onChange={(event) => { handleChange(event) }}
                                     onBlur={handleBlur}
                                     value={values.title} />
                             </div>
@@ -118,7 +126,7 @@ const EditModal = ({
 
                             <div className='createNote__container__description'>
                                 <textarea placeholder="Введите запись"
-                                    onChange={(event) => {handleChange(event); console.log(id)}}
+                                    onChange={(event) => { handleChange(event); }}
                                     onBlur={handleBlur}
                                     name={`description`}
                                     value={values.description}
@@ -140,32 +148,31 @@ const EditModal = ({
                                         id="input__file"
                                         type='file'
                                         onChange={(event) => {
-                                            selectFile(convertBase64(event.target.files[0], setEditImage));
+                                            selectFile(convertBase64(event.target.files[0], setNoteImage));
                                             handleChange(event);
                                             setFile(event.target.files[0])
-                                            console.log(id)
-                                            
                                         }}
-                                      
+
                                         value={values.image?.name}
                                         multiple
+
                                     />
                                     <label htmlFor="input__file" className="input__file-button">
-                                        <span className="input__file-button-text">Изменить изображение</span>
+                                        <span className="input__file-button-text">Выберите изображение</span>
                                     </label>
                                 </div>
 
                                 <div className='createNote__container__image__prewiew'>
                                     {openCrop ? <ImageCropDialog
-                                        imageUrl={editImage}
+                                        imageUrl={noteImage}
                                         onCancel={onCancel}
                                         setCroppedImageFor={setCroppedImageFor}
                                         setOpenCrop={setOpenCrop}
                                     /> : null}
-                                    {editImage ?
+                                    {noteImage ?
                                         // eslint-disable-next-line jsx-a11y/alt-text
                                         <img className='createNote__container__image__prewiew__img'
-                                            src={editImage}
+                                            src={noteImage}
                                             onClick={() => setOpenCrop(!openCrop)} /> : <></>
                                     }
                                 </div>
@@ -184,7 +191,14 @@ const EditModal = ({
                                     Записать
                                 </button>
                             </div>
+                            <div className='createNote__container__button'>
+                                <button className="button"
+                                    onClick={() => { handleReset(); setNoteImage(editImage) }}
+                                    type={`reset`}>
+                                    Сбросить
+                                </button>
 
+                            </div>
 
                         </form>
                     )}

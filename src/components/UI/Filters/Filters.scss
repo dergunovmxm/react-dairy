@@ -41,6 +41,7 @@
     }
 
     &__filtering {
+        z-index: 1;
 
         &__label {
             display: flex;
@@ -64,6 +65,7 @@
             background: white;
             border-radius: 8px;
             text-decoration: none;
+            z-index: 1;
 
             ul {
                 padding-left: 0;
@@ -72,7 +74,7 @@
                 flex-direction: column;
                 list-style-type: none;
                 text-decoration: none;
-
+                z-index: 2;
 
                 li {
                     cursor: pointer;
@@ -86,10 +88,21 @@
                     font-size: 12px;
                     opacity: .7;
                     text-decoration: none;
+                    z-index: 2;
+
                 }
+
+                li:last-child {
+                    border-radius: 0 0 8px 8px 
+                }
+                li:first-child {
+                    border-radius: 8px 8px 0 0 
+                }
+
 
                 li:hover {
                     background-color: #f3f3f3;
+
                 }
             }
 

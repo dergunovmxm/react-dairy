@@ -8,7 +8,7 @@ import Filters from "../UI/Filters"
 import empty from '../../assets/empty.png'
 import './DiaryList.scss'
 import Loading from "../UI/Loading"
-import { fetchNotes, fetchRemoveNotes } from "../../redux/slices/notes"
+import { fetchRemoveNotes } from "../../redux/slices/notes"
 import { useLocation, useNavigate } from "react-router-dom"
 
 
@@ -21,7 +21,7 @@ const DiaryList = () => {
     const [isEdit, setIsEdit] = useState(false)
     const [sort, setSort] = useState({})
     const navigate = useNavigate();
-    const [numPages, setNumPages] = useState(0);
+    const [countNotes, setCountNotes] = useState(0)
     const [limit, setLimit] = useState(4)
 
     let { search } = useLocation();
@@ -33,12 +33,12 @@ const DiaryList = () => {
             setIsLoading(true)
             axios.delete(`/notes/${id}`)
                 .then(() => {
-                    setNumPages(Number(numPages - 1));
+                    setCountNotes(countNotes - 1)
                     axios
                         .get(`/notes?title_like=${searchValue}&_page=${page}&_limit=${limit}&_sort=${sort.name}&_order=${sort.order}`)
                         .then(({ data }) => {
                             if (!data.length) {
-
+                                
                                 navigate(`?_page=${page - 1}&_limit=${limit}`)
                                 
                             } else {
@@ -59,22 +59,29 @@ const DiaryList = () => {
         axios
             .get(`/notes?title_like=${searchValue}`)
             .then(({ data }) => {
-                setIsLoading(false)
-                setNumPages(Math.ceil(data.length / limit));
+                
+                setCountNotes(data.length);
+                setTimeout(() => {
+                    setIsLoading(false)
+                }, 100)
             })
             .catch((error) => {
                 console.warn(error);
                 alert("Не удалось выполниить запрос!");
             });
     }, [searchValue]);
-
+    
     useEffect(() => {
         axios
             .get(`/notes?title_like=${searchValue}&_page=${page}&_limit=${limit}&_sort=${sort.sort}&_order=${sort.order}`)
             .then(({ data }) => {
-
+                
                 setNotes(data)
-                setIsLoading(false)
+                setIsEdit(false)
+                setTimeout(() => {
+                    setIsLoading(false)
+                }, 100)
+               
             })
             .catch((error) => {
                 console.warn(error);
@@ -99,7 +106,7 @@ const DiaryList = () => {
                 isLoading ? <Loading /> :
                     <>
                         <section className="dairy__items">
-                            {notes.length ? notes.map((item) => <DairyCard {...item} key={item.id} removeNote={removeNote} setIsEdit={setIsEdit} isEdit={isEdit}/>)
+                            { !isLoading  && notes.length? notes.map((item) => <DairyCard {...item} key={item.id} removeNote={removeNote} setIsEdit={setIsEdit} isEdit={isEdit}/>)
                                 : <div className="emptySearch">
                                     <img src={empty} alt='emptySearch' />
                                     <span>Ничего не найдено</span>
@@ -109,7 +116,7 @@ const DiaryList = () => {
                         {
                             isLoading ? <></> :
                                 notes.length ?
-                                    <Pagination page={page} numPages={numPages} limit={limit} /> : <></>
+                                    <Pagination page={page} numPages={Math.ceil(countNotes / limit)} limit={limit} /> : <></>
                         }
                     </>
             }

@@ -35,6 +35,7 @@ const Filters = ({ searchValue, setSearchValue, sort, onClickSort, limit }) => {
     const onClickItem = (i) => {
         onClickSort(i)
         setOpen(false)
+        navigate(`?_page=${1}&_limit=${limit}`)
     }
 
     return (

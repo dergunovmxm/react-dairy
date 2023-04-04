@@ -25,6 +25,7 @@ const Pagination = ({ page, numPages, limit }) => {
                 </div>
 
                 <div className="wrapper__pagination__pages">
+
                     {Array.from({
                         length: (Number(page) === 1
                             ? (Number(page) === Number(numPages) ? 1 : 2)
@@ -34,6 +35,7 @@ const Pagination = ({ page, numPages, limit }) => {
                             (element) => (
                                 <div
                                     key={element}
+                                    onClick={()=> navigate(`?_page=${element}&_limit=${limit}`)}
                                     className={
                                         Number(page) === Number(element)
                                             ? "wrapper__pagination__pages__select_block"

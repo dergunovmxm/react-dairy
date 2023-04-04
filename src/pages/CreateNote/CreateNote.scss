@@ -71,7 +71,7 @@
         &__image {
 
             height: 500px;
-            top:0;
+            margin-bottom:0;
             display: flex;
             flex-direction: column-reverse;
             justify-content: center;
@@ -94,7 +94,7 @@
             justify-content: center;
             text-decoration: none;
             margin-top: 10px;
-            margin-bottom:  30px;
+            margin-bottom:  20px;
             button {
                 width: 100px;
                 height: 30px;
@@ -130,8 +130,7 @@
 }
 
 .input__wrapper {
-    
-    margin: 15px 0;
+
     text-align: center;
 }
 

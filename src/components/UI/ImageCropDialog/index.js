@@ -1,14 +1,14 @@
 import './ImageCropDialog.scss'
-import Cropper from 'react-easy-crop'
-import { useEffect, useState } from 'react'
-import getCroppedImg from './cropImage'
+import React, { useState, useEffect } from "react";
+import Cropper from "react-easy-crop";
+import getCroppedImg from "./cropImage";
 
 const ImageCropDialog = ({ imageUrl, cropInit, zoomInit, aspectInit, onCancel, setCroppedImageFor, setOpenCrop }) => {
 
-    const aspecrRatios = [
+    const aspectRatios = [
         { value: 4 / 3, text: "4/3" },
         { value: 16 / 9, text: "16/9" },
-        { value: 1 / 2, text: "1/2" }
+        { value: 1 / 1, text: "1/1" }
     ]
 
     if (zoomInit == null) {
@@ -23,13 +23,13 @@ const ImageCropDialog = ({ imageUrl, cropInit, zoomInit, aspectInit, onCancel, s
     }
 
     if (aspectInit == null) {
-        aspectInit = aspecrRatios[0].value
+        aspectInit = aspectRatios[0].value
     }
 
-    const [zoom, setZoom] = useState(zoomInit)
-    const [crop, setCrop] = useState(cropInit)
-    const [aspect, setAspect] = useState(aspectInit)
-    const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
+    const [zoom, setZoom] = useState(zoomInit);
+    const [crop, setCrop] = useState(cropInit);
+    const [aspect, setAspect] = useState(aspectInit);
+    const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
 
     const onCropChange = (crop) => {
         setCrop(crop)
@@ -39,28 +39,22 @@ const ImageCropDialog = ({ imageUrl, cropInit, zoomInit, aspectInit, onCancel, s
         setZoom(zoom)
     }
 
-    const onAspectChange = (event) => {
-        console.log(event)
-        const value = Number(event.target.value)
-        const ratio = aspecrRatios.find(ratio => 
-            ratio.value === value
-        )
-        console.log(ratio)
-        setAspect(ratio.value)
-    }
+    const onAspectChange = (e) => {
+        const value = e.target.value;
+        const ratio = aspectRatios.find((ratio) => ratio.value == value);
+        setAspect(ratio);
+    };
 
-    const onCropComplete = (event) => {
-        setCroppedAreaPixels(event)
-        console.log(event)
-    }
+    const onCropComplete = (croppedArea, croppedAreaPixels) => {
+        setCroppedAreaPixels(croppedAreaPixels);
+    };
 
-    const onCrop = () => {
-        // console.log(`test ${imageUrl}`)
-        // console.log(croppedAreaPixels)
-        const croppedImageUrl = getCroppedImg(imageUrl, croppedAreaPixels)
-        setCroppedImageFor(crop, zoom, aspect, croppedImageUrl)
+
+    const onCrop = async () => {
+        const croppedImageUrl = await getCroppedImg(imageUrl, croppedAreaPixels);
+        setCroppedImageFor(crop, zoom, aspect, croppedImageUrl);
         setOpenCrop(false)
-    }
+    };
 
     return (
         <div>
@@ -69,7 +63,7 @@ const ImageCropDialog = ({ imageUrl, cropInit, zoomInit, aspectInit, onCancel, s
                 <Cropper image={imageUrl}
                     zoom={zoom}
                     crop={crop}
-                    aspect={aspect}
+                    aspect={aspect.value}
                     onCropChange={onCropChange}
                     onZoomChange={onZoomChange}
                     onCropComplete={onCropComplete}
@@ -88,11 +82,11 @@ const ImageCropDialog = ({ imageUrl, cropInit, zoomInit, aspectInit, onCancel, s
                         className="slider"
                     ></input>
                     <select onChange={onAspectChange} value={aspect}>
-                        {aspecrRatios.map((ratio) => (
+                        {aspectRatios.map((ratio) => (
                             <option
                                 key={ratio.text}
                                 value={ratio.value}
-                                //selected={ratio.value === aspect}
+
                             >
                                 {ratio.text}
                             </option>
