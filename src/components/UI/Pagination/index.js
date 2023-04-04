@@ -10,21 +10,21 @@ const Pagination = ({ page, numPages, limit }) => {
 
         <div className="wrapper">
 
-            <section className="wrapper__pagination">
+            <section className="wrapper-pagination">
 
                 <div
                     onClick={() => {
                         navigate(`?_page=${1}&_limit=${limit}`)
                     }}
-                    className="wrapper__pagination__arrow">
+                    className="wrapper-pagination__arrow">
                     <FiChevronsLeft />
                 </div>
 
-                <div onClick={() => { navigate(`?_page=${Number(page) === 1 ? Number(page) : Number(page) - 1}&_limit=${limit}`) }} className="wrapper__pagination__arrow">
+                <div onClick={() => { navigate(`?_page=${Number(page) === 1 ? Number(page) : Number(page) - 1}&_limit=${limit}`) }} className="wrapper-pagination__arrow">
                     <FiChevronLeft />
                 </div>
 
-                <div className="wrapper__pagination__pages">
+                <div className="wrapper-pagination__pages">
 
                     {Array.from({
                         length: (Number(page) === 1
@@ -38,8 +38,8 @@ const Pagination = ({ page, numPages, limit }) => {
                                     onClick={()=> navigate(`?_page=${element}&_limit=${limit}`)}
                                     className={
                                         Number(page) === Number(element)
-                                            ? "wrapper__pagination__pages__select_block"
-                                            : "wrapper__pagination__pages__block"
+                                            ? "wrapper-pagination__pages__select_block"
+                                            : "wrapper-pagination__pages__block"
                                     }>
                                     {Number(element)}
                                 </div>
@@ -47,7 +47,7 @@ const Pagination = ({ page, numPages, limit }) => {
                         )}
                 </div>
 
-                <div onClick={() => { navigate(`?_page=${Number(page) + 1 > numPages ? Number(page) : Number(page) + 1}&_limit=${limit}`) }} className="wrapper__pagination__arrow">
+                <div onClick={() => { navigate(`?_page=${Number(page) + 1 > numPages ? Number(page) : Number(page) + 1}&_limit=${limit}`) }} className="wrapper-pagination__arrow">
                     <FiChevronRight />
                 </div>
 
@@ -55,7 +55,7 @@ const Pagination = ({ page, numPages, limit }) => {
                     onClick={() => {
                         navigate(`?_page=${numPages}&_limit=${limit}`)
                     }}
-                    className="wrapper__pagination__arrow">
+                    className="wrapper-pagination__arrow">
                     <FiChevronsRight />
                 </div>
 

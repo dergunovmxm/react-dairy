@@ -105,7 +105,7 @@ const DiaryList = () => {
             {
                 isLoading ? <Loading /> :
                     <>
-                        <section className="dairy__items">
+                        <section className="dairy-items">
                             { !isLoading  && notes.length? notes.map((item) => <DairyCard {...item} key={item.id} removeNote={removeNote} setIsEdit={setIsEdit} isEdit={isEdit}/>)
                                 : <div className="emptySearch">
                                     <img src={empty} alt='emptySearch' />

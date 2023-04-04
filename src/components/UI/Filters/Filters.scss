@@ -12,7 +12,7 @@
     }
 
 
-    &__adding {
+    &-adding {
         margin: 0, 50px;
         background: white;
         height: 30px;
@@ -40,7 +40,7 @@
 
     }
 
-    &__filtering {
+    &-filtering {
         z-index: 1;
 
         &__label {
@@ -109,7 +109,7 @@
         }
     }
 
-    &__search {
+    &-search {
         margin-top: 0;
         display: flex;
         align-items: center;

@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchComments } from '../../redux/slices/comments'
 import  CommentsItem  from '../CommentsItem'
-import './Comments.scss'
 
 const Comments = ({ id }) => {
 

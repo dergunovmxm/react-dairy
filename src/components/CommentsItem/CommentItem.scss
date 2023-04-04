@@ -19,7 +19,7 @@
 
     }
 
-    &__content {
+    &-content {
         transition: 0.1s;
         height: 60px;
         padding: 5px;
@@ -57,7 +57,7 @@
         }
     }
 
-    &__contentOpen {
+    &-contentOpen {
         transition: 0.2s;
         height: 150px;
         padding: 5px;

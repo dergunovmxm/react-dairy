@@ -15,13 +15,13 @@ const CommentsItem = ({ text, firstname, lastname }) => {
                 <FiUser />
             </div>
 
-            <div className={openComment ? "commentItem__contentOpen" : 'commentItem__content'}>
+            <div className={openComment ? "commentItem-contentOpen" : 'commentItem-content'}>
 
-                <div className='commentItem__content__name'>
+                <div className='commentItem-content__name'>
                     <span>{user}</span>
                 </div>
 
-                <div className={openComment ? 'commentItem__content__text open' : 'commentItem__content__text'}>
+                <div className={openComment ? 'commentItem-content__text open' : 'commentItem-content__text'}>
                     <span>{text}</span>
                 </div>
 

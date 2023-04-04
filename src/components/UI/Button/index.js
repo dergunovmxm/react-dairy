@@ -1,8 +1,9 @@
 import './Button.scss'
 
 const Button = ({ value }) => {
+    
     return (
-        <button className="button__container">
+        <button className="button-container">
             {value}
         </button>
     )

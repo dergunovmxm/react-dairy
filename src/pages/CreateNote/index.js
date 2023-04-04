@@ -77,12 +77,12 @@ const CreateNote = () => {
                 {
                     ({ values, errors, touched, handleChange, handleBlur, isValid, handleSubmit, handleReset }) => (
                         <div className='createNote'>
-                            <form className='createNote__container'>
-                                <div className='createNote__container__header'>
+                            <form className='createNote-container'>
+                                <div className='createNote-container__header'>
                                     <Title title={"Создание записи"} />
                                 </div>
 
-                                <div className='createNote__container__title'>
+                                <div className='createNote-container__title'>
                                     <input
                                         type={`text`}
                                         name={'title'}
@@ -95,7 +95,7 @@ const CreateNote = () => {
                                 {touched.title && errors.title &&
                                     <div className={`error`}><span>{errors.title}</span></div>}
 
-                                <div className='createNote__container__description'>
+                                <div className='createNote-container__description'>
                                     <textarea placeholder="Введите запись"
                                         onChange={(event) => { setDescription(event.target.value);  handleChange(event)}}
                                         onBlur={handleBlur}
@@ -108,7 +108,7 @@ const CreateNote = () => {
                                 {touched.description && errors.description &&
                                     <div className={`error`}><span>{errors.description}</span></div>}
 
-                                <div className='createNote__container__image'>
+                                <div className='createNote-container__image'>
 
                                     <div className="input__wrapper">
                                         <input
@@ -130,7 +130,7 @@ const CreateNote = () => {
                                         </label>
                                     </div>
 
-                                    <div className='createNote__container__image__prewiew'>
+                                    <div className='createNote-container__image__prewiew'>
                                         {openCrop ? <ImageCropDialog
                                             imageUrl={noteImage}
                                             onCancel={onCancel}
@@ -139,7 +139,7 @@ const CreateNote = () => {
                                         /> : null}
                                         {noteImage?
                                             // eslint-disable-next-line jsx-a11y/alt-text
-                                            <img className='createNote__container__image__prewiew__img'
+                                            <img className='createNote-container__image__prewiew__img'
                                                 src={noteImage}
                                                 onClick={() => setOpenCrop(!openCrop)} /> : <></>
                                         }
@@ -149,7 +149,7 @@ const CreateNote = () => {
                                 {touched.image && errors.image &&
                                     <div className={`error`}><span>{errors.image}</span></div>}
 
-                                <div className='createNote__container__button'>
+                                <div className='createNote-container__button'>
                                     <button className="button"
                                         disabled={!isValid}
                                         onClick={handleSubmit}
@@ -158,7 +158,7 @@ const CreateNote = () => {
                                     </button>
                                 </div>
 
-                                <div className='createNote__container__button'>
+                                <div className='createNote-container__button'>
                                     <button className="button"
                                         onClick={(event) => {event.stopPropagation(); handleReset(); setNoteImage('');  }}
                                         type={`reset`}>

@@ -58,24 +58,24 @@ const Diary = () => {
     }
 
     return (
-        <div className='diary__container'>
+        <div className='diary-container'>
             {!isLoading ? <>
-                <main className='diary__container__content'>
+                <main className='diary-container-content'>
 
-                    <div className='diary__container__content__image'>
+                    <div className='diary-container-content__image'>
                         {
                             items.image ? <img src={items.image} alt="defaultImage" /> : <FiImage />
                         }
                         
                     </div>
 
-                    <div className='diary__container__content__info'>
+                    <div className='diary-container-content__info'>
 
-                        <div className='diary__container__content__info__title'>
+                        <div className='diary-container-content__info__title'>
                             <span>{items.title}</span>
                         </div>
 
-                        <div className='diary__container__content__info__description'>
+                        <div className='diary-container-content__info__description'>
                             <span>{items.description}</span>
                         </div>
 
@@ -83,7 +83,7 @@ const Diary = () => {
 
                 </main>
 
-                <section className='diary__container__commentsBox'>
+                <section className='diary-container__commentsBox'>
                     <Title title={"Комментарии"} />
                     <div className='comments__box'>
                         <Comments id={diaryId} />

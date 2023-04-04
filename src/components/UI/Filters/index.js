@@ -43,16 +43,16 @@ const Filters = ({ searchValue, setSearchValue, sort, onClickSort, limit }) => {
         <header className='tools'>
 
 
-            <div className='tools__filtering' >
+            <div className='tools-filtering' >
 
-                <div className='tools__filtering__label' onClick={() => setOpen(!open)}>
+                <div className='tools-filtering__label' onClick={() => setOpen(!open)}>
 
                     <span>{label}</span>
 
                 </div>
                 {
                     open ?
-                        <div className='tools__filtering__sortList'>
+                        <div className='tools-filtering__sortList'>
                             <ul>
                                 {
                                     list.map((item, i) => (
@@ -72,7 +72,7 @@ const Filters = ({ searchValue, setSearchValue, sort, onClickSort, limit }) => {
 
 
 
-            <div className="tools__search">
+            <div className="tools-search">
                 {
                     searchValue &&
                     <img className="clear"
@@ -91,7 +91,7 @@ const Filters = ({ searchValue, setSearchValue, sort, onClickSort, limit }) => {
             </div>
 
             <Link to='create_note'>
-                <div className='tools__adding'>
+                <div className='tools-adding'>
                     <span>Добавить запись</span>
                 </div>
             </Link>

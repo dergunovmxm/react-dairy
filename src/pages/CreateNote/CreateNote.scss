@@ -1,11 +1,10 @@
 .createNote {
 
-    // width: 95vw;
     display: flex;
     justify-content: center;
     overflow-x: hidden ;
 
-    &__container {
+    &-container {
         height: 85vh;
         width: 30%;
         min-width: 560px;

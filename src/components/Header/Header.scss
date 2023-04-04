@@ -1,4 +1,5 @@
 .header {
+
     height: 60px;
     background: white;
     border-bottom: 2px solid #eaeaea;
@@ -7,12 +8,9 @@
     justify-content: space-between;
     margin-left: auto;
 
-    
-
-    .header__logo {
+    .header-logo {
         display: flex;
         align-items: center;
-        // margin: 0 20px;
         padding: 10px;
         cursor: pointer;
 
@@ -35,25 +33,7 @@
                 font-size: 13px;
                 opacity: .5;
             }
-            @media screen and (min-width: 1921px) {
-                b{
-                    font-size: 20px;
-                }
-                span{
-                    font-size: 20px;
-                }
-            }
-        }
-    }
 
-    @media screen and (min-width: 1921px) {
-        height: 100px;
-
-        .header__logo {
-            svg {
-                width: 70px;
-                height: 70px;
-            }
         }
     }
 }

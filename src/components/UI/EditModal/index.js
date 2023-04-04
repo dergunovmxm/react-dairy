@@ -101,17 +101,17 @@ const EditModal = ({
                 validationSchema={validationSchema}>
                 {
                     ({ values, errors, touched, dirty, handleChange, handleBlur, isValid, handleSubmit, handleReset }) => (
-                        <form className="editModal__content" >
+                        <form className="editModal-content" >
 
-                            <div className="editModal__content__close" >
+                            <div className="editModal-content__close" >
                                 <FiX onClick={() => { setEditOpen(false); }} />
                             </div>
 
-                            <div className="editModal__content__header">
+                            <div className="editModal-content__header">
                                 <Tilte title={"Редактирование записи"} />
                             </div>
 
-                            <div className='createNote__container__title'>
+                            <div className='editModal-content__title'>
                                 <input
                                     type={`text`}
                                     name={'title'}
@@ -124,7 +124,7 @@ const EditModal = ({
                             {touched.title && errors.title &&
                                 <div className={`error`}><span>{errors.title}</span></div>}
 
-                            <div className='createNote__container__description'>
+                            <div className='editModal-content__description'>
                                 <textarea placeholder="Введите запись"
                                     onChange={(event) => { handleChange(event); }}
                                     onBlur={handleBlur}
@@ -139,7 +139,7 @@ const EditModal = ({
 
 
 
-                            <div className='createNote__container__image'>
+                            <div className='createNote-container__image'>
 
                                 <div className="input__wrapper">
                                     <input
@@ -162,7 +162,7 @@ const EditModal = ({
                                     </label>
                                 </div>
 
-                                <div className='createNote__container__image__prewiew'>
+                                <div className='createNote-container__image__prewiew'>
                                     {openCrop ? <ImageCropDialog
                                         imageUrl={noteImage}
                                         onCancel={onCancel}
@@ -171,7 +171,7 @@ const EditModal = ({
                                     /> : null}
                                     {noteImage ?
                                         // eslint-disable-next-line jsx-a11y/alt-text
-                                        <img className='createNote__container__image__prewiew__img'
+                                        <img className='createNote-container__image__prewiew__img'
                                             src={noteImage}
                                             onClick={() => setOpenCrop(!openCrop)} /> : <></>
                                     }
@@ -183,7 +183,7 @@ const EditModal = ({
                                 <div className={`error`}><span>{errors.image}</span></div>}
 
 
-                            <div className='createNote__container__button'>
+                            <div className='createNote-container__button'>
                                 <button className="button"
                                     disabled={!isValid && !dirty}
                                     onClick={handleSubmit}
@@ -191,7 +191,7 @@ const EditModal = ({
                                     Записать
                                 </button>
                             </div>
-                            <div className='createNote__container__button'>
+                            <div className='createNote-container__button'>
                                 <button className="button"
                                     onClick={() => { handleReset(); setNoteImage(editImage) }}
                                     type={`reset`}>

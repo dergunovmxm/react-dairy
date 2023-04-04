@@ -8,9 +8,9 @@ const Header = () => {
     return (
         <header className='header'>
 
-            <div className="header__logo" onClick={() => { navigate(`/`)}} >
+            <div className="header-logo" onClick={() => { navigate(`/`)}} >
                 <BiBookBookmark />
-                <div className="header__logo__info" >
+                <div className="header-logo__info" >
                     <b>React-Diary</b>
                     <span>By Maxim Dergunov</span>
                 </div>

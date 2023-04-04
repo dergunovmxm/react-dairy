@@ -7,7 +7,6 @@ import axios from '../../axios'
 
 const DiaryCard = ({ image, title, description, id, date, removeNote, setIsEdit, isEdit }) => {
 
-
     const navigate = useNavigate()
     const [editOpen, setEditOpen] = useState(false)
     const [editTitle, setEditTitle] = useState('')
@@ -30,7 +29,6 @@ const DiaryCard = ({ image, title, description, id, date, removeNote, setIsEdit,
             })
     }
 
-
     return (
         <>
             {editOpen ? <EditModal
@@ -48,30 +46,30 @@ const DiaryCard = ({ image, title, description, id, date, removeNote, setIsEdit,
             /> : <></>}
 
 
-            <section className='dairy__card'
+            <section className='dairy-card'
                 onClick={() => { navigate(`/notes/?id=${id}`) }} >
 
-                <div className='dairy__card__image' >
+                <div className='dairy-card__image' >
                     {
                         image ? <img src={image} alt="dairyImage" /> : <FiImage />
                     }
 
                 </div>
 
-                <div className='dairy__card__title'>
+                <div className='dairy-card__title'>
                     <span>{title}</span>
                 </div>
 
-                <div className='dairy__card__description'>
+                <div className='dairy-card__description'>
                     <span>{description} </span>
                 </div>
 
-                <div className='dairy__card__date'>
+                <div className='dairy-card__date'>
                     <span>{date}</span>
                 </div>
 
-                <aside className='dairy__card__toolbar'>
-                    <div className='dairy__card__toolbar__item'>
+                <aside className='dairy-card__toolbar'>
+                    <div className='dairy-card__toolbar__item'>
                         <div className='edit' onClick={(event) => (setEditOpen(true), getData(id), event.stopPropagation())}>
                             <FiEdit />
 
