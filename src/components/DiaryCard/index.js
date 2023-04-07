@@ -31,19 +31,21 @@ const DiaryCard = ({ image, title, description, id, date, removeNote, setIsEdit,
 
     return (
         <>
-            {editOpen ? <EditModal
-                editOpen={editOpen}
-                setEditOpen={setEditOpen}
-                id={id}
-                editTitle={editTitle}
-                setEditTitle={setEditTitle}
-                editDescription={editDescription}
-                setEditDescription={setEditDescription}
-                editImage={editImage}
-                setEditImage={setEditImage}
-                setIsEdit={setIsEdit}
-                isEdit={isEdit}
-            /> : <></>}
+            {editOpen ?
+                <section className={editOpen ? "editModal active" : "editModal"}>
+                    <EditModal
+                        editOpen={editOpen}
+                        setEditOpen={setEditOpen}
+                        id={id}
+                        editTitle={editTitle}
+                        setEditTitle={setEditTitle}
+                        editDescription={editDescription}
+                        setEditDescription={setEditDescription}
+                        editImage={editImage}
+                        setEditImage={setEditImage}
+                        setIsEdit={setIsEdit}
+                        isEdit={isEdit}
+                    /> </section> : <></>}
 
 
             <section className='dairy-card'

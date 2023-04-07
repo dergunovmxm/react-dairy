@@ -73,14 +73,7 @@ const Filters = ({ searchValue, setSearchValue, sort, onClickSort, limit }) => {
 
 
             <div className="tools-search">
-                {
-                    searchValue &&
-                    <img className="clear"
-                        src={close}
-                        alt="Close"
-                        onClick={() => setSearchValue('')}
-                    />
-                }
+             
 
                 <img src={search} alt="Search" />
                 <input
@@ -88,6 +81,14 @@ const Filters = ({ searchValue, setSearchValue, sort, onClickSort, limit }) => {
                     placeholder="Поиск..."
                     value={searchValue}
                 />
+                   {
+                    searchValue &&
+                    <img className="clear"
+                        src={close}
+                        alt="Close"
+                        onClick={() => setSearchValue('')}
+                    />
+                }
             </div>
 
             <Link to='create_note'>
