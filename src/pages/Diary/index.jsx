@@ -1,0 +1,107 @@
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { FiImage } from 'react-icons/fi';
+import axios from '../../axios';
+import { Comments } from '../../components';
+import { fetchComments } from '../../redux/slices/comments';
+import { Input, Loading, Title } from '../../components/UI';
+import './Diary.scss';
+
+function Diary() {
+  const [items, setItems] = useState({});
+  const [comment, setComment] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
+
+  const { search } = useLocation();
+  const params = new URLSearchParams(search);
+  const diaryId = params.get('id');
+
+  useEffect(() => {
+    axios
+      .get(`/notes/${diaryId}`)
+      .then((response) => {
+        setItems(response.data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        alert('Не удалось выполниить запрос!');
+        console.warn(error);
+      });
+  }, []);
+
+  const addComment = () => {
+    const data = {
+      text: comment,
+      firstname: 'Maxim',
+      lastname: 'Dergunov',
+      noteId: diaryId,
+    };
+
+    if (comment !== '') {
+      axios
+        .post('/comments', data)
+        .then(() => {
+          dispatch(fetchComments(diaryId));
+        })
+        .catch((error) => {
+          console.warn(error);
+          alert('Не удалось выполниить запрос!');
+        });
+      setComment('');
+    }
+  };
+
+  return (
+    <div className="diary-container">
+      {!isLoading ? (
+        <>
+          <main className="diary-container-content">
+            <div className="diary-container-content__image">
+              {items.image ? (
+                <img src={items.image} alt="defaultImage" />
+              ) : (
+                <FiImage />
+              )}
+            </div>
+
+            <div className="diary-container-content__info">
+              <div className="diary-container-content__info__title">
+                <span>{items.title}</span>
+              </div>
+
+              <div className="diary-container-content__info__description">
+                <span>{items.description}</span>
+              </div>
+            </div>
+          </main>
+
+          <section className="diary-container__commentsBox">
+            <Title title="Комментарии" />
+            <div className="comments__box">
+              <Comments id={diaryId} />
+            </div>
+
+            <div className="comments__input">
+              <Input
+                addComment={addComment}
+                setComment={setComment}
+                comment={comment}
+              />
+            </div>
+            <div className="comments__button">
+              <button className="button-container" type="submit" onClick={addComment}>
+                Отправить
+              </button>
+            </div>
+          </section>
+        </>
+      ) : (
+        <Loading />
+      )}
+    </div>
+  );
+}
+
+export default Diary;

@@ -1,16 +1,18 @@
 .diary-container {
     display: flex;
     flex-direction: row;
+    justify-content: space-around;
     height: 90vh;
     margin: 20px;
-
+    width: 95vw;
+    
     &-content {
-
         width: 70%;
         display: flex;
         flex-direction: column;
 
         &__image {
+            
             padding: 20px;
             display: flex;
             justify-content: center;
@@ -21,7 +23,8 @@
                 height: auto;
                 object-fit: contain;
             }
-            svg{
+
+            svg {
                 width: 540px;
                 height: 360px;
                 border: 5px solid black;
@@ -51,12 +54,13 @@
     }
 
     &__commentsBox {
-        width: 30%;
+
         background: white;
         border-radius: 12px;
         text-align: center;
         display: flex;
         flex-direction: column;
+        width: 30%;
 
         h2 {
             margin: 10px;
@@ -82,13 +86,13 @@
     border-radius: 10px;
     padding: 10px;
 
-   
+
 }
 
 .comments__button {
     margin: 20px;
     text-align: right;
-    
+
     span {
         border-radius: 8px;
         background-color: #e7f6ff;
@@ -97,4 +101,18 @@
         font-weight: bold;
         cursor: pointer;
     }
+}
+
+.button-container {
+
+    width: 100px;
+    height: 30px;
+    border-radius: 5px;
+    border: 0;
+    cursor: pointer;
+
+    &:hover {
+        background: #e7f6ff
+    }
+
 }
