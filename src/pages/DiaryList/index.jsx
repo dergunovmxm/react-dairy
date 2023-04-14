@@ -1,12 +1,9 @@
-/* eslint-disable no-nested-ternary */
-/* eslint-disable react/jsx-no-useless-fragment */
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import DairyCard from '../../components/DiaryCard';
-import Pagination from '../../components/UI/Pagination';
-
-import Filters from '../../components/UI/Filters';
+import {
+  Pagination, Filters, DiaryCard, Header,
+} from '../../components';
 import Loading from '../../components/UI/Loading';
 import empty from '../../assets/empty.png';
 import axios from '../../axios';
@@ -45,8 +42,7 @@ function DiaryList() {
               setIsLoading(false);
             }
           })
-          .catch((error) => {
-            console.warn(error);
+          .catch(() => {
             alert('Не удалось выполниить запрос!');
           });
       });
@@ -89,22 +85,22 @@ function DiaryList() {
 
   return (
     <>
-      <Filters
-        searchValue={searchValue}
-        setSearchValue={setSearchValue}
-        sort={sort}
-        onClickSort={(i) => setSort(i)}
-        limit={limit}
-      />
-
+      {' '}
       {isLoading ? (
         <Loading />
       ) : (
         <>
+          <Filters
+            searchValue={searchValue}
+            setSearchValue={setSearchValue}
+            sort={sort}
+            onClickSort={(i) => setSort(i)}
+            limit={limit}
+          />
           <section className="dairy-items">
             {!isLoading && notes.length ? (
               notes.map((item) => (
-                <DairyCard
+                <DiaryCard
                   {...item}
                   key={item.id}
                   removeNote={removeNote}
@@ -120,17 +116,11 @@ function DiaryList() {
             )}
           </section>
 
-          {isLoading ? (
-            <> </>
-          ) : notes.length ? (
-            <Pagination
-              page={page}
-              numPages={Math.ceil(countNotes / limit)}
-              limit={limit}
-            />
-          ) : (
-            <> </>
-          )}
+          <Pagination
+            page={page}
+            numPages={Math.ceil(countNotes / limit)}
+            limit={limit}
+          />
         </>
       )}
     </>

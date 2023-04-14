@@ -82,32 +82,6 @@
 
             }
         }
-
-        &__button {
-            display: flex;
-            justify-content: center;
-            text-decoration: none;
-            margin-top: 10px;
-            margin-bottom: 20px;
-
-            button {
-                width: 100px;
-                height: 30px;
-                border-radius: 5px;
-                border: 0;
-                text-decoration: none !important;
-                cursor: pointer;
-
-                &:hover {
-                    background: #e7f6ff
-                }
-
-            }
-
-            &:active {
-                transform: translateY(2px);
-            }
-        }
     }
 }
 

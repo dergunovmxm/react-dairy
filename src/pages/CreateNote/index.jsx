@@ -1,7 +1,4 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
-import './CreateNote.scss';
-import 'react-image-crop/dist/ReactCrop.css';
 import moment from 'moment';
 import 'moment/locale/ru';
 import { useNavigate } from 'react-router-dom';
@@ -9,10 +6,13 @@ import {
   Formik, Form, Field, ErrorMessage,
 } from 'formik';
 import * as yup from 'yup';
-import { Error, Title } from '../../components/UI';
+import {
+  Error, Title, Button, ImageCropDialog,
+} from '../../components/UI';
 import convertBase64 from '../../utils/functions';
-import ImageCropDialog from '../../components/UI/ImageCropDialog';
 import axios from '../../axios';
+import 'react-image-crop/dist/ReactCrop.css';
+import './CreateNote.scss';
 
 moment.locale('ru');
 function CreateNote() {
@@ -21,6 +21,7 @@ function CreateNote() {
   const [noteDescription, setDescription] = useState('');
   const [src, selectFile] = useState(null);
   const [openCrop, setOpenCrop] = useState(false);
+  const [closeCrop, setCloseCrop] = useState(true);
   const navigate = useNavigate();
 
   const creatingNote = (values) => {
@@ -48,16 +49,28 @@ function CreateNote() {
 
   const setCroppedImageFor = (crop, zoom, aspect, croppedImageUrl) => {
     const newImage = {
-      noteImage, crop, zoom, aspect, croppedImageUrl,
+      noteImage,
+      crop,
+      zoom,
+      aspect,
+      croppedImageUrl,
     };
     setNoteImage(croppedImageUrl);
   };
 
   const validationSchema = yup.object().shape({
-    title: yup.string().typeError('Неверный тип').required('Введите заголовок записи'),
-    description: yup.string().typeError('Неверный тип').required('Введите текст записи'),
-    image: yup.string().typeError('Неверный тип').required('Загрузите изображение'),
-
+    title: yup
+      .string()
+      .typeError('Неверный тип')
+      .required('Введите заголовок записи'),
+    description: yup
+      .string()
+      .typeError('Неверный тип')
+      .required('Введите текст записи'),
+    image: yup
+      .string()
+      .typeError('Неверный тип')
+      .required('Загрузите изображение'),
   });
 
   const initialValues = {
@@ -72,7 +85,6 @@ function CreateNote() {
   };
 
   return (
-
     <Formik
       initialValues={initialValues}
       onSubmit={onSubmit}
@@ -80,7 +92,6 @@ function CreateNote() {
     >
       {(formik) => (
         <Form className="createNote-container">
-
           <Title title="Создание записи" />
 
           <div className="createNote-container__title">
@@ -90,7 +101,6 @@ function CreateNote() {
               name="title"
               placeholder="Введите заголовок записи"
             />
-
           </div>
           <ErrorMessage className="error" name="title" component={Error} />
 
@@ -103,10 +113,13 @@ function CreateNote() {
             />
           </div>
 
-          <ErrorMessage className="error" name="description" component={Error} />
+          <ErrorMessage
+            className="error"
+            name="description"
+            component={Error}
+          />
 
           <div className="createNote-container__image">
-
             <div className="input__wrapper">
               <input
                 name="image"
@@ -115,7 +128,10 @@ function CreateNote() {
                 type="file"
                 onChange={(event) => {
                   formik.handleChange(event);
-                  selectFile(convertBase64(event.target.files[0], setNoteImage));
+                  selectFile(
+                    convertBase64(event.target.files[0], setNoteImage),
+                    setOpenCrop(true),
+                  );
                 }}
                 onBlur={formik.handleBlur}
                 value={formik.values.image}
@@ -135,48 +151,34 @@ function CreateNote() {
                   setOpenCrop={setOpenCrop}
                 />
               ) : null}
-              {noteImage
-              // eslint-disable-next-line jsx-a11y/alt-text
-                ? (
-                  <img
-                    className="createNote-container__image__prewiew__img"
-                    src={noteImage}
-                    onClick={() => setOpenCrop(!openCrop)}
-                  />
-                ) : <> </>}
+              {noteImage ? (
+                <img
+                  className="createNote-container__image__prewiew__img"
+                  src={noteImage}
+                  onClick={() => setOpenCrop(!openCrop)}
+                />
+              ) : (
+                <> </>
+              )}
             </div>
-
           </div>
-          {formik.touched.image && formik.errors.image ? <div className="error" name="image">{formik.errors.image}</div> : null}
+          {formik.touched.image && formik.errors.image ? (
+            <div className="error" name="image">
+              {formik.errors.image}
+            </div>
+          ) : null}
 
-          <div className="createNote-container__button">
-            <button
-              className="button"
-              disabled={!(formik.isValid)}
-              type="submit"
-            >
-              Записать
-            </button>
-          </div>
-
-          <div className="createNote-container__button">
-            <button
-              className="button"
-              onClick={(event) => {
-                event.stopPropagation();
-                setNoteImage('');
-              }}
-              type="button"
-            >
-              Сбросить
-            </button>
-
-          </div>
-
+          <Button name="Записать" submit disable={!formik.isValid} />
+          <Button
+            name="Сбросить"
+            onClickButton={(event) => {
+              setNoteImage('');
+              event.stopPropagation();
+            }}
+          />
         </Form>
       )}
     </Formik>
-
   );
 }
 

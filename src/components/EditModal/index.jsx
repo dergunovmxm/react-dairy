@@ -6,8 +6,9 @@ import {
 } from 'formik';
 import * as yup from 'yup';
 import axios from '../../axios';
-import ImageCropDialog from '../UI/ImageCropDialog';
-import { Title, Error } from '../UI';
+import {
+  Title, Error, Button, ImageCropDialog,
+} from '../UI';
 import './EditModal.scss';
 
 moment.locale('ru');
@@ -30,7 +31,11 @@ function EditModal({
 
   const setCroppedImageFor = (crop, zoom, aspect, croppedImageUrl) => {
     const newImage = {
-      noteImage, crop, zoom, aspect, croppedImageUrl,
+      noteImage,
+      crop,
+      zoom,
+      aspect,
+      croppedImageUrl,
     };
     console.log(newImage);
     setNoteImage(croppedImageUrl);
@@ -151,6 +156,7 @@ function EditModal({
                 onChange={(event) => {
                   selectFile(
                     convertBase64(event.target.files[0], setNoteImage),
+                    setOpenCrop(true),
                   );
                   formik.handleChange(event);
                 }}
@@ -159,7 +165,7 @@ function EditModal({
               />
               <label htmlFor="input__file" className="input__file-button">
                 <span className="input__file-button-text">
-                  Выберите изображение
+                  Изменить изображение
                 </span>
               </label>
             </div>
@@ -167,14 +173,13 @@ function EditModal({
             <div className="createNote-container__image__prewiew">
               {openCrop ? (
                 <ImageCropDialog
-                  imageUrl={editImage}
+                  imageUrl={noteImage}
                   onCancel={onCancel}
                   setCroppedImageFor={setCroppedImageFor}
                   setOpenCrop={setOpenCrop}
                 />
               ) : null}
               {noteImage ? (
-                // eslint-disable-next-line jsx-a11y/alt-text
                 <img
                   className="createNote-container__image__prewiew__img"
                   src={noteImage}
@@ -192,28 +197,19 @@ function EditModal({
               {formik.errors.image}
             </div>
           ) : null}
-
-          <div className="createNote-container__button">
-            <button
-              className="button"
-              disabled={!formik.isValid && !formik.dirty}
-              type="submit"
-            >
-              Записать
-            </button>
-          </div>
-
-          <div className="createNote-container__button">
-            <button
-              className="button"
-              type="button"
-              onClick={() => {
-                setNoteImage(editImage);
-              }}
-            >
-              Сбросить
-            </button>
-          </div>
+          <Button
+            name="Записать"
+            submit
+            disable={!formik.isValid && !formik.dirty}
+          />
+          <Button
+            name="Сбросить"
+            onClickButton={(event) => {
+              formik.handleReset();
+              setNoteImage(editImage);
+              event.stopPropagation();
+            }}
+          />
         </Form>
       )}
     </Formik>

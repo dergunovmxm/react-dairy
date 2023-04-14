@@ -13,6 +13,7 @@
     right: 0;
     left: 0;
     bottom: 100px;
+
 }
 
 .controls {
@@ -23,35 +24,42 @@
     height: 80px;
     text-align: center;
 
+
     &__upper__area {
         text-align: center;
+    }
+
+    select {
+        cursor: pointer;
     }
 }
 
 .slider {
     width: 30%;
+    cursor: pointer;
 }
 
 .button__area {
     margin-top: 10px;
     display: flex;
-    justify-content: center ;
+    justify-content: center;
 
 
     &__button {
         transition: 0.2s;
         outline: none;
         color: white;
-        width: 100px;
+        width: 150px;
         height: 25px;
         border-radius: 3px;
-        margin-right: 3px;
+        margin-right: 10px;
         cursor: pointer;
-        background-color:  black;
+        background-color: black;
     }
 
     .exit {
         border: 1px solid #ff9494;
+
         &:hover {
             background: #ff9494;
             color: black;
@@ -60,6 +68,7 @@
 
     .reset {
         border: 1px solid #c6e2f3;
+
         &:hover {
             background: #c6e2f3;
             color: black;
@@ -68,8 +77,22 @@
 
     .save {
         border: 1px solid #75ffb8;
+
         &:hover {
             background: #75ffb8;
+            color: black;
+        }
+    }
+
+    .load {
+        span {
+            cursor: pointer;
+        }
+
+        border: 1px solid #ffff00;
+
+        &:hover {
+            background: #ffff00;
             color: black;
         }
     }

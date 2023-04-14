@@ -1,19 +1,23 @@
 import React from 'react';
 import './Input.scss';
 
-function Input({ setComment, addComment, comment }) {
+function Input({
+  setValue, onKeyDown, value, navigate, placeholder,
+}) {
   return (
     <input
       type="text"
+      placeholder={placeholder}
       onChange={(event) => {
-        setComment(event.target.value);
+        setValue(event.target.value);
+        navigate(navigate);
       }}
       onKeyDown={(event) => {
         if (event.keyCode === 13) {
-          addComment();
+          onKeyDown();
         }
       }}
-      value={comment}
+      value={value}
     />
   );
 }

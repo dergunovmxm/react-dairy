@@ -5,7 +5,9 @@ import { FiImage } from 'react-icons/fi';
 import axios from '../../axios';
 import { Comments } from '../../components';
 import { fetchComments } from '../../redux/slices/comments';
-import { Input, Loading, Title } from '../../components/UI';
+import {
+  Button, Input, Loading, Title,
+} from '../../components/UI';
 import './Diary.scss';
 
 function Diary() {
@@ -85,16 +87,13 @@ function Diary() {
 
             <div className="comments__input">
               <Input
-                addComment={addComment}
-                setComment={setComment}
-                comment={comment}
+                onKeyDown={addComment}
+                setValue={setComment}
+                value={comment}
               />
             </div>
-            <div className="comments__button">
-              <button className="button-container" type="submit" onClick={addComment}>
-                Отправить
-              </button>
-            </div>
+
+            <Button name="Отправить" submit onClickButton={addComment} classType="comments" />
           </section>
         </>
       ) : (

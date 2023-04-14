@@ -1,6 +1,6 @@
-import './CommentItem.scss';
 import React, { useState } from 'react';
 import { FiUser } from 'react-icons/fi';
+import './CommentItem.scss';
 
 function CommentsItem({ text, firstname, lastname }) {
   const user = `${firstname} ${lastname}`;

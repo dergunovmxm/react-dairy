@@ -38,5 +38,14 @@ module.exports = {
     'jsx-a11y/no-static-element-interactions': 'off',
     'react/jsx-props-no-spreading': 'off',
     'no-param-reassign': 0,
+    'no-console': 0,
+    'no-shadow': [
+      'error',
+      {
+        allow: ['zoom', 'ratio', 'crop', 'croppedAreaPixels'],
+      },
+    ],
+    'no-unused-vars': 'off',
+    'no-nested-ternary': 'off',
   },
 };

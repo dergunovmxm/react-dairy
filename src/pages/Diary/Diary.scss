@@ -86,7 +86,6 @@
     border-radius: 10px;
     padding: 10px;
 
-
 }
 
 .comments__button {
@@ -101,18 +100,4 @@
         font-weight: bold;
         cursor: pointer;
     }
-}
-
-.button-container {
-
-    width: 100px;
-    height: 30px;
-    border-radius: 5px;
-    border: 0;
-    cursor: pointer;
-
-    &:hover {
-        background: #e7f6ff
-    }
-
 }

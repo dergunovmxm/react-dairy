@@ -1,12 +1,19 @@
-/* eslint-disable eqeqeq */
-/* eslint-disable no-shadow */
-import './ImageCropDialog.scss';
 import React, { useState } from 'react';
 import Cropper from 'react-easy-crop';
 import getCroppedImg from './cropImage';
+import convertBase64 from '../../../utils/functions';
+import './ImageCropDialog.scss';
 
 function ImageCropDialog({
-  imageUrl, cropInit, zoomInit, aspectInit, onCancel, setCroppedImageFor, setOpenCrop,
+  imageUrl,
+  cropInit,
+  zoomInit,
+  aspectInit,
+  onCancel,
+  setCroppedImageFor,
+  setOpenCrop,
+  selectFile,
+  setNoteImage,
 }) {
   const aspectRatios = [
     { value: 4 / 3, text: '4/3' },
@@ -14,7 +21,6 @@ function ImageCropDialog({
     { value: 16 / 9, text: '16/9' },
     { value: 9 / 16, text: '9/16' },
     { value: 1 / 1, text: '1/1' },
-
   ];
 
   if (zoomInit == null) {
@@ -47,9 +53,7 @@ function ImageCropDialog({
 
   const onAspectChange = (e) => {
     const { value } = e.target;
-    const ratio = aspectRatios.find((ratio) => ratio.value == value);
-    setAspect(ratio);
-    console.log(ratio);
+    setAspect(value);
   };
 
   const onCropComplete = (croppedArea, croppedAreaPixels) => {
@@ -70,7 +74,7 @@ function ImageCropDialog({
           image={imageUrl}
           zoom={zoom}
           crop={crop}
-          aspect={aspect.value}
+          aspect={aspect}
           onCropChange={onCropChange}
           onZoomChange={onZoomChange}
           onCropComplete={onCropComplete}
@@ -91,19 +95,39 @@ function ImageCropDialog({
           />
           <select onChange={onAspectChange}>
             {aspectRatios.map((ratio) => (
-              <option
-                key={ratio.text}
-                value={ratio.value}
-              >
+              <option key={ratio.text} value={ratio.value}>
                 {ratio.text}
               </option>
             ))}
           </select>
-
         </div>
         <div className="button__area">
-          <div className="button__area__button exit" onClick={onCancel}>Выйти</div>
-          <div className="button__area__button save" onClick={onCrop}>Сохранить</div>
+          <div className="button__area__button exit" onClick={onCancel}>
+            Выйти
+          </div>
+          <div className="button__area__button save" onClick={onCrop}>
+            Сохранить
+          </div>
+          <div
+            className="button__area__button load"
+          >
+            <input
+              name="image"
+              className="input input__file"
+              id="input__file"
+              type="file"
+              onChange={(event) => {
+                selectFile(
+                  convertBase64(event.target.files[0], setNoteImage),
+                  setOpenCrop(true),
+                );
+              }}
+              multiple
+            />
+            <label htmlFor="input__file">
+              <span className="input__file-button-text">Загрузить новое</span>
+            </label>
+          </div>
         </div>
       </div>
     </div>

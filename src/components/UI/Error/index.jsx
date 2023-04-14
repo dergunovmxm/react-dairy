@@ -1,7 +1,7 @@
 import React from 'react';
 import './Error.scss';
 
-function Error({ props }) {
+function Error({ ...props }) {
   return (
     <div className="error">
       {props.children}
