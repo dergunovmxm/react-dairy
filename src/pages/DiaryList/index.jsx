@@ -25,6 +25,30 @@ function DiaryList() {
   const params = new URLSearchParams(search);
   const page = params.get('_page') || 1;
 
+  const removeNote = (id) => {
+    if (window.confirm('Вы действительно хотите удалить запись?')) {
+      setIsLoading(true);
+      axios.delete(`/notes/${id}`).then(() => {
+        setCountNotes(countNotes - 1);
+        axios
+          .get(
+            `/notes?title_like=${searchValue}&_page=${page}&_limit=${limit}&_sort=${sort.name}&_order=${sort.order}`,
+          )
+          .then(({ data }) => {
+            if (!data.length) {
+              navigate(`?_page=${page - 1}&_limit=${limit}`);
+            } else {
+              setNotes(data);
+              setIsLoading(false);
+            }
+          })
+          .catch(() => {
+            alert('Не удалось выполниить запрос!');
+          });
+      });
+    }
+  };
+
   useEffect(() => {
     crud.searchNotes({ searchValue, setCountNotes, setIsLoading });
   }, [searchValue]);
@@ -62,7 +86,7 @@ function DiaryList() {
                 <DiaryCard
                   {...item}
                   key={item.id}
-                  removeNote={crud.removeNote}
+                  removeNote={removeNote}
                   setIsEdit={setIsEdit}
                   setIsLoading={setIsLoading}
                   setCountNotes={setCountNotes}

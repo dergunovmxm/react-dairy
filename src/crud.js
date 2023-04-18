@@ -110,27 +110,28 @@ export default {
         alert('Не удалось выполниить запрос!');
       });
   },
-  removeNote(params) {
-    if (window.confirm('Вы действительно хотите удалить запись?')) {
-      params.setIsLoading(true);
-      axios.delete(`${resource}/${params.id}`)
-        .then(() => {
-          params.setCountNotes(params.countNotes - 1);
-          axios
-            .get(`${resource}?title_like=${params.searchValue}&_page=${params.page}&_limit=${params.limit}&_sort=${params.sort.sort}&_order=${params.sort.order}`)
-            .then(({ data }) => {
-              if (!data.length) {
-                params.navigate(`?_page=${params.page - 1}&_limit=${params.limit}`);
-              } else {
-                params.setNotes(data);
-                params.setIsLoading(false);
-              }
-            })
-            .catch((error) => {
-              console.warn(error);
-              alert('Не удалось выполниить запрос!');
-            });
-        });
-    }
-  },
+  // removeNote(params) {
+  //   if (window.confirm('Вы действительно хотите удалить запись?')) {
+  //     params.setIsLoading(true);
+  //     axios.delete(`${resource}/${params.id}`)
+  //       .then(() => {
+  //         params.setCountNotes(params.countNotes - 1);
+  //         axios
+  //           .get(`${resource}?title_like=${params.searchValue}&_page=${params.page}
+  // &_limit=${params.limit}&_sort=${params.sort.sort}&_order=${params.sort.order}`)
+  //           .then(({ data }) => {
+  //             if (!data.length) {
+  //               params.navigate(`?_page=${params.page - 1}&_limit=${params.limit}`);
+  //             } else {
+  //               params.setNotes(data);
+  //               params.setIsLoading(false);
+  //             }
+  //           })
+  //           .catch((error) => {
+  //             console.warn(error);
+  //             alert('Не удалось выполниить запрос!');
+  //           });
+  //       });
+  //   }
+  // },
 };
