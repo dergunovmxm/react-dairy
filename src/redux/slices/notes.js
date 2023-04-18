@@ -6,13 +6,6 @@ export const fetchNotes = createAsyncThunk('notes/fetchNotes', async () => {
   return data;
 });
 
-export const fetchRemoveNotes = createAsyncThunk('notes/fetchRemoveBooks', async (id) => {
-  axios.delete(`/notes/${id}`)
-    .then(() => {
-
-    });
-});
-
 const initialState = {
   notes: {
     items: [],
@@ -33,11 +26,6 @@ const notesSlice = createSlice({
     [fetchNotes.rejected]: (state) => {
       state.notes.items = [];
       state.notes.status = 'loaded';
-    },
-
-    // Удаление записей
-    [fetchRemoveNotes.pending]: (state, action) => {
-      state.notes.items = state.notes.items.filter((obj) => obj.id !== action.meta.arg);
     },
   },
 });

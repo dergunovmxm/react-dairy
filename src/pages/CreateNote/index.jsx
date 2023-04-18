@@ -13,6 +13,7 @@ import convertBase64 from '../../utils/functions';
 import axios from '../../axios';
 import 'react-image-crop/dist/ReactCrop.css';
 import './CreateNote.scss';
+import crud from '../../crud';
 
 moment.locale('ru');
 function CreateNote() {
@@ -23,25 +24,6 @@ function CreateNote() {
   const [openCrop, setOpenCrop] = useState(false);
   const [closeCrop, setCloseCrop] = useState(true);
   const navigate = useNavigate();
-
-  const creatingNote = (values) => {
-    const data = {
-      title: values.title,
-      description: values.description,
-      image: noteImage,
-      date: moment().format('LLL'),
-    };
-    axios
-      .post('/notes', data)
-      .then(() => {
-        alert('Запись создана!');
-        navigate('/');
-      })
-      .catch((error) => {
-        console.warn(error);
-        alert('Не удалось выполниить запрос!');
-      });
-  };
 
   const onCancel = () => {
     setOpenCrop(false);
@@ -81,7 +63,7 @@ function CreateNote() {
   };
 
   const onSubmit = (values) => {
-    creatingNote(values);
+    crud.creatingNote({ values, noteImage, navigate });
   };
 
   return (

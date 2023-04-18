@@ -8,6 +8,7 @@ import { fetchComments } from '../../redux/slices/comments';
 import {
   Button, Input, Loading, Title,
 } from '../../components/UI';
+import crud from '../../crud';
 import './Diary.scss';
 
 function Diary() {
@@ -21,19 +22,11 @@ function Diary() {
   const diaryId = params.get('id');
 
   useEffect(() => {
-    axios
-      .get(`/notes/${diaryId}`)
-      .then((response) => {
-        setItems(response.data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        alert('Не удалось выполниить запрос!');
-        console.warn(error);
-      });
+    crud.getOneNote({ setItems, setIsLoading, diaryId });
   }, []);
 
   const addComment = () => {
+    console.log(diaryId);
     const data = {
       text: comment,
       firstname: 'Maxim',
@@ -41,7 +34,7 @@ function Diary() {
       noteId: diaryId,
     };
 
-    if (comment !== '') {
+    if (comment !== '' && diaryId) {
       axios
         .post('/comments', data)
         .then(() => {

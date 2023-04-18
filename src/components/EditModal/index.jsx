@@ -10,6 +10,7 @@ import {
   Title, Error, Button, ImageCropDialog,
 } from '../UI';
 import './EditModal.scss';
+import crud from '../../crud';
 
 moment.locale('ru');
 
@@ -37,7 +38,6 @@ function EditModal({
       aspect,
       croppedImageUrl,
     };
-    console.log(newImage);
     setNoteImage(croppedImageUrl);
   };
 
@@ -48,28 +48,6 @@ function EditModal({
     reader.onload = () => setEditImage(reader.result);
     reader.onerror = (error) => reject(error);
   });
-
-  const editNote = (values) => {
-    const data = {
-      title: values.title,
-      description: values.description,
-      image: noteImage,
-      date: moment().format('LLL'),
-    };
-
-    axios
-      .put(`/notes/${id}`, data)
-
-      .then(() => {
-        alert('Запись изменена!');
-        setIsEdit(true);
-        setEditOpen(false);
-      })
-      .catch((error) => {
-        console.warn(error);
-        alert('Не удалось выполниить запрос!');
-      });
-  };
 
   const validationSchema = yup.object().shape({
     title: yup
@@ -93,7 +71,9 @@ function EditModal({
   };
 
   const onSubmit = (values) => {
-    editNote(values);
+    crud.editNote({
+      values, id, setIsEdit, setEditOpen, noteImage,
+    });
   };
 
   useEffect(() => {

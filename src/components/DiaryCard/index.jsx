@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import EditModal from '../EditModal';
 import axios from '../../axios';
+import crud from '../../crud';
 
 function DiaryCard({
   image,
@@ -20,22 +21,6 @@ function DiaryCard({
   const [editTitle, setEditTitle] = useState('');
   const [editDescription, setEditDescription] = useState('');
   const [editImage, setEditImage] = useState('');
-
-  const getData = () => {
-    axios
-      .get(`/notes/${id}`)
-
-      .then(({ data }) => {
-        setEditTitle(data.title);
-        setEditDescription(data.description);
-        setEditImage(data.image);
-        setIsEdit(false);
-      })
-      .catch((error) => {
-        console.warn(error);
-        alert('Не удалось выполниить запрос!');
-      });
-  };
 
   return (
     <>
@@ -85,13 +70,17 @@ function DiaryCard({
           <div className="dairy-card__toolbar__item">
             <div
               className="edit"
-              onClick={(event) => { setEditOpen(true); getData(id); event.stopPropagation(); }}
+              onClick={(event) => {
+                setEditOpen(true); crud.getData({
+                  id, setEditDescription, setEditImage, setEditOpen, setEditTitle, setIsEdit,
+                }); event.stopPropagation();
+              }}
             >
               <FiEdit />
             </div>
             <div
               className="delete"
-              onClick={(event) => { removeNote(id); event.stopPropagation(); }}
+              onClick={(event) => { event.stopPropagation(); removeNote(id); }}
             >
               <FiTrash2 />
             </div>

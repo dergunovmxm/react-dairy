@@ -8,7 +8,7 @@ import Loading from '../../components/UI/Loading';
 import empty from '../../assets/empty.png';
 import axios from '../../axios';
 import './DiaryList.scss';
-import { fetchRemoveNotes } from '../../redux/slices/notes';
+import crud from '../../crud';
 
 function DiaryList() {
   const dispatch = useDispatch();
@@ -25,62 +25,21 @@ function DiaryList() {
   const params = new URLSearchParams(search);
   const page = params.get('_page') || 1;
 
-  const removeNote = (id) => {
-    if (window.confirm('Вы действительно хотите удалить запись?')) {
-      setIsLoading(true);
-      axios.delete(`/notes/${id}`).then(() => {
-        setCountNotes(countNotes - 1);
-        axios
-          .get(
-            `/notes?title_like=${searchValue}&_page=${page}&_limit=${limit}&_sort=${sort.name}&_order=${sort.order}`,
-          )
-          .then(({ data }) => {
-            if (!data.length) {
-              navigate(`?_page=${page - 1}&_limit=${limit}`);
-            } else {
-              setNotes(data);
-              setIsLoading(false);
-            }
-          })
-          .catch(() => {
-            alert('Не удалось выполниить запрос!');
-          });
-      });
-      dispatch(fetchRemoveNotes(id));
-    }
-  };
-
   useEffect(() => {
-    axios
-      .get(`/notes?title_like=${searchValue}`)
-      .then(({ data }) => {
-        setCountNotes(data.length);
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 100);
-      })
-      .catch((error) => {
-        console.warn(error);
-        alert('Не удалось выполниить запрос!');
-      });
+    crud.searchNotes({ searchValue, setCountNotes, setIsLoading });
   }, [searchValue]);
 
   useEffect(() => {
-    axios
-      .get(
-        `/notes?title_like=${searchValue}&_page=${page}&_limit=${limit}&_sort=${sort.sort}&_order=${sort.order}`,
-      )
-      .then(({ data }) => {
-        setNotes(data);
-        setIsEdit(false);
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 100);
-      })
-      .catch((error) => {
-        console.warn(error);
-        alert('Не удалось выполниить запрос!');
-      });
+    crud.getAllNotes({
+      setNotes,
+      setIsLoading,
+      setIsEdit,
+      page,
+      limit,
+      searchValue,
+      isEdit,
+      sort,
+    });
   }, [page, searchValue, isEdit, sort]);
 
   return (
@@ -103,9 +62,13 @@ function DiaryList() {
                 <DiaryCard
                   {...item}
                   key={item.id}
-                  removeNote={removeNote}
+                  removeNote={crud.removeNote}
                   setIsEdit={setIsEdit}
+                  setIsLoading={setIsLoading}
+                  setCountNotes={setCountNotes}
                   isEdit={isEdit}
+                  sort={sort}
+                  navigate={navigate}
                 />
               ))
             ) : (
