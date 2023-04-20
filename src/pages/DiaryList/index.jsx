@@ -2,16 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
-  Pagination, Filters, DiaryCard, Header,
+  Pagination, Filters, DiaryCard,
 } from '../../components';
 import Loading from '../../components/UI/Loading';
 import empty from '../../assets/empty.png';
-import axios from '../../axios';
 import './DiaryList.scss';
-import crud from '../../crud';
+import noteRepository from '../../API/Repositories/noteRepository';
 
 function DiaryList() {
-  const dispatch = useDispatch();
   const [notes, setNotes] = useState([]);
   const [searchValue, setSearchValue] = useState('');
   const [isLoading, setIsLoading] = useState(true);
@@ -26,44 +24,73 @@ function DiaryList() {
   const page = params.get('_page') || 1;
 
   const removeNote = (id) => {
+    const config = {
+      title_like: searchValue,
+      _page: page,
+      _limit: limit,
+      _sort: sort.sort,
+      _order: sort.order,
+    };
+
     if (window.confirm('Вы действительно хотите удалить запись?')) {
       setIsLoading(true);
-      axios.delete(`/notes/${id}`).then(() => {
-        setCountNotes(countNotes - 1);
-        axios
-          .get(
-            `/notes?title_like=${searchValue}&_page=${page}&_limit=${limit}&_sort=${sort.name}&_order=${sort.order}`,
-          )
-          .then(({ data }) => {
-            if (!data.length) {
-              navigate(`?_page=${page - 1}&_limit=${limit}`);
-            } else {
-              setNotes(data);
-              setIsLoading(false);
-            }
-          })
-          .catch(() => {
-            alert('Не удалось выполниить запрос!');
-          });
-      });
+      noteRepository.delete(id)
+        .then(() => {
+          setCountNotes(countNotes - 1);
+          noteRepository.getNotes(config)
+            .then(({ data }) => {
+              if (!data.length) {
+                navigate(`?_page=${page - 1}&_limit=${limit}`);
+              } else {
+                setNotes(data);
+                setIsLoading(false);
+              }
+            })
+            .catch(() => {
+              alert('Не удалось выполниить запрос!');
+            });
+        });
     }
   };
 
   useEffect(() => {
-    crud.searchNotes({ searchValue, setCountNotes, setIsLoading });
+    const config = {
+      title_like: searchValue,
+    };
+    noteRepository.getNotes(config)
+      .then(({ data }) => {
+        setCountNotes(data.length);
+      })
+      .catch((error) => {
+        console.warn(error);
+        alert('Не удалось выполниить запрос!');
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, [searchValue]);
 
   useEffect(() => {
-    crud.getAllNotes({
-      setNotes,
-      setIsLoading,
-      setIsEdit,
-      page,
-      limit,
-      searchValue,
-      isEdit,
-      sort,
-    });
+    const config = {
+      title_like: searchValue,
+      _page: page,
+      _limit: limit,
+      _sort: sort.sort,
+      _order: sort.order,
+    };
+    noteRepository
+      .getNotes(config)
+      .then(({ data }) => {
+        setNotes(data);
+        setIsEdit(false);
+      })
+      .catch((error) => {
+        console.warn(error);
+        alert('Не удалось выполниить запрос!');
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, [page, searchValue, isEdit, sort]);
 
   return (
@@ -103,11 +130,14 @@ function DiaryList() {
             )}
           </section>
 
-          <Pagination
-            page={page}
-            numPages={Math.ceil(countNotes / limit)}
-            limit={limit}
-          />
+          {!isLoading && notes.length ? (
+            <Pagination
+              page={page}
+              numPages={Math.ceil(countNotes / limit)}
+              limit={limit}
+            />
+          ) : null}
+
         </>
       )}
     </>

@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { FiImage } from 'react-icons/fi';
-import axios from '../../axios';
+import axios from '../../API/Service';
 import { Comments } from '../../components';
 import { fetchComments } from '../../redux/slices/comments';
 import {
   Button, Input, Loading, Title,
 } from '../../components/UI';
-import crud from '../../crud';
+import noteRepository from '../../API/Repositories/noteRepository';
+import commentRepository from '../../API/Repositories/commentRepository';
 import './Diary.scss';
 
 function Diary() {
@@ -22,11 +23,20 @@ function Diary() {
   const diaryId = params.get('id');
 
   useEffect(() => {
-    crud.getOneNote({ setItems, setIsLoading, diaryId });
+    noteRepository.getNote(diaryId)
+      .then(({ data }) => {
+        setItems(data);
+      })
+      .catch((error) => {
+        alert('Не удалось выполниить запрос!');
+        console.warn(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
 
   const addComment = () => {
-    console.log(diaryId);
     const data = {
       text: comment,
       firstname: 'Maxim',
@@ -35,8 +45,7 @@ function Diary() {
     };
 
     if (comment !== '' && diaryId) {
-      axios
-        .post('/comments', data)
+      commentRepository.create(data)
         .then(() => {
           dispatch(fetchComments(diaryId));
         })
@@ -86,7 +95,12 @@ function Diary() {
               />
             </div>
 
-            <Button name="Отправить" submit onClickButton={addComment} classType="comments" />
+            <Button
+              name="Отправить"
+              submit
+              onClickButton={addComment}
+              classType="comments"
+            />
           </section>
         </>
       ) : (

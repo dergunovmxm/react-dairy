@@ -79,7 +79,7 @@ function Filters({
           placeholder="Поиск..."
           value={searchValue}
           setValue={setSearchValue}
-          navigate={`?_page=${1}&_limit=${limit}`}
+          nav={`?_page=${1}&_limit=${limit}`}
         />
         {searchValue && (
           <img

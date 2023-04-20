@@ -10,10 +10,9 @@ import {
   Error, Title, Button, ImageCropDialog,
 } from '../../components/UI';
 import convertBase64 from '../../utils/functions';
-import axios from '../../axios';
 import 'react-image-crop/dist/ReactCrop.css';
 import './CreateNote.scss';
-import crud from '../../crud';
+import repository from '../../API/Repositories/noteRepository';
 
 moment.locale('ru');
 function CreateNote() {
@@ -63,7 +62,22 @@ function CreateNote() {
   };
 
   const onSubmit = (values) => {
-    crud.creatingNote({ values, noteImage, navigate });
+    const data = {
+      title: values.title,
+      description: values.description,
+      image: noteImage,
+      date: moment().format('LLL'),
+    };
+    repository.creatingNote(data)
+      .then(() => {
+        alert('Запись создана!');
+        console.log(data);
+        navigate('/');
+      })
+      .catch((error) => {
+        console.warn(error);
+        alert('Не удалось выполниить запрос!');
+      });
   };
 
   return (

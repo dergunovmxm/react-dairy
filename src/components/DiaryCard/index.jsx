@@ -3,8 +3,8 @@ import { FiEdit, FiTrash2, FiImage } from 'react-icons/fi';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import EditModal from '../EditModal';
-import axios from '../../axios';
-import crud from '../../crud';
+import axios from '../../API/Service';
+import noteRepository from '../../API/Repositories/noteRepository';
 
 function DiaryCard({
   image,
@@ -18,9 +18,18 @@ function DiaryCard({
 }) {
   const navigate = useNavigate();
   const [editOpen, setEditOpen] = useState(false);
-  const [editTitle, setEditTitle] = useState('');
-  const [editDescription, setEditDescription] = useState('');
-  const [editImage, setEditImage] = useState('');
+  const [items, setItems] = useState({});
+
+  const getDataForEdit = () => {
+    noteRepository.getNote(id)
+      .then(({ data }) => {
+        setItems(data);
+      })
+      .catch((error) => {
+        alert('Не удалось выполниить запрос!');
+        console.warn(error);
+      });
+  };
 
   return (
     <>
@@ -30,12 +39,9 @@ function DiaryCard({
             editOpen={editOpen}
             setEditOpen={setEditOpen}
             id={id}
-            editTitle={editTitle}
-            setEditTitle={setEditTitle}
-            editDescription={editDescription}
-            setEditDescription={setEditDescription}
-            editImage={editImage}
-            setEditImage={setEditImage}
+            editTitle={items.title}
+            editDescription={items.description}
+            editImage={items.image}
             setIsEdit={setIsEdit}
             isEdit={isEdit}
           />
@@ -71,9 +77,9 @@ function DiaryCard({
             <div
               className="edit"
               onClick={(event) => {
-                setEditOpen(true); crud.getData({
-                  id, setEditDescription, setEditImage, setEditOpen, setEditTitle, setIsEdit,
-                }); event.stopPropagation();
+                setEditOpen(true);
+                getDataForEdit();
+                event.stopPropagation();
               }}
             >
               <FiEdit />
