@@ -71,18 +71,13 @@ function EditModal({
   };
 
   const onSubmit = (values) => {
-    const config = {
-      data: {
-        title: values.title,
-        description: values.description,
-        image: noteImage,
-        date: moment().format('LLL'),
-      },
-      edit: {
-        editId: id,
-      },
+    const data = {
+      title: values.title,
+      description: values.description,
+      image: noteImage,
+      date: moment().format('LLL'),
     };
-    noteRepository.edit(config)
+    noteRepository.editNote(id, data)
       .then(() => {
         alert('Запись изменена!');
         setIsEdit(true);

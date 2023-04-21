@@ -1,6 +1,6 @@
 import './DiaryCard.scss';
 import { FiEdit, FiTrash2, FiImage } from 'react-icons/fi';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import EditModal from '../EditModal';
 import axios from '../../API/Service';
@@ -10,8 +10,8 @@ function DiaryCard({
   image,
   title,
   description,
-  id,
   date,
+  id,
   removeNote,
   setIsEdit,
   isEdit,
@@ -36,14 +36,12 @@ function DiaryCard({
       {editOpen ? (
         <section className={editOpen ? 'editModal active' : 'editModal'}>
           <EditModal
-            editOpen={editOpen}
             setEditOpen={setEditOpen}
             id={id}
             editTitle={items.title}
             editDescription={items.description}
             editImage={items.image}
             setIsEdit={setIsEdit}
-            isEdit={isEdit}
           />
         </section>
       ) : (

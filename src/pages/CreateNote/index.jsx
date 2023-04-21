@@ -68,10 +68,9 @@ function CreateNote() {
       image: noteImage,
       date: moment().format('LLL'),
     };
-    repository.creatingNote(data)
+    repository.createNote(data)
       .then(() => {
         alert('Запись создана!');
-        console.log(data);
         navigate('/');
       })
       .catch((error) => {

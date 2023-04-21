@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from '../../API/Service';
+import commentRepository from '../../API/Repositories/commentRepository';
 
-export const fetchComments = createAsyncThunk('comments/fetchNotes', async (id) => {
-  const { data } = await axios.get(`/comments?noteId=${id}`);
+export const fetchComments = createAsyncThunk('comments/fetchNotes', async (diaryId) => {
+  const { data } = await commentRepository.getComments(diaryId);
   return data;
 });
 

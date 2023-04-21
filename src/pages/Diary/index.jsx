@@ -37,7 +37,7 @@ function Diary() {
   }, []);
 
   const addComment = () => {
-    const data = {
+    const config = {
       text: comment,
       firstname: 'Maxim',
       lastname: 'Dergunov',
@@ -45,7 +45,7 @@ function Diary() {
     };
 
     if (comment !== '' && diaryId) {
-      commentRepository.create(data)
+      commentRepository.createComment(config)
         .then(() => {
           dispatch(fetchComments(diaryId));
         })
