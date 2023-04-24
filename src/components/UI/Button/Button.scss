@@ -3,7 +3,7 @@
     justify-content: center;
     text-decoration: none;
     margin-top: 10px;
-    margin-bottom: 20px;
+    padding-bottom: 20px;
 
     button {
         width: 100px;
@@ -16,37 +16,6 @@
         &:hover {
             background: #e7f6ff
         }
-    }
-
-    &:active {
-        transform: translateY(2px);
-    }
-}
-
-
-.comments__button {
-    margin: 20px;
-    text-align: right;
-
-    button {
-        width: 100px;
-        height: 30px;
-        border-radius: 5px;
-        border: 0;
-        cursor: pointer;
-
-        &:hover {
-            background: #e7f6ff
-        }
-    }
-
-    span {
-        border-radius: 8px;
-        background-color: #e7f6ff;
-        padding: 5px 25px;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
     }
 
     &:active {

@@ -2,12 +2,12 @@ import React from 'react';
 import './Button.scss';
 
 function Button({
-  name, submit, onClickButton, disable, classType,
+  value, submit, onClickButton, disabled,
 }) {
   return (
-    <div className={classType ? `${classType}__button` : 'button'}>
-      <button type={submit ? 'submit' : 'button'} onClick={onClickButton} disabled={disable}>
-        {name}
+    <div className="button">
+      <button type={submit ? 'submit' : 'button'} onClick={onClickButton} disabled={disabled}>
+        {value}
       </button>
     </div>
   );

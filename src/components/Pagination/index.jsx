@@ -9,9 +9,9 @@ import {
 import { useNavigate } from 'react-router-dom';
 import './Pagination.scss';
 
-function Pagination({ page, numPages, limit }) {
+function Pagination({ page, countNotes, limit }) {
   const navigate = useNavigate();
-
+  const numPages = Math.ceil(countNotes / limit);
   return (
     <section className="wrapper-pagination">
       <div

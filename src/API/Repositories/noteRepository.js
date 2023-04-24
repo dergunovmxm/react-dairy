@@ -7,24 +7,28 @@ const resource = '/notes';
 
 export default {
 
+  getAllNotes() {
+    return axios.get(resource);
+  },
+
   getNotes(params) {
     return axios.get(resource, { params });
   },
 
-  getNote(params) {
-    return axios.get(`${resource}/${params}`);
+  getNote(id) {
+    return axios.get(`${resource}/${id}`);
   },
 
-  creatingNote(data) {
+  createNote(data) {
     return axios.post(resource, data);
   },
 
-  edit(params) {
-    return axios.put(`${resource}/${params.edit.editId}`, params.data);
+  editNote(id, data) {
+    return axios.put(`${resource}/${id}`, data);
   },
 
-  delete(params) {
-    return axios.delete(`${resource}/${params}`);
+  deleteNote(id) {
+    return axios.delete(`${resource}/${id}`);
   },
 
 };

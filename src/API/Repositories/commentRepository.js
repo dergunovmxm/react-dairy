@@ -2,7 +2,11 @@ import axios from '../Service';
 
 const resource = '/comments';
 export default {
-  create(data) {
+  createComment(data) {
     return axios.post(resource, data);
   },
+  getComments(noteId) {
+    return axios.get(`${resource}?noteId=${noteId}`);
+  },
+
 };

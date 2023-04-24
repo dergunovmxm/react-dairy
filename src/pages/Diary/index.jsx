@@ -8,36 +8,18 @@ import { fetchComments } from '../../redux/slices/comments';
 import {
   Button, Input, Loading, Title,
 } from '../../components/UI';
-import noteRepository from '../../API/Repositories/noteRepository';
 import commentRepository from '../../API/Repositories/commentRepository';
 import './Diary.scss';
+import useShowNote from '../../hooks/useShowNote';
 
 function Diary() {
-  const [items, setItems] = useState({});
   const [comment, setComment] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
 
-  const { search } = useLocation();
-  const params = new URLSearchParams(search);
-  const diaryId = params.get('id');
-
-  useEffect(() => {
-    noteRepository.getNote(diaryId)
-      .then(({ data }) => {
-        setItems(data);
-      })
-      .catch((error) => {
-        alert('Не удалось выполниить запрос!');
-        console.warn(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, []);
+  const { items, isLoading, diaryId } = useShowNote();
 
   const addComment = () => {
-    const data = {
+    const config = {
       text: comment,
       firstname: 'Maxim',
       lastname: 'Dergunov',
@@ -45,7 +27,7 @@ function Diary() {
     };
 
     if (comment !== '' && diaryId) {
-      commentRepository.create(data)
+      commentRepository.createComment(config)
         .then(() => {
           dispatch(fetchComments(diaryId));
         })
@@ -96,7 +78,7 @@ function Diary() {
             </div>
 
             <Button
-              name="Отправить"
+              value="Отправить"
               submit
               onClickButton={addComment}
               classType="comments"

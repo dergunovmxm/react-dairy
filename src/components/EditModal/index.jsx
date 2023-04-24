@@ -5,7 +5,6 @@ import {
   Formik, Form, Field, ErrorMessage,
 } from 'formik';
 import * as yup from 'yup';
-import axios from '../../API/Service';
 import {
   Title, Error, Button, ImageCropDialog,
 } from '../UI';
@@ -71,18 +70,13 @@ function EditModal({
   };
 
   const onSubmit = (values) => {
-    const config = {
-      data: {
-        title: values.title,
-        description: values.description,
-        image: noteImage,
-        date: moment().format('LLL'),
-      },
-      edit: {
-        editId: id,
-      },
+    const data = {
+      title: values.title,
+      description: values.description,
+      image: noteImage,
+      date: moment().format('LLL'),
     };
-    noteRepository.edit(config)
+    noteRepository.editNote(id, data)
       .then(() => {
         alert('Запись изменена!');
         setIsEdit(true);
@@ -196,12 +190,12 @@ function EditModal({
             </div>
           ) : null}
           <Button
-            name="Записать"
+            value="Записать"
             submit
             disable={!formik.isValid && !formik.dirty}
           />
           <Button
-            name="Сбросить"
+            value="Сбросить"
             onClickButton={(event) => {
               formik.handleReset();
               setNoteImage(editImage);

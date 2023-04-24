@@ -68,10 +68,9 @@ function CreateNote() {
       image: noteImage,
       date: moment().format('LLL'),
     };
-    repository.creatingNote(data)
+    repository.createNote(data)
       .then(() => {
         alert('Запись создана!');
-        console.log(data);
         navigate('/');
       })
       .catch((error) => {
@@ -164,9 +163,9 @@ function CreateNote() {
             </div>
           ) : null}
 
-          <Button name="Записать" submit disable={!formik.isValid} />
+          <Button value="Записать" submit disabled={!formik.isValid} />
           <Button
-            name="Сбросить"
+            value="Сбросить"
             onClickButton={(event) => {
               setNoteImage('');
               event.stopPropagation();

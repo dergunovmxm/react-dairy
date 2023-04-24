@@ -1,27 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   Pagination, Filters, DiaryCard,
 } from '../../components';
 import Loading from '../../components/UI/Loading';
 import empty from '../../assets/empty.png';
 import './DiaryList.scss';
+import useShowNotes from '../../hooks/useShowNotes';
 import noteRepository from '../../API/Repositories/noteRepository';
 
 function DiaryList() {
-  const [notes, setNotes] = useState([]);
-  const [searchValue, setSearchValue] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
-  const [isEdit, setIsEdit] = useState(false);
-  const [sort, setSort] = useState({});
   const navigate = useNavigate();
-  const [countNotes, setCountNotes] = useState(0);
-  const [limit] = useState(4);
-
-  const { search } = useLocation();
-  const params = new URLSearchParams(search);
-  const page = params.get('_page') || 1;
+  const {
+    showNotes,
+    isLoading,
+    setIsLoading,
+    limit,
+    page,
+    countNotes,
+    setCountNotes,
+    setIsEdit,
+    sort,
+    setSort,
+    searchValue,
+    setSearchValue,
+    setShowNotes,
+  } = useShowNotes();
 
   const removeNote = (id) => {
     const config = {
@@ -34,7 +38,7 @@ function DiaryList() {
 
     if (window.confirm('Вы действительно хотите удалить запись?')) {
       setIsLoading(true);
-      noteRepository.delete(id)
+      noteRepository.deleteNote(id)
         .then(() => {
           setCountNotes(countNotes - 1);
           noteRepository.getNotes(config)
@@ -42,7 +46,7 @@ function DiaryList() {
               if (!data.length) {
                 navigate(`?_page=${page - 1}&_limit=${limit}`);
               } else {
-                setNotes(data);
+                setShowNotes(data);
                 setIsLoading(false);
               }
             })
@@ -52,46 +56,6 @@ function DiaryList() {
         });
     }
   };
-
-  useEffect(() => {
-    const config = {
-      title_like: searchValue,
-    };
-    noteRepository.getNotes(config)
-      .then(({ data }) => {
-        setCountNotes(data.length);
-      })
-      .catch((error) => {
-        console.warn(error);
-        alert('Не удалось выполниить запрос!');
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, [searchValue]);
-
-  useEffect(() => {
-    const config = {
-      title_like: searchValue,
-      _page: page,
-      _limit: limit,
-      _sort: sort.sort,
-      _order: sort.order,
-    };
-    noteRepository
-      .getNotes(config)
-      .then(({ data }) => {
-        setNotes(data);
-        setIsEdit(false);
-      })
-      .catch((error) => {
-        console.warn(error);
-        alert('Не удалось выполниить запрос!');
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, [page, searchValue, isEdit, sort]);
 
   return (
     <>
@@ -108,8 +72,8 @@ function DiaryList() {
             limit={limit}
           />
           <section className="dairy-items">
-            {!isLoading && notes.length ? (
-              notes.map((item) => (
+            {!isLoading && showNotes.length ? (
+              showNotes.map((item) => (
                 <DiaryCard
                   {...item}
                   key={item.id}
@@ -117,7 +81,6 @@ function DiaryList() {
                   setIsEdit={setIsEdit}
                   setIsLoading={setIsLoading}
                   setCountNotes={setCountNotes}
-                  isEdit={isEdit}
                   sort={sort}
                   navigate={navigate}
                 />
@@ -130,10 +93,10 @@ function DiaryList() {
             )}
           </section>
 
-          {!isLoading && notes.length ? (
+          {!isLoading && showNotes.length ? (
             <Pagination
               page={page}
-              numPages={Math.ceil(countNotes / limit)}
+              countNotes={countNotes}
               limit={limit}
             />
           ) : null}
